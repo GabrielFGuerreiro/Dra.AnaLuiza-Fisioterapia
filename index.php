@@ -1,10 +1,10 @@
 <?php 
     include "header.php";
+    require "Models/Database.php";
+
     function mensagem() {
         echo "Boas Vindas!";
     }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -12,33 +12,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/placeholder.css">
     <title>Fisio com a Ana</title>
 </head>
 
 <body>
-    <div class="container" >
-        <h2 class="conteudo">Login</h2>
-
-        <div class="form-group">
-            <input class="form-field" type="email" placeholder="Email">
-            <input class="form-field" type="password" placeholder="Senha"><br>
+    <form action="" method="post">
+        <div class="container" >
+            <h2 class="conteudo">Login</h2>
+    
+            <div class="form-group">
+                <input id="email" name="email" class="form-field" type="email" placeholder="Digite o E-mail.">
+                <input id="password" name="password" class="form-field" type="password" placeholder="Digite a Senha."><br>
+            </div>
         </div>
-    </div>
-        <div>
-            <h3>
-                Olá, me chamo Ana, faço ASDJHF ASDGHJ a X anos, e meu sonho é se tornar hokage
-            </h3>
-            <h4>
-                Para começar, faça seu cadastro para então fazer o seu pré agendamento!<br>
-                <button>Cadastre-se!</button>
-            </h4>
-        </div>
-
+        <button>Cadastrar-se!</button>
+    </form>
 </body>
 </html>
 
 <?php 
-// mensagem();
+if($_SERVER['REQUEST_METHOD'] === 'POST')
+{
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
+
+    $sql = "SELECT SENHA FROM USUARIOS WHERE email = :email";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':email' => $email]);
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if($usuario && password_verify($senha, $usuario["senha"]))
+    {
+        
+    }
+    else
+        echo "E-mail ou Senha Inválido.";
+}
 
 
 ?>
+
