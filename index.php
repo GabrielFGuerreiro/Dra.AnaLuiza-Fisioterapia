@@ -1,7 +1,6 @@
 <?php 
     include "header.php";
-    require "Models/Database.php";
-
+    include "Models/Database.php";
     function mensagem() {
         echo "Boas Vindas!";
     }
@@ -36,6 +35,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
+    $db = new Database();
+    $pdo = $db->getConnection();
 
     $sql = "SELECT SENHA FROM USUARIOS WHERE email = :email";
     $stmt = $pdo->prepare($sql);
