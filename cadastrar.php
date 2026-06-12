@@ -1,5 +1,6 @@
 <?php 
     include "header.php";
+    include "Models/Database.php";
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +11,7 @@
     <title>Cadastrar</title>
 </head>
 <body>
-    <form action="" method="post">
+    <form action="" method="POST">
         <label for="nome">Nome</label>
         <input type="text" id="nome" name="nome">
 
@@ -29,7 +30,7 @@
         <label for="senhaCad">Senha</label>
         <input type="password" id="senhaCad" name="senhaCad">
 
-        <button>Cadastrar</button>
+        <button type="submit">Cadastrar</button>
     </form>
 </body>
 </html>
@@ -48,6 +49,16 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     {
         $db = new Database();
         $pdo = $db->getConnection();
+
+        $sql = "SELECT COUNT(*) FROM USUARIOS WHERE cpf = :cpf";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([":cpf" => $cpf]);
+        $count = $stmt->fetchColumn();
+
+        if ($count > 0) {
+            echo "CPF Já Cadastrado.";
+            exit;
+        }
         
         $sql = "INSERT INTO USUARIOS (nmUsuario, cpf, dataNasc, email, celular, isAdmin, senha) 
                 VALUES (:nome, :cpf, :dataNasc, :email, :celular, 0, :senha)";
@@ -60,11 +71,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
             ":celular" => $cel,
             ":senha" => $senha            
         ]);
-
+        echo "Cadastro Realizado com Sucesso!";
     }
     catch(PDOException $e)
     {
-
+        echo "Erro: " . $e->getMessage();
     }
 }
 
