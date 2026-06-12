@@ -1,6 +1,6 @@
 <header>
     <style>html {color-scheme: light;}</style>
-    
+    <link rel="stylesheet" href="styles/placeholder.css">
     <div class="headerStyle">
         <style>
             #headerStyle {
@@ -16,7 +16,7 @@
 
         <a href="index.php">Inicio</a>
         <a href="avalie.php">Depoimentos</a>
-        <a href="preConsulta">Entre em Contato</a>
+        <a href="preConsulta.php">Entre em Contato</a>
     </div>
 </header>
 
