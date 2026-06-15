@@ -82,7 +82,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 
         <label for="senhaCad">Senha</label>
         <input type="password" id="senhaCad" name="senhaCad">
-        <spam id="msgObrigatoriaSenha" class="msgObrigatoria">A <b>Senha</b> é Obrigatória.</spam>
+        <spam id="msgSenha" class="msgObrigatoria"></spam>
 
         <spam class="requisitosSenha"><i class="fa fa-circle"></i>8 Caracteres</spam>  
         <spam class="requisitosSenha"><i class="fa fa-circle"></i>1 Letra Minúscula</spam>  
@@ -115,55 +115,70 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 
 
 <script>
+    var senhaValida = true;
+    var circulos = document.querySelectorAll(".fa-circle");
+
     document.getElementById("btnCadastrar").addEventListener("click", function()
     {
         var icCadastrar = true;
-        // var nome = document.getElementById("nome").value;
-        // if(!nome)
-        // {
-        //     document.getElementById("msgObrigatoriaNome").style.display = "block";
-        //     icCadastrar = false;
-        // }
 
-        // var cpf = document.getElementById("cpf").value;
-        // if(!cpf)
-        // {
-        //     document.getElementById("msgObrigatoriaCpf").style.display = "block";
-        //     icCadastrar = false;
-        // }
+        circulos.forEach((circulo) => {      
+            if(circulo.style.color === "gray")
+            {
+                senhaValida = false;
+            }
+        });
 
-        
-        var senhaCad = document.getElementById("senhaCad").value;
-        if(!senhaCad)
+        var nome = document.getElementById("nome").value;
+        if(!nome)
         {
-            document.getElementById("msgObrigatoriaSenha").style.display = "block";
+            document.getElementById("msgObrigatoriaNome").style.display = "block";
             icCadastrar = false;
         }
-
-        //if(icCadastrar == true)
-        if(1==0)
+        else        
+            document.getElementById("msgObrigatoriaNome").style.display = "none";
+        
+        var cpf = document.getElementById("cpf").value;
+        if(!cpf)
         {
-            document.getElementById("formCadastrar").submit();
+            document.getElementById("msgObrigatoriaCpf").style.display = "block";
+            icCadastrar = false;
         }
+        else        
+            document.getElementById("msgObrigatoriaCpf").style.display = "none";
         
-        document.querySelectorAll(".fa-circle").forEach((element) => {
-            element.style.color = "red";
-        });
+        var senhaCad = document.getElementById("senhaCad").value;
+        var senha = document.getElementById("msgSenha");
+        if(!senhaCad)
+        {
+            senha.style.display = "block";
+            senha.innerHTML = "A <b>Senha</b> é Obrigatória.";
+            icCadastrar = false;
+        }
+        else if(!senhaValida)
+        {
+            senha.style.display = "block";
+            senha.innerHTML = "Requisitos da Senha não Foram Atendidos.";
+        }
+        else
+            senha.style.display = "none";
+
+        if(senhaValida && icCadastrar)        
+            document.getElementById("formCadastrar").submit();
         
+
+        senhaValida = true;
     });
 
 
     document.getElementById("senhaCad").addEventListener("input", function()
     {
-        console.log(this.value);
         var senha = this.value;
-        var circulos = document.getElementsByClassName("fa-circle");
 
         circulos[0].style.color = senha.length >= 8 ? "red" : "gray";
-
-        
-        circulos[1].style.color = senha.match(/\w/g) ? "red" : "gray";
-        circulos[3].style.color = senha.match(/[a-z]/g) ? "red" : "gray";
-
+        circulos[1].style.color = senha.match(/[a-z]/g) ? "red" : "gray";
+        circulos[2].style.color = senha.match(/[A-Z]/g) ? "red" : "gray";
+        circulos[3].style.color = senha.match(/\d/g) ? "red" : "gray";
+        circulos[4].style.color = senha.match(/\W|_/g) ? "red" : "gray";
     });
 </script>
