@@ -148,24 +148,23 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
             document.getElementById("msgObrigatoriaCpf").style.display = "none";
         
         var senhaCad = document.getElementById("senhaCad").value;
-        var senha = document.getElementById("msgSenha");
+        var msgSenha = document.getElementById("msgSenha");
         if(!senhaCad)
         {
-            senha.style.display = "block";
-            senha.innerHTML = "A <b>Senha</b> é Obrigatória.";
+            msgSenha.style.display = "block";
+            msgSenha.innerHTML = "A <b>Senha</b> é Obrigatória.";
             icCadastrar = false;
         }
         else if(!senhaValida)
         {
-            senha.style.display = "block";
-            senha.innerHTML = "Requisitos da Senha não Foram Atendidos.";
+            msgSenha.style.display = "block";
+            msgSenha.innerHTML = "Requisitos da Senha não Foram Atendidos.";
         }
         else
-            senha.style.display = "none";
+            msgSenha.style.display = "none";
 
         if(senhaValida && icCadastrar)        
-            document.getElementById("formCadastrar").submit();
-        
+            document.getElementById("formCadastrar").submit();        
 
         senhaValida = true;
     });
