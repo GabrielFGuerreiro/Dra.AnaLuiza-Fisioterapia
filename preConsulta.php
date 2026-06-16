@@ -17,7 +17,7 @@
 
         <form"> <!-- placeholder -->
             
-            <fieldset>
+            
                 <legend>Informações do Paciente</legend>
                 
                 <p>
@@ -29,9 +29,9 @@
                     <label for="data_nascimento">Data de Nascimento:</label>
                     <input type="date" id="data_nascimento" name="data_nascimento" required>
                 </p>
-            </fieldset>
+            
 
-            <fieldset>
+            
                 <legend>Queixa Principal</legend>
                 
                 <p>
@@ -49,9 +49,9 @@
                     <br>
                     <textarea id="descricao_sintoma" name="descricao_sintoma" rows="4" cols="50" placeholder="Escreva aqui..."></textarea>
                 </p>
-            </fieldset>
+            
 
-            <fieldset>
+            
                 <legend>Histórico Clínico</legend>
 
                 <p>
@@ -74,7 +74,7 @@
                     <br>
                     <textarea id="comorbidades" name="comorbidades" rows="2" cols="50"></textarea>
                 </p>
-            </fieldset>
+            
 
             <br>
             <button type="submit">Enviar Pré-Consulta</button>
