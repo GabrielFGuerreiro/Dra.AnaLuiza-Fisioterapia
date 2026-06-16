@@ -34,18 +34,18 @@
 if($_SERVER['REQUEST_METHOD'] === 'POST')
 {
     $email = $_POST['email'];
-    $senha = $_POST['senha'];
+    $senha = $_POST['password'];
     $db = new Database();
     $pdo = $db->getConnection();
-
-    $sql = "SELECT SENHA FROM USUARIOS WHERE email = :email";
+    
+    $sql = "SELECT senha FROM USUARIOS WHERE email = :email";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':email' => $email]);
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if($usuario && password_verify($senha, $usuario["senha"]))
+    if( password_verify($senha, $usuario["senha"]))
     {
-        
+        echo "Entrou";
     }
     else
         echo "E-mail ou Senha Inválido.";
