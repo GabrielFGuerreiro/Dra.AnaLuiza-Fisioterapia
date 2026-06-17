@@ -25,7 +25,7 @@
                 <input id="password" name="password" class="form-field" type="password" placeholder="Digite a Senha."><br>
             </div>
         </div>
-        <button>Cadastrar-se!</button>
+        <button>Logar</button>
     </form>
 </body>
 </html>
@@ -48,7 +48,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
         echo "Entrou";
     }
     else
-        echo "E-mail ou Senha Inválido.";
+        echo "E-mail ou Senha Inválidos.";
 }
 
 
