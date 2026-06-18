@@ -207,6 +207,11 @@ form select:focus {
     border-radius: 10px;
     width: 350px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    color: var(--text);
+}
+
+.form-container input{
+    background-color: white;
 }
 
 .resultado {
@@ -236,7 +241,7 @@ input {
     border: none;
     border-radius: 5px;
     background: var(--inputBg);
-    color: white;
+    color: var(--text);
 }
 
 input:focus {
@@ -313,6 +318,10 @@ a.menu:hover {
     border-radius: 12px;
     box-shadow: 0 5px rgb(0, 0, 0, 0.08);
     margin-bottom: 30px;
+}
+
+.card-alt {
+    background-color: var(--hover);
 }
 
 .card h1,

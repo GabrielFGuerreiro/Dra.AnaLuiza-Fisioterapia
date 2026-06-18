@@ -4,7 +4,7 @@ class Database {
     private $banco = "pi_fisioana";
     private $usuario = "root";
     private $senha = "usbw";
-    private $port = "3310";
+    private $port = "3307";
     public $conn;
 
     public function getConnection() {

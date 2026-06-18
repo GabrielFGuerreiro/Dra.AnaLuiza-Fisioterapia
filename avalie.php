@@ -9,6 +9,7 @@
 
         
         }
+        
 ?>
 
 <!DOCTYPE html>
@@ -16,18 +17,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/placeholder.css">
     <title>Depoimento</title>
 </head>
 <body>
-    <form action="" method="POST"><br>
-        <label for="opiniao">O que o cliente achou do atendimento?</label><br>
-        <input name="opiniao" id="opiniao" type="text"><br><br>
-        <label for="image">Insira uma foto ou um video do atendimento:</label><br>
-        <input type="file" name="image" id="image" accept="image/*, video/*"><br><br>
+    <div class="conteudo">
+        <h2>Avaliação de Atendimento</h2><BR>
+        <form action="" method="POST"><br>
+            <label  for="opiniao">O que o cliente achou do atendimento?</label>
+            <input name="opiniao" id="opiniao" type="text"><br>
+            <label  for="image">Insira uma foto ou um video do atendimento:</label>
+            <input type="file" name="image" id="image" accept="image/*, video/*"><br>
 
-        <input class="submit" type="submit" value="Salvar depoimento">
-    </form>
+            <button>Salvar depoimento</button>
+        </form>
+    </div>
 </body>
 </html>
 

@@ -1,6 +1,5 @@
 <?php 
 include "header.php";
-include "Models/Database.php";
 
 if (isset($_GET['sucesso'])) {
     echo "Cadastro realizado com sucesso!";
@@ -61,42 +60,47 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 </head>
 <body>
-    <form action="" method="POST" id="formCadastrar">
-        <label for="nome">Nome</label>
-        <input type="text" id="nome" name="nome">
-        <spam id="msgObrigatoriaNome" class="msgObrigatoria">O <b>Nome</b> é Obrigatório.</spam>
+    <div class="conteudo">
+        <h2>Cadastro de Usuário</h2>
+        <form action="" method="POST" id="formCadastrar">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome">
+            <spam id="msgObrigatoriaNome" class="msgObrigatoria">O <b>Nome</b> é Obrigatório.</spam>
 
-        <label for="cpf">CPF</label>
-        <input type="text" id="cpf" name="cpf">
-        <spam id="msgObrigatoriaCpf" class="msgObrigatoria">O <b>CPF</b> é Obrigatório.</spam>
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" name="cpf">
+            <spam id="msgObrigatoriaCpf" class="msgObrigatoria">O <b>CPF</b> é Obrigatório.</spam>
 
-        <label for="dtNasc">Data de Nascimento</label>
-        <input type="date" id="dtNasc" name="dtNasc">
+            <label for="dtNasc">Data de Nascimento</label>
+            <input type="date" id="dtNasc" name="dtNasc">
 
-        <label for="cel">Celular</label>
-        <input type="text" id="cel" name="cel">
+            <label for="cel">Celular</label>
+            <input type="text" id="cel" name="cel">
 
-        <label for="emailCad">E-mail</label>
-        <input type="email" id="emailCad" name="emailCad">
-        <spam id="msgObrigatoriaEmail" class="msgObrigatoria">O <b>CPF</b> é Obrigatório.</spam>
+            <label for="emailCad">E-mail</label>
+            <input type="email" id="emailCad" name="emailCad">
+            <spam id="msgObrigatoriaEmail" class="msgObrigatoria">O <b>CPF</b> é Obrigatório.</spam>
 
-        <label for="senhaCad">Senha</label>
-        <input type="password" id="senhaCad" name="senhaCad">
-        <spam id="msgSenha" class="msgObrigatoria"></spam>
+            <label for="senhaCad">Senha</label>
+            <input type="password" id="senhaCad" name="senhaCad">
+            <spam id="msgSenha" class="msgObrigatoria"></spam>
 
-        <spam class="requisitosSenha"><i class="fa fa-circle"></i>8 Caracteres</spam>  
-        <spam class="requisitosSenha"><i class="fa fa-circle"></i>1 Letra Minúscula</spam>  
-        <spam class="requisitosSenha"><i class="fa fa-circle"></i>1 Letra Maiúscula</spam>  
-        <spam class="requisitosSenha"><i class="fa fa-circle"></i>1 Número</spam>  
-        <spam class="requisitosSenha"><i class="fa fa-circle"></i>1 Caracter Especial</spam>  
+            <div>
+                <spam class="requisitosSenha"><i class="fa fa-circle"></i>8 Caracteres</spam>  
+                <spam class="requisitosSenha"><i class="fa fa-circle"></i>1 Letra Minúscula</spam>  
+                <spam class="requisitosSenha"><i class="fa fa-circle"></i>1 Letra Maiúscula</spam>  
+                <spam class="requisitosSenha"><i class="fa fa-circle"></i>1 Número</spam>  
+                <spam title="Exemplo: #, @, %, *" class="requisitosSenha"><i class="fa fa-circle" ></i >1 Caracter Especial</spam>  
+            </div>
 
-        <button type="button" id="btnCadastrar">Cadastrar</button>
-    </form>
+            <button type="button" id="btnCadastrar">Cadastrar</button>
+        </form>
+    </div>
 </body>
 </html>
 
 
-<style>
+<style> 
     .msgObrigatoria {
         display: none;
         color:red;

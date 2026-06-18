@@ -1,9 +1,5 @@
 <?php 
-    include "header.php";
     include "Models/Database.php";
-    function mensagem() {
-        echo "Boas Vindas!";
-    }
 ?>
 
 <!DOCTYPE html>
@@ -11,24 +7,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/placeholder.css">
+    <link rel="stylesheet" href="styles/light.css">
     <title>Fisio com a Ana</title>
 </head>
 
 <body>
-    <form action="" method="post">
-        <div class="container" >
-            <h2 class="conteudo">Login</h2>
-    
-            <div class="form-group">
-                <input id="email" name="email" class="form-field" type="email" placeholder="Digite o E-mail.">
-                <input id="password" name="password" class="form-field" type="password" placeholder="Digite a Senha."><br>
-            </div>
-        </div>
-        <button>Cadastrar-se!</button>
-    </form>
-</body>
-</html>
+    <style>
+        body {
+            position: relative;
+            right:150px;
+        }
+    </style>
+    <div class="conteudo" >
+        <h2>Login</h2>
+        <form action="" method="post">
+                <input id="email" name="email" type="email" placeholder="Digite o E-mail.">
+                <input id="senha" name="senha" type="senha" placeholder="Digite a Senha."><br>
+            <button>Cadastrar-se!</button>
+
 
 <?php 
 if($_SERVER['REQUEST_METHOD'] === 'POST')
@@ -48,9 +44,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
         
     }
     else
-        echo "E-mail ou Senha Inválido.";
+        echo "<p style='text-align: center;'>E-mail ou Senha Inválido.</p>";
 }
-
-
 ?>
-
+        </form>
+    </div>
+</body>
+</html>
