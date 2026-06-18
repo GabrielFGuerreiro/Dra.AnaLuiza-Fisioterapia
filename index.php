@@ -25,7 +25,7 @@
                 <input id="password" name="password" class="form-field" type="password" placeholder="Digite a Senha."><br>
             </div>
         </div>
-        <button>Logar</button>
+        <button>Cadastrar-se!</button>
     </form>
 </body>
 </html>
