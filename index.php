@@ -12,19 +12,21 @@
 </head>
 
 <body>
-    <style>
-        body {
-            position: relative;
-            right:150px;
-        }
-    </style>
-    <div class="conteudo" >
-        <h2>Login</h2>
-        <form action="" method="post">
-                <input id="email" name="email" type="email" placeholder="Digite o E-mail.">
-                <input id="senha" name="senha" type="senha" placeholder="Digite a Senha."><br>
-            <button>Cadastrar-se!</button>
-
+    <form action="" method="post">
+        <div class="container" >
+            <h2 class="conteudo">Login</h2>
+    
+            <div class="form-group">
+                <input id="email" name="email" class="form-field" type="email" placeholder="Digite o E-mail.">
+                <input id="password" name="password" class="form-field" type="password" placeholder="Digite a Senha."><br>
+            </div>
+        </div>
+        <br>
+        
+        <button>Cadastrar-se!</button>
+    </form>
+</body>
+</html>
 
 <?php 
 if($_SERVER['REQUEST_METHOD'] === 'POST')
