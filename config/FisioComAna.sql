@@ -25,9 +25,13 @@ CONSTRAINT fk_PreConsultas_Usuarios FOREIGN KEY(idUsuario) REFERENCES Usuarios (
 
 CREATE TABLE Depoimentos (
 idDepoimento INT PRIMARY KEY AUTO_INCREMENT,
-idUsuario INT,
-dsDepoimento VARCHAR (255) NOT NULL,
+dsDepoimento VARCHAR (255) NOT NULL
+)
 
-CONSTRAINT fk_Depoimentos_Usuarios FOREIGN KEY (idUsuario) REFERENCES Usuarios (idUsuario)
+CREATE TABLE DepoimentosImagens(
+idDepoimentoImagem INT PRIMARY KEY AUTO_INCREMENT,
+idDepoimento INT,
+caminhoArquivo VARCHAR(300),
 
+CONSTRAINT fk_Depoimentos_Imagens_Depoimentos FOREIGN KEY(idDepoimento) REFERENCES Depoimentos(idDepoimento)
 )

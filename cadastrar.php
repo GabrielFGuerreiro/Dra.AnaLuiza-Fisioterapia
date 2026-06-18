@@ -24,10 +24,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
         $stmt->execute([":cpf" => $cpf]);
         $count = $stmt->fetchColumn();
 
-        if ($count > 0) {
-            echo "CPF Já Cadastrado.";
-        }
-        else
+        if ($count == 0)
         {            
             $sql = "INSERT INTO USUARIOS (nmUsuario, cpf, dataNasc, email, celular, isAdmin, senha) 
                 VALUES (:nome, :cpf, :dataNasc, :email, :celular, 0, :senha)";
@@ -43,6 +40,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
             header("Location: cadastrar.php?sucesso=1"); //Quando cadastrar, não fica na requisição POST, vai para GET, impedindo o reenvio do form quando recarregar.
             exit();
         }
+        else
+            echo "<script>alert('CPF Já Cadastrado!');</script>";        
     }
     catch(PDOException $e)
     {
@@ -77,9 +76,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
             <label for="cel">Celular</label>
             <input type="text" id="cel" name="cel">
 
-            <label for="emailCad">E-mail</label>
-            <input type="email" id="emailCad" name="emailCad">
-            <spam id="msgObrigatoriaEmail" class="msgObrigatoria">O <b>CPF</b> é Obrigatório.</spam>
+        <label for="emailCad">E-mail</label>
+        <input type="email" id="emailCad" name="emailCad">
+        <spam id="msgObrigatoriaEmail" class="msgObrigatoria"></spam>
 
             <label for="senhaCad">Senha</label>
             <input type="password" id="senhaCad" name="senhaCad">
@@ -99,8 +98,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 </body>
 </html>
 
-
-<style> 
+<style>
     .msgObrigatoria {
         display: none;
         color:red;
@@ -117,7 +115,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     }
 </style>
 
-
 <script>
     var senhaValida = true;
     var circulos = document.querySelectorAll(".fa-circle");
@@ -126,40 +123,41 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     {
         var icCadastrar = true;
 
-        circulos.forEach((circulo) => {      
-            if(circulo.style.color === "gray")
-            {
-                senhaValida = false;
-            }
-        });
-
-        var nome = document.getElementById("nome").value;
+        var nome = document.getElementById("nome").value; //Verifica se o campo nome está vazio
+        var msgNome = document.getElementById("msgObrigatoriaNome");
         if(!nome)
         {
-            document.getElementById("msgObrigatoriaNome").style.display = "block";
+            msgNome.style.display = "block";
             icCadastrar = false;
         }
         else        
-            document.getElementById("msgObrigatoriaNome").style.display = "none";
+            msgNome.style.display = "none";
         
-        var cpf = document.getElementById("cpf").value;
+        var cpf = document.getElementById("cpf").value; //Verifica se o campo cpf está vazio
+        var msgCpf = document.getElementById("msgObrigatoriaCpf");
         if(!cpf)
         {
-            document.getElementById("msgObrigatoriaCpf").style.display = "block";
+            msgCpf.style.display = "block";
             icCadastrar = false;
         }
         else        
-            document.getElementById("msgObrigatoriaCpf").style.display = "none";
+            msgCpf.style.display = "none";
         
-        var senhaCad = document.getElementById("senhaCad").value;
+
+        circulos.forEach((circulo) => { //Verifica se algum requisito da senha não foi atendido com base na cor da bolinha
+            if(circulo.style.color === "gray")
+                senhaValida = false;
+        });
+
+        var senhaCad = document.getElementById("senhaCad").value;  
         var msgSenha = document.getElementById("msgSenha");
-        if(!senhaCad)
+        if(!senhaCad) //Verifica se o campo senha está vazio
         {
             msgSenha.style.display = "block";
             msgSenha.innerHTML = "A <b>Senha</b> é Obrigatória.";
             icCadastrar = false;
         }
-        else if(!senhaValida)
+        else if(!senhaValida) //E se os requisitos da senha foram atendidos
         {
             msgSenha.style.display = "block";
             msgSenha.innerHTML = "Requisitos da Senha não Foram Atendidos.";
@@ -172,7 +170,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 
         senhaValida = true;
     });
-
 
     document.getElementById("senhaCad").addEventListener("input", function()
     {

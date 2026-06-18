@@ -1,15 +1,31 @@
 <?php 
-    include "header.php";
-    session_start();
+include "header.php";
+include "Models/Database.php";
 
-    if($_SERVER["REQUEST_METHOD"]==="POST")
-        {
-        $opiniao = $_POST["opiniao"];
-        $image = $_POST["image"];
+session_start();
 
-        
-        }
-        
+if($_SERVER['REQUEST_METHOD'] === 'POST')
+{
+    $db = new Database();
+    $pdo = $db->getConnection();
+
+    $opiniao = $_POST['opiniao'];
+    $sql = "INSERT INTO DEPOIMENTOS (dsDepoimento) VALUES (:opiniao)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([":opniao" => $opiniao]);
+    
+    $sql = "SELECT idDepoimento FROM DEPOIMENTOS ORDER BY dtCadastro DESC LIMIT 1";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $idDepoimento = $stmt->fetchColumn();
+
+    $sql = "INSERT INTO DEPOIMENTOARQUIVOS (idDepoimento, caminhoArquivo) VALUES (:idDepoimento, :caminho)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ":idDepoimento" => $idDepoimento,
+        ":caminho" => "TESTE"
+        ]);
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,13 +44,10 @@
             <label  for="image">Insira uma foto ou um video do atendimento:</label>
             <input type="file" name="image" id="image" accept="image/*, video/*"><br>
 
-            <button>Salvar depoimento</button>
-        </form>
-    </div>
+        <button type="submit">Salvar</button>
+    </form>
 </body>
 </html>
-
-
 
 <!-- 
     Precisamos adicionar o integração ao banco, para que possa ser feito o ADD do depoimento, 
