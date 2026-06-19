@@ -1,4 +1,6 @@
 <?php 
+    session_start();
+
     include "Models/Database.php";
     $db = new Database();
     $pdo = $db->getConnection();
@@ -8,7 +10,7 @@
     $stmt->execute([':email' => 'senac@gmail.com']);
     $isAdmin = $stmt->fetchColumn();
 
-    
+    var_dump($isAdmin);
 ?>
 
 <header>
@@ -21,14 +23,14 @@
             </div>
 
             <a class="msg" href="index.php">Inicio</a>
-            <a class="msg" href="avalie.php">Depoimentos</a>
+            
             <a class="msg" href="preConsulta.php">Entre em Contato</a>
 
             <?php 
                 
-                if ($isAdmin === true)
+                if ($isAdmin == 1)
                 {
-                    echo 'cock vore';
+                    echo '<a class="msg" href="avalie.php">Depoimentos</a>';
                 }
             ?>
         </div>

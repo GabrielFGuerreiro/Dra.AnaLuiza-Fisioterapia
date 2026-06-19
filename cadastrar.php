@@ -59,6 +59,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 </head>
 <body>
+    <style>
+    body {
+        position: relative;
+        right:30px;
+    }
+    </style>
     <div class="conteudo">
         <h2>Cadastro de Usuário</h2>
         <form action="" method="POST" id="formCadastrar">

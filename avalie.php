@@ -1,6 +1,6 @@
 <?php 
 include "header.php";
-include "Models/Database.php";
+include_once "Models/Database.php";
 
 session_start();
 
@@ -19,7 +19,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     $stmt->execute();
     $idDepoimento = $stmt->fetchColumn();
 
-    $sql = "INSERT INTO DEPOIMENTOARQUIVOS (idDepoimento, caminhoArquivo) VALUES (:idDepoimento, :caminho)";
+    $sql = "INSERT INTO DepoimentosImagens (idDepoimento, caminhoArquivo) VALUES (:idDepoimento, :caminho)";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         ":idDepoimento" => $idDepoimento,
@@ -36,6 +36,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     <title>Depoimento</title>
 </head>
 <body>
+    <style>
+    body {
+        position: relative;
+        right:30px;
+    }
+    </style>
     <div class="conteudo">
         <h2>Avaliação de Atendimento</h2><BR>
         <form action="" method="POST"><br>

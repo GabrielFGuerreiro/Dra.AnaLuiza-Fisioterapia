@@ -234,7 +234,7 @@ label {
     color: var(--text);
 }
 
-input {
+input, textarea{
     width: 100%;
     padding: 8px;
     margin-top: 5px;
@@ -242,6 +242,7 @@ input {
     border-radius: 5px;
     background: var(--inputBg);
     color: var(--text);
+    resize: none;
 }
 
 input:focus {
