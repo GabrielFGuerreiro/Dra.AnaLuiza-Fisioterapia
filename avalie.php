@@ -1,6 +1,6 @@
 <?php 
 include "header.php";
-include "Models/Database.php";
+include_once "Models/Database.php";
 
 session_start();
 
@@ -12,14 +12,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     $opiniao = $_POST['opiniao'];
     $sql = "INSERT INTO DEPOIMENTOS (dsDepoimento) VALUES (:opiniao)";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([":opniao" => $opiniao]);
+    $stmt->execute([":opiniao" => $opiniao]);
     
-    $sql = "SELECT idDepoimento FROM DEPOIMENTOS ORDER BY dtCadastro DESC LIMIT 1";
+    $sql = "SELECT idDepoimento FROM DEPOIMENTOS ORDER BY idDepoimento DESC LIMIT 1";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $idDepoimento = $stmt->fetchColumn();
-
-    $sql = "INSERT INTO DEPOIMENTOARQUIVOS (idDepoimento, caminhoArquivo) VALUES (:idDepoimento, :caminho)";
+    
+    $sql = "INSERT INTO DepoimentosImagens (idDepoimento, caminhoArquivo) VALUES (:idDepoimento, :caminho)";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         ":idDepoimento" => $idDepoimento,
@@ -39,9 +39,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     <div class="conteudo">
         <h2>Avaliação de Atendimento</h2><BR>
         <form action="" method="POST"><br>
-            <label  for="opiniao">O que o cliente achou do atendimento?</label>
+            <label for="opiniao">O que o cliente achou do atendimento?</label>
             <input name="opiniao" id="opiniao" type="text"><br>
-            <label  for="image">Insira uma foto ou um video do atendimento:</label>
+            <label for="image">Insira uma foto ou um video do atendimento:</label>
             <input type="file" name="image" id="image" accept="image/*, video/*"><br>
 
         <button type="submit">Salvar</button>
