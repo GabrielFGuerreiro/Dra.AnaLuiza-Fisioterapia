@@ -3,8 +3,8 @@ class Database {
     private $host = "localhost";
     private $banco = "pi_fisioana";
     private $usuario = "root";
-    private $senha = "usbw";
-    private $port = "3307";
+    private $senha = "";
+    private $port = "3306";
     public $conn;
 
     public function getConnection() {

@@ -40,8 +40,8 @@
                 <?php 
                     if (isset($_SESSION['email'])) {
                         if ($isAdmin == 0) {
-                            echo '<a class="msg" href="agendamentos.php">Ver Agendamentos</a>';
-                            echo '<a class="msg" href="caDepoimentos.php">Gerenciar Depoimentos</a>';
+                            echo '<a class="msg" href="Agendamentos.php">Ver Agendamentos</a>';
+                            echo '<a class="msg" href="Depoimentos.php">Gerenciar Depoimentos</a>';
                         }
                         echo '<div><a class="user">Olá, ' . htmlspecialchars($nomeUsuario) . '!</a>';
                         echo '<a class="user out" href="logout.php">Sair</a></div>';

@@ -175,11 +175,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
             {
                 var senha = this.value;
 
-                circulos[0].style.color = senha.length >= 8 ? "red" : "gray";
-                circulos[1].style.color = senha.match(/[a-z]/g) ? "red" : "gray";
-                circulos[2].style.color = senha.match(/[A-Z]/g) ? "red" : "gray";
-                circulos[3].style.color = senha.match(/\d/g) ? "red" : "gray";
-                circulos[4].style.color = senha.match(/\W|_/g) ? "red" : "gray";
+                circulos[0].style.color = senha.length >= 8 ? "#61c9b4" : "gray";
+                circulos[1].style.color = senha.match(/[a-z]/g) ? "#61c9b4" : "gray";
+                circulos[2].style.color = senha.match(/[A-Z]/g) ? "#61c9b4" : "gray";
+                circulos[3].style.color = senha.match(/\d/g) ? "#61c9b4" : "gray";
+                circulos[4].style.color = senha.match(/\W|_/g) ? "#61c9b4" : "gray";
             });
         </script>
 

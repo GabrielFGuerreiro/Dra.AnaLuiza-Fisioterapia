@@ -2,8 +2,6 @@
 include "header.php";
 include_once "Models/Database.php";
 
-session_start();
-
 if($_SERVER['REQUEST_METHOD'] === 'POST')
 {
     $db = new Database();
@@ -50,7 +48,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
             <label for="image">Insira uma foto ou um video do atendimento:</label>
             <input type="file" name="image" id="image" accept="image/*, video/*"><br>
 
-        <button type="submit">Salvar</button>
+        <button type="submit">Salvar</button>''
     </form>
 </body>
 </html>
@@ -60,5 +58,5 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     quanto tambem receber os depoimentos anteriores para mostrar ordenado por datetime 
     
 
-    no input de imagem/video, fazer uma função com javascript para mostrar um preview, para o usuario saber que está enviando a midia correta.
+    no input de imagem/video, fazer uma função com javascript para mostrar um preview, para o usuario saber que esta enviando a midia correta.
  -->
