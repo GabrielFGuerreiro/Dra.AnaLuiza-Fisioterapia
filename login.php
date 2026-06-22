@@ -1,5 +1,12 @@
 <?php 
+    session_start();
     include "Models/Database.php";
+    
+    // Se já está logado, redireciona para inicio
+    if (isset($_SESSION['email'])) {
+        header("Location: inicio.php");
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +27,7 @@
     </style>
     <div class="conteudo" >
         <h2>Login</h2>
-        <form action="inicio.php" method="POST">
+        <form action="login.php" method="POST">
             <input id="email" name="email" class="form-field" type="email" placeholder="Digite o E-mail.">
             <input id="password" name="password" class="form-field" type="password" placeholder="Digite a Senha."><br>
             <button>Logar!</button>
@@ -40,7 +47,9 @@
 
         if( password_verify($senha, $usuario["senha"]))
         {
-            echo "Entrou";
+            $_SESSION['email'] = $email;
+            header("Location: inicio.php");
+            exit();
         }
         else
             echo "<p style='text-align: center;'>E-mail ou Senha Inválido.</p>";

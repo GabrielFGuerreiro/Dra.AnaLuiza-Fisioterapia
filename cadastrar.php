@@ -1,8 +1,12 @@
 <?php 
 include "header.php";
 
+$mensagem = '';
+$tipoMensagem = '';
+
 if (isset($_GET['sucesso'])) {
-    echo "Cadastro realizado com sucesso!";
+    $mensagem = "Cadastro realizado com sucesso!";
+    $tipoMensagem = "Sucesso";
 }
 
 if($_SERVER['REQUEST_METHOD'] === 'POST')
@@ -27,7 +31,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
         if ($count == 0)
         {            
             $sql = "INSERT INTO USUARIOS (nmUsuario, cpf, dataNasc, email, celular, isAdmin, senha) 
-                VALUES (:nome, :cpf, :dataNasc, :email, :celular, 0, :senha)";
+            VALUES (:nome, :cpf, :dataNasc, :email, :celular, 0, :senha)";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
             ":nome" => $nome,
@@ -41,11 +45,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
             exit();
         }
         else
-            echo "<script>alert('CPF Já Cadastrado!');</script>";        
+        {
+            $mensagem = "CPF Já Cadastrado!";
+            $tipoMensagem = "Erro";
+        }
     }
     catch(PDOException $e)
     {
-        echo "Erro: " . $e->getMessage();
+        $mensagem = "Erro: " . $e->getMessage();
+        $tipoMensagem = "Erro";
     }
 }
 
@@ -67,6 +75,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     </style>
     <div class="conteudo">
         <h2>Cadastro de Usuário</h2>
+        
         <form action="" method="POST" id="formCadastrar">
             <label for="nome">Nome</label>
             <input type="text" id="nome" name="nome">
@@ -99,92 +108,82 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
             </div>
 
             <button type="button" id="btnCadastrar">Cadastrar</button>
+        
+        <?php if ($mensagem): ?>
+            <div class="notif <?php echo ($tipoMensagem === 'Sucesso') ? 'Sucesso' : 'Erro'; ?>">
+                <?php echo htmlspecialchars($mensagem); ?>
+            </div>
+        <?php endif; ?>
+
+        <script>
+            var senhaValida = true;
+            var circulos = document.querySelectorAll(".fa-circle");
+
+            document.getElementById("btnCadastrar").addEventListener("click", function()
+            {
+                var icCadastrar = true;
+
+                var nome = document.getElementById("nome").value; //Verifica se o campo nome está vazio
+                var msgNome = document.getElementById("msgObrigatoriaNome");
+                if(!nome)
+                {
+                    msgNome.style.display = "block";
+                    icCadastrar = false;
+                }
+                else        
+                    msgNome.style.display = "none";
+                
+                var cpf = document.getElementById("cpf").value; //Verifica se o campo cpf está vazio
+                var msgCpf = document.getElementById("msgObrigatoriaCpf");
+                if(!cpf)
+                {
+                    msgCpf.style.display = "block";
+                    icCadastrar = false;
+                }
+                else        
+                    msgCpf.style.display = "none";
+                
+
+                circulos.forEach((circulo) => { //Verifica se algum requisito da senha não foi atendido com base na cor da bolinha
+                    if(circulo.style.color === "gray")
+                        senhaValida = false;
+                });
+
+                var senhaCad = document.getElementById("senhaCad").value;  
+                var msgSenha = document.getElementById("msgSenha");
+                if(!senhaCad) //Verifica se o campo senha está vazio
+                {
+                    msgSenha.style.display = "block";
+                    msgSenha.innerHTML = "A <b>Senha</b> é Obrigatória.";
+                    icCadastrar = false;
+                }
+                else if(!senhaValida) //E se os requisitos da senha foram atendidos
+                {
+                    msgSenha.style.display = "block";
+                    msgSenha.innerHTML = "Requisitos da Senha não Foram Atendidos.";
+                }
+                else
+                    msgSenha.style.display = "none";
+
+                if(senhaValida && icCadastrar)        
+                    document.getElementById("formCadastrar").submit();        
+
+                senhaValida = true;
+            });
+
+            document.getElementById("senhaCad").addEventListener("input", function()
+            {
+                var senha = this.value;
+
+                circulos[0].style.color = senha.length >= 8 ? "red" : "gray";
+                circulos[1].style.color = senha.match(/[a-z]/g) ? "red" : "gray";
+                circulos[2].style.color = senha.match(/[A-Z]/g) ? "red" : "gray";
+                circulos[3].style.color = senha.match(/\d/g) ? "red" : "gray";
+                circulos[4].style.color = senha.match(/\W|_/g) ? "red" : "gray";
+            });
+        </script>
+
         </form>
     </div>
 </body>
 </html>
-
-<style>
-    .msgObrigatoria {
-        display: none;
-        color:red;
-    }
-
-    .requisitosSenha {
-        font-size: 10px;
-    }
-
-    .fa-circle {
-        color:gray;
-        font-size: 10px;
-        margin-right: 5px;
-    }
-</style>
-
-<script>
-    var senhaValida = true;
-    var circulos = document.querySelectorAll(".fa-circle");
-
-    document.getElementById("btnCadastrar").addEventListener("click", function()
-    {
-        var icCadastrar = true;
-
-        var nome = document.getElementById("nome").value; //Verifica se o campo nome está vazio
-        var msgNome = document.getElementById("msgObrigatoriaNome");
-        if(!nome)
-        {
-            msgNome.style.display = "block";
-            icCadastrar = false;
-        }
-        else        
-            msgNome.style.display = "none";
-        
-        var cpf = document.getElementById("cpf").value; //Verifica se o campo cpf está vazio
-        var msgCpf = document.getElementById("msgObrigatoriaCpf");
-        if(!cpf)
-        {
-            msgCpf.style.display = "block";
-            icCadastrar = false;
-        }
-        else        
-            msgCpf.style.display = "none";
-        
-
-        circulos.forEach((circulo) => { //Verifica se algum requisito da senha não foi atendido com base na cor da bolinha
-            if(circulo.style.color === "gray")
-                senhaValida = false;
-        });
-
-        var senhaCad = document.getElementById("senhaCad").value;  
-        var msgSenha = document.getElementById("msgSenha");
-        if(!senhaCad) //Verifica se o campo senha está vazio
-        {
-            msgSenha.style.display = "block";
-            msgSenha.innerHTML = "A <b>Senha</b> é Obrigatória.";
-            icCadastrar = false;
-        }
-        else if(!senhaValida) //E se os requisitos da senha foram atendidos
-        {
-            msgSenha.style.display = "block";
-            msgSenha.innerHTML = "Requisitos da Senha não Foram Atendidos.";
-        }
-        else
-            msgSenha.style.display = "none";
-
-        if(senhaValida && icCadastrar)        
-            document.getElementById("formCadastrar").submit();        
-
-        senhaValida = true;
-    });
-
-    document.getElementById("senhaCad").addEventListener("input", function()
-    {
-        var senha = this.value;
-
-        circulos[0].style.color = senha.length >= 8 ? "red" : "gray";
-        circulos[1].style.color = senha.match(/[a-z]/g) ? "red" : "gray";
-        circulos[2].style.color = senha.match(/[A-Z]/g) ? "red" : "gray";
-        circulos[3].style.color = senha.match(/\d/g) ? "red" : "gray";
-        circulos[4].style.color = senha.match(/\W|_/g) ? "red" : "gray";
-    });
-</script>
