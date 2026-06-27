@@ -1,30 +1,4 @@
-<?php 
-include "header.php";
-include_once "Models/Database.php";
 
-if($_SERVER['REQUEST_METHOD'] === 'POST')
-{
-    $db = new Database();
-    $pdo = $db->getConnection();
-
-    $opiniao = $_POST['opiniao'];
-    $sql = "INSERT INTO DEPOIMENTOS (dsDepoimento) VALUES (:opiniao)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([":opiniao" => $opiniao]);
-    
-    $sql = "SELECT idDepoimento FROM DEPOIMENTOS ORDER BY idDepoimento DESC LIMIT 1";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    $idDepoimento = $stmt->fetchColumn();
-    
-    $sql = "INSERT INTO DepoimentosImagens (idDepoimento, caminhoArquivo) VALUES (:idDepoimento, :caminho)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([
-        ":idDepoimento" => $idDepoimento,
-        ":caminho" => "TESTE"
-        ]);
-}
-?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -48,7 +22,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
             <label for="image">Insira uma foto ou um video do atendimento:</label>
             <input type="file" name="image" id="image" accept="image/*, video/*"><br>
 
-        <button type="submit">Salvar</button>''
+        <button type="submit">Salvar</button>
     </form>
 </body>
 </html>
