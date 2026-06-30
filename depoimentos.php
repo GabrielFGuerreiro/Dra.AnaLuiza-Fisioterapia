@@ -48,7 +48,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
             <label for="image">Insira uma foto ou um video do atendimento:</label>
             <input type="file" name="image" id="image" accept="image/*, video/*"><br>
 
-        <button type="submit">Salvar</button>''
+        <button type="submit">Salvar</button>
     </form>
 </body>
 </html>
