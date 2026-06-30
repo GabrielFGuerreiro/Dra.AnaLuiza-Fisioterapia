@@ -14,7 +14,7 @@
         <h1>Formulário de Pré-Consulta</h1>
         <form>
             <label>Qual a sua preferencia de dia e horario?</label>
-            <input type="text" placeholder="Ex: Segunda às 14:00hrs">
+            <input type="text" placeholder="Ex: Segunda às 14:00hrs" size="70px">
 
             <label for="local_dor">Qual o principal local da dor ou desconforto?</label>
             <input type="text" id="local_dor" name="local_dor" required placeholder="Ex: Dor no pescoço">

@@ -1,7 +1,9 @@
-<?php 
-    session_start();
+<?php
+    if(!isset($_SESSION)) {
+        session_start();
+    }
 
-    include "Models/Database.php";
+    require_once "Models/Database.php";
     $db = new Database();
     $pdo = $db->getConnection();
 

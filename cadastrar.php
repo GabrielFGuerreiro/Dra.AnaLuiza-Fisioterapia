@@ -67,18 +67,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 </head>
 <body>
-    <style>
-    body {
-        position: relative;
-        right:30px;
-    }
-    </style>
     <div class="conteudo">
-        <h2>Cadastro de Usuário</h2>
+        <h1>Cadastro de Usuário</h1>
         
         <form action="" method="POST" id="formCadastrar">
             <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome">
+            <input type="text" id="nome" name="nome" size="70px">
             <spam id="msgObrigatoriaNome" class="msgObrigatoria">O <b>Nome</b> é Obrigatório.</spam>
 
             <label for="cpf">CPF</label>

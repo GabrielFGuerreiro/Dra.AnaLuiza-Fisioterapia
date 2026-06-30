@@ -1,6 +1,6 @@
 <?php 
 include "header.php";
-include_once "Models/Database.php";
+require_once "Models/Database.php";
 
 if($_SERVER['REQUEST_METHOD'] === 'POST')
 {

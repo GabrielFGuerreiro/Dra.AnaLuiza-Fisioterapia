@@ -3,8 +3,8 @@ class Database {
     private $host = "localhost";
     private $banco = "pi_fisioana";
     private $usuario = "root";
-    private $senha = "";
-    private $port = "3306";
+    private $senha = "usbw";
+    private $port = "3307";
     public $conn;
 
     public function getConnection() {
@@ -22,7 +22,7 @@ class Database {
         }
         catch(PDOException $e) //Em caso de erro na conexão, exibe a messagem de erro.
         { 
-            echo "Erro de conexão: " . $e->getMessage();
+            echo "<div class='notif erro' style='position: fixed; bottom: 90%;left:37.6%;'>Erro de conexão: " . $e->getMessage() . "</div>";
         }
         return $this->conn;
     }
