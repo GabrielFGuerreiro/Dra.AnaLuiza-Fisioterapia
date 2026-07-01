@@ -1,6 +1,11 @@
-<?php 
-    session_start();
-    include "Models/Database.php";
+<?php
+    include "header.php";
+
+    if(session_id() == ''){
+        session_start();
+    }
+    
+    require_once "Models/Database.php";
     
     // Se já está logado, redireciona para inicio
     if (isset($_SESSION['email'])) {
@@ -20,10 +25,10 @@
 
 <body>
     <style>
-        body {
-            position: relative;
-            right:150px;
-        }
+    body {
+        position: relative;
+        right:30px;
+    }
     </style>
     <div class="conteudo" >
         <h2>Login</h2>
