@@ -1,4 +1,4 @@
-
+x
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -19,8 +19,8 @@
         <form action="" method="POST"><br>
             <label for="opiniao">O que o cliente achou do atendimento?</label>
             <input name="opiniao" id="opiniao" type="text"><br>
-            <label for="image">Insira uma foto ou um video do atendimento:</label>
-            <input type="file" name="image" id="image" accept="image/*, video/*"><br>
+            <label for="arqDepoimento">Insira uma foto ou um video do atendimento:</label>
+            <input type="file" name="arqDepoimento" id="arqDepoimento" accept="image/*, video/*"><br>
 
         <button type="submit">Salvar</button>
     </form>
