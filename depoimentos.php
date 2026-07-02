@@ -1,30 +1,4 @@
-<?php 
-include "header.php";
-require_once "Models/Database.php";
-
-if($_SERVER['REQUEST_METHOD'] === 'POST')
-{
-    $db = new Database();
-    $pdo = $db->getConnection();
-
-    $opiniao = $_POST['opiniao'];
-    $sql = "INSERT INTO DEPOIMENTOS (dsDepoimento) VALUES (:opiniao)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([":opiniao" => $opiniao]);
-    
-    $sql = "SELECT idDepoimento FROM DEPOIMENTOS ORDER BY idDepoimento DESC LIMIT 1";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    $idDepoimento = $stmt->fetchColumn();
-    
-    $sql = "INSERT INTO DepoimentosImagens (idDepoimento, caminhoArquivo) VALUES (:idDepoimento, :caminho)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([
-        ":idDepoimento" => $idDepoimento,
-        ":caminho" => "TESTE"
-        ]);
-}
-?>
+x
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -45,8 +19,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
         <form action="" method="POST"><br>
             <label for="opiniao">O que o cliente achou do atendimento?</label>
             <input name="opiniao" id="opiniao" type="text"><br>
-            <label for="image">Insira uma foto ou um video do atendimento:</label>
-            <input type="file" name="image" id="image" accept="image/*, video/*"><br>
+            <label for="arqDepoimento">Insira uma foto ou um video do atendimento:</label>
+            <input type="file" name="arqDepoimento" id="arqDepoimento" accept="image/*, video/*"><br>
 
         <button type="submit">Salvar</button>
     </form>
