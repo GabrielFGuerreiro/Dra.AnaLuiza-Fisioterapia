@@ -16,7 +16,7 @@ x
     </style>
     <div class="conteudo">
         <h2>Avaliação de Atendimento</h2><BR>
-        <form action="" method="POST"><br>
+        <form action="salvarDepoimentos.php" method="POST" enctype="multipart/form-data"><br>
             <label for="opiniao">O que o cliente achou do atendimento?</label>
             <input name="opiniao" id="opiniao" type="text"><br>
             <label for="arqDepoimento">Insira uma foto ou um video do atendimento:</label>

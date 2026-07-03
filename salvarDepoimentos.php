@@ -1,4 +1,5 @@
 <?php 
+
 include "header.php";
 include_once "Models/Database.php";
 
@@ -6,10 +7,16 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 {    
     if(!is_dir("arquivosDepoimentos"))
         mkdir("arquivosDepoimentos", 0777, true);
+    if(!isset($_FILES["arqDepoimento"]) || $_FILES["arqDepoimento"]["error"] !== UPLOAD_ERR_OK)
+    {
+        echo "Erro no upload do arquivo.";
+        header("Location: inicio.php");
+        exit;
+    }
     
-    $nomeArq = $_FILES["arqDepoimento"]["name"];
+    $nomeArq = time() . "_" . preg_replace("/[^a-zA-Z0-9.]/", "_", $_FILES["arqDepoimento"]["name"]);   
     $caminho = "arquivosDepoimentos/$nomeArq";
-    echo $nomeArq;
+
     move_uploaded_file($_FILES["arqDepoimento"]["tmp_name"], $caminho);
 
     $db = new Database();
