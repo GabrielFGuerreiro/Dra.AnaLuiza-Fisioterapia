@@ -1,0 +1,208 @@
+
+.lm-modal > div > .lm-calendar-options { /* ukn */
+  border-bottom: 1px solid var(--lm-border-color, #ccc);
+}
+
+.lm-calendar-header .lm-calendar-labels > button { /* Titulo - mes e ano do calendario */
+  background-color: transparent;
+  color: var(--lm-font-color);
+}
+
+-calendar-content > div[data-grey="true"] { /* ukn */
+  color: #ccc;
+}
+
+.lm-calendar-content > div[data-event="true"]::before { /* ukn */
+  background-color: rgb(255, 0, 191);
+}
+.lm-calendar-content > div[data-selected="true"] { /* seleção - dia selecionado */
+  background-color: #464646;
+  color: #000;
+}
+.lm-calendar-content:focus > div[data-selected="true"] { /* seleção em foco */
+  outline: 2px solid rgb(255, 0, 221);
+}
+.lm-calendar-content > div:hover { /* pré-seleção hover */
+  background-color: #ff0000;
+  color: #000;
+}
+
+.lm-calendar-content > div[data-end="true"], /* ukn */
+.lm-calendar-content > div[data-start="true"] {
+  background-color: var(--lm-main-color, #2196f3);
+  color: initial;
+}
+
+.lm-calendar-content > div[data-range="true"]::before { /* ukn */
+  background-color: var(--lm-main-color-alpha, #2196f388);
+}
+
+.lm-calendar-footer { /* barra no pé do calendario, sla */
+  border-top: 1px solid black;
+}
+
+.lm-calendar-footer .lm-calendar-control { /* ukn */
+
+  background-color: red;
+
+}
+.lm-calendar-footer select:focus {
+  background-color: #ff0000;
+}
+.lm-calendar-footer input {
+
+  background-color: var(--lm-border-color-light, #e9e9e9);
+}
+.lm-calendar-input {
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Zm280 240q-17 0-28.5-11.5T440-440q0-17 11.5-28.5T480-480q17 0 28.5 11.5T520-440q0 17-11.5 28.5T480-400Zm-160 0q-17 0-28.5-11.5T280-440q0-17 11.5-28.5T320-480q17 0 28.5 11.5T360-440q0 17-11.5 28.5T320-400Zm320 0q-17 0-28.5-11.5T600-440q0-17 11.5-28.5T640-480q17 0 28.5 11.5T680-440q0 17-11.5 28.5T640-400ZM480-240q-17 0-28.5-11.5T440-280q0-17 11.5-28.5T480-320q17 0 28.5 11.5T520-280q0 17-11.5 28.5T480-240Zm-160 0q-17 0-28.5-11.5T280-280q0-17 11.5-28.5T320-320q17 0 28.5 11.5T360-280q0 17-11.5 28.5T320-240Zm320 0q-17 0-28.5-11.5T600-280q0-17 11.5-28.5T640-320q17 0 28.5 11.5T680-280q0 17-11.5 28.5T640-240Z" fill="gray" /></svg>')
+    top 50% right 5px no-repeat;
+}
+
+.lm-calendar[data-grid="true"] .lm-calendar-content {
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+.lm-calendar[data-grid="true"] .lm-calendar-content > div {
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+}
+
+.lm-ripple:hover {
+  background: var(--lm-background-color-highlight, #ebebeb)
+    radial-gradient(
+      circle,
+      transparent 1%,
+      var(--lm-background-color-highlight, #ebebeb) 1%
+    )
+    center/15000%;
+}
+.lm-ripple:active {
+  background-color: var(--lm-background-color-active, #e8e8e8);
+}
+.lm-dark-mode .lm-calendar-weekdays {
+  color: #aaa;
+}
+.lm-dark-mode .lm-calendar-labels > button {
+  background-color: initial;
+}
+.lm-dark-mode .lm-calendar-content:focus > div[data-selected="true"] {
+  outline-color: #fff;
+}
+.lm-dark-mode .lm-calendar-content > div[data-grey="true"] {
+  color: var(--lm-font-grayout, #777);
+}
+.lm-dark-mode .lm-calendar-footer select:focus {
+  background-color: #3a3a45;
+}
+
+.lm-timeline-header {
+  border-bottom: 1px solid var(--lm-border-color-light, #e9e9e9);
+}
+
+.lm-timeline-edit .lm-timeline-icon {
+  color: gray;
+}
+
+.lm-timeline-item {
+  border-style: var(--lm-border-style, solid);
+  border-color: var(--lm-border-color, #ccc);
+}
+
+.lm-timeline-item[data-bullet] .lm-timeline-title::before {
+
+  border-color: var(--lm-main-color-deep, #1f64e1);
+
+  background-color: #fff;
+
+}
+.lm-timeline-subtitle {
+  color: #aaa;
+}
+
+.lm-timeline-data::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.lm-timeline-data::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+}
+
+.lm-timeline-tag {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.lm-schedule {
+  scrollbar-color: var(--lm-border-color-highlight, #aaa) var(--lm-border-color-light, #e9e9e9);
+  border-bottom: 1px solid var(--lm-border-color-light, #e9e9e9);
+
+}
+
+.lm-schedule thead td {
+  background-color: var(--lm-background-color, #fff);
+}
+
+.lm-schedule .lm-schedule-hour > td {
+  border-top: 1px solid var(--lm-border-color-light, #e9e9e9);
+}
+
+.lm-schedule thead td[data-selected="true"] {
+  background-color: var(--lm-background-color-header, #ececec);
+}
+
+.lm-schedule thead td:after {
+  border-bottom: 1px solid var(--lm-border-color, #ddd);
+}
+.lm-schedule thead td[data-selected="true"]:after {
+  border-bottom: 1px solid var(--lm-border-outline, #000);
+}
+.lm-schedule table tbody td:first-child {
+  border-right: 1px solid var(--lm-border-color, #ddd);
+}
+.lm-schedule-item {
+  color: var(--lm-schedule-color, #fff);
+  background-color: var(--lm-schedule-background, #66b244);
+  border: 1px solid var(--lm-background-color, #fff);
+}
+.lm-schedule-item[data-readonly="true"] {
+  background-image: repeating-linear-gradient(
+    45deg,
+    #ffffff11 0,
+    #ffffff11 1px,
+    #ffffff33 0,
+    #ffffff33 50%
+  );
+}
+.lm-schedule-item[data-warning="true"] {
+  outline: 2px solid red;
+}
+
+.lm-schedule-pointer {
+  background-color: var(--lm-main-color-deep, #66b244);
+
+}
+.lm-schedule-pointer:before {
+  background-color: var(--lm-main-color-deep, #66b244);
+  border: 1px solid #fff;
+}
+.lm-schedule-disabled {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--lm-background-color, #fff),
+    var(--lm-background-color, #fff) 5px,
+    var(--lm-background-color-highlight, #f4f4f4) 5px,
+    var(--lm-background-color-highlight, #f4f4f4) 10px
+  );
+}
+.lm-schedule-disabled.lm-schedule-hour {
+  color: #aaa;
+}
+.lm-schedule::-webkit-scrollbar-track {
+  background: #eee;
+}
+.lm-schedule::-webkit-scrollbar-thumb {
+  background: #888;
+}

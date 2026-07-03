@@ -36,6 +36,8 @@
                 <a class="msg" href="inicio.php">Inicio</a>
                 
                 <a class="msg" href="preConsulta.php">Entre em Contato</a>
+
+                <a class="msg" href="Agendamentos.php">Agendamentos</a>
             </div>
 
             <div>
