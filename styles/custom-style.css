@@ -9,7 +9,7 @@
 }
 
 -calendar-content > div[data-grey="true"] { /* ukn */
-  color: #ccc;
+  color: rgb(5, 240, 44)
 }
 
 .lm-calendar-content > div[data-event="true"]::before { /* ukn */
@@ -41,30 +41,30 @@
   border-top: 1px solid black;
 }
 
-.lm-calendar-footer .lm-calendar-control { /* ukn */
+.lm-calendar-footer .lm-calendar-control { /* fundo do horario */
 
-  background-color: red;
+  background-color: rgb(247, 0, 255);
 
 }
-.lm-calendar-footer select:focus {
-  background-color: #ff0000;
+.lm-calendar-footer select:focus { /* select do horario (clicar no número) */
+  background-color: #33ff00;
 }
 .lm-calendar-footer input {
 
-  background-color: var(--lm-border-color-light, #e9e9e9);
+  background-color: var(--lm-border-color-light, #e9e9e9); /* botão (usando em 'update') */
 }
 .lm-calendar-input {
   background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Zm280 240q-17 0-28.5-11.5T440-440q0-17 11.5-28.5T480-480q17 0 28.5 11.5T520-440q0 17-11.5 28.5T480-400Zm-160 0q-17 0-28.5-11.5T280-440q0-17 11.5-28.5T320-480q17 0 28.5 11.5T360-440q0 17-11.5 28.5T320-400Zm320 0q-17 0-28.5-11.5T600-440q0-17 11.5-28.5T640-480q17 0 28.5 11.5T680-440q0 17-11.5 28.5T640-400ZM480-240q-17 0-28.5-11.5T440-280q0-17 11.5-28.5T480-320q17 0 28.5 11.5T520-280q0 17-11.5 28.5T480-240Zm-160 0q-17 0-28.5-11.5T280-280q0-17 11.5-28.5T320-320q17 0 28.5 11.5T360-280q0 17-11.5 28.5T320-240Zm320 0q-17 0-28.5-11.5T600-280q0-17 11.5-28.5T640-320q17 0 28.5 11.5T680-280q0 17-11.5 28.5T640-240Z" fill="gray" /></svg>')
     top 50% right 5px no-repeat;
 }
 
-.lm-calendar[data-grid="true"] .lm-calendar-content {
+.lm-calendar[data-grid="true"] .lm-calendar-content { /* bordas do calendario, externo*/
   border-top: 1px solid transparent;
   border-left: 1px solid transparent;
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
 }
-.lm-calendar[data-grid="true"] .lm-calendar-content > div {
+.lm-calendar[data-grid="true"] .lm-calendar-content > div { /* bordas do calendario, interno*/
   border-top: 1px solid #ccc;
   border-left: 1px solid #ccc;
   border-right: 1px solid transparent;
@@ -72,16 +72,16 @@
 }
 
 .lm-ripple:hover {
-  background: var(--lm-background-color-highlight, #ebebeb)
+  background: var(--lm-background-color-highlight, #ebebeb) /* hover do botão 'update' */
     radial-gradient(
       circle,
       transparent 1%,
-      var(--lm-background-color-highlight, #ebebeb) 1%
+      var(--lm-background-color-highlight, #ebebeb) 1% /* idk */
     )
     center/15000%;
 }
 .lm-ripple:active {
-  background-color: var(--lm-background-color-active, #e8e8e8);
+  background-color: var(--lm-background-color-active, #47d307); /* clicar no 'update' */
 }
 .lm-dark-mode .lm-calendar-weekdays {
   color: #aaa;

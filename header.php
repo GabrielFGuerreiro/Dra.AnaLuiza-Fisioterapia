@@ -37,14 +37,13 @@
                 
                 <a class="msg" href="preConsulta.php">Entre em Contato</a>
 
-                <a class="msg" href="Agendamentos.php">Agendamentos</a>
             </div>
 
             <div>
                 <?php 
                     if (isset($_SESSION['email'])) {
                         if ($isAdmin == 0) {
-                            echo '<a class="msg" href="Agendamentos.php">Ver Agendamentos</a>';
+                            echo '<a class="msg" href="listarAgendamentos.php">Ver Agendamentos</a>';
                             echo '<a class="msg" href="Depoimentos.php">Gerenciar Depoimentos</a>';
                         }
                         echo '<div><a class="user">Olá, ' . htmlspecialchars($nomeUsuario) . '!</a>';
