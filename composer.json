@@ -1,0 +1,21 @@
+{
+    "name": "gfg/draanaluiza",
+    "description": "Site para Dra.Ana Luiza",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "DraAnaLuiza\\": "src/",
+            "DraAnaLuiza\\Core\\": "Core/"
+        },
+        "files": [
+            "scripts/calendario-lib.html"
+        ] 
+    },
+    "authors": [
+        {
+            "name": "Gabriel Fernandes Guerreiro"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

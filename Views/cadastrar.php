@@ -1,62 +1,6 @@
 <?php 
 include "header.php";
 
-$mensagem = '';
-$tipoMensagem = '';
-
-if (isset($_GET['sucesso'])) {
-    $mensagem = "Cadastro realizado com sucesso!";
-    $tipoMensagem = "Sucesso";
-}
-
-if($_SERVER['REQUEST_METHOD'] === 'POST')
-{
-    $nome = $_POST['nome'];
-    $cpf = $_POST['cpf'];
-    $dtNasc = $_POST['dtNasc'];
-    $email = $_POST['emailCad'];
-    $cel = $_POST['cel'];
-    $senha = password_hash($_POST['senhaCad'], PASSWORD_DEFAULT);
-
-    try
-    {
-        $db = new Database();
-        $pdo = $db->getConnection();
-
-        $sql = "SELECT COUNT(*) FROM USUARIOS WHERE cpf = :cpf";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([":cpf" => $cpf]);
-        $count = $stmt->fetchColumn();
-
-        if ($count == 0)
-        {            
-            $sql = "INSERT INTO USUARIOS (nmUsuario, cpf, dataNasc, email, celular, isAdmin, senha) 
-            VALUES (:nome, :cpf, :dataNasc, :email, :celular, 0, :senha)";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([
-            ":nome" => $nome,
-            ":cpf" => $cpf,
-            ":dataNasc" => $dtNasc,
-            ":email" => $email,
-            ":celular" => $cel,
-            ":senha" => $senha            
-            ]);
-            header("Location: cadastrar.php?sucesso=1"); //Quando cadastrar, não fica na requisição POST, vai para GET, impedindo o reenvio do form quando recarregar.
-            exit();
-        }
-        else
-        {
-            $mensagem = "CPF Já Cadastrado!";
-            $tipoMensagem = "Erro";
-        }
-    }
-    catch(PDOException $e)
-    {
-        $mensagem = "Erro: " . $e->getMessage();
-        $tipoMensagem = "Erro";
-    }
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -70,7 +14,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     <div class="conteudo">
         <h1>Cadastro de Usuário</h1>
         
-        <form action="" method="POST" id="formCadastrar">
+        <form action="<?= BASE_URL ?>/cadastrar" method="POST" id="formCadastrar">
             <label for="nome">Nome</label>
             <input type="text" id="nome" name="nome" size="70px">
             <spam id="msgObrigatoriaNome" class="msgObrigatoria">O <b>Nome</b> é Obrigatório.</spam>
@@ -103,11 +47,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 
             <button type="button" id="btnCadastrar">Cadastrar</button>
         
-        <?php if ($mensagem): ?>
-            <div class="notif <?php echo ($tipoMensagem === 'Sucesso') ? 'Sucesso' : 'Erro'; ?>">
-                <?php echo htmlspecialchars($mensagem); ?>
+        <!-- <?php //if ($mensagem): ?>
+            <div class="notif <?php //echo ($tipoMensagem === 'Sucesso') ? 'Sucesso' : 'Erro'; ?>">
+                <?php //echo htmlspecialchars($mensagem); ?>
             </div>
-        <?php endif; ?>
+        <?php //endif; ?> -->
 
         <script>
             var senhaValida = true;

@@ -10,4 +10,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
  
 # Regra: Redireciona a requisição para o index.php
 # O parâmetro [L] impede que outras regras sejam aplicadas
-RewriteRule ^(.*)$ inicio.php [L]
+RewriteRule ^(.*)$ index.php [L]
+
+#Oculta os diretórios na URL
+#Options -indexes

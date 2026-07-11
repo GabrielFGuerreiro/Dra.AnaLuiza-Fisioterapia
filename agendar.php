@@ -1,7 +1,7 @@
 <?php 
+require_once __DIR__ . "/vendor/autoload.php";
+
 include "header.php";
-require_once "Models/Database.php";
-require_once "scripts/calendario-lib.html";
 ?>
 
 <!DOCTYPE html>

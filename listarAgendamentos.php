@@ -1,6 +1,9 @@
 <?php 
+require_once __DIR__ . "/vendor/autoload.php";
+
+use DraAnaLuiza\Models\Database;
+
 include "header.php";
-require_once "Models/Database.php";
 require_once "scripts/calendario-lib.html";
 
 $db = new Database();

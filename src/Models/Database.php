@@ -1,9 +1,12 @@
 <?php
+namespace DraAnaLuiza\Models;
+use PDO;
+use PDOException;
 class Database {
     private $host = "localhost";
     private $banco = "pi_fisioana";
     private $usuario = "root";
-    private $senha = "usbw";
+    private $senha = "";
     private $port = "3307";
     public $conn;
 
