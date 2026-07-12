@@ -69,10 +69,7 @@ class Usuario
         }
         catch(PDOException $e)
         {
-           return [
-                'sucesso' => false,
-                'mensagem' => "Erro: {$e->getMessage()}"
-            ];
+            return null;
         }
     }
 }
