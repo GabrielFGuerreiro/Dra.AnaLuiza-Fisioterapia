@@ -6,7 +6,9 @@ return [
         '/' => 'HomeController@Home',
         '/login' => 'UsuarioController@Login',
         '/cadastro' => 'UsuarioController@Cadastro',
-        '/logout' => 'UsuarioController@Logout'
+        '/logout' => 'UsuarioController@Logout',
+        '/agendamentos' => 'AdmController@Agendamentos',
+        '/listarAgendamentosJson' => 'AdmController@ListarAgendamentosJson'
     ],
 
     'POST' => [

@@ -22,7 +22,7 @@
                 <span class="user">Olá, <?= htmlspecialchars($_SESSION['nome']) ?></span>
                 <?php if ($_SESSION['isAdmin']): ?>
 
-                    <a class="msg" href="/agendamentos">Ver Agendamentos</a>
+                    <a class="msg" href="<?= BASE_URL ?>/agendamentos">Ver Agendamentos</a>
                     <a class="msg" href="/depoimentos">Gerenciar Depoimentos</a>
 
                 <?php endif; ?>
