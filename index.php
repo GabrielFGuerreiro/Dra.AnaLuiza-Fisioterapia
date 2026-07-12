@@ -6,8 +6,6 @@ require_once __DIR__ . "/vendor/autoload.php";
 define('BASE_URL', '/Dra.AnaLuiza-Fisioterapia');
 define('RAIZ', __DIR__);
 
-include "Views/header.php";
-
 use DraAnaLuiza\Core\Router;
 
 //Executa o arquivo routes.php, guardando as rotas.

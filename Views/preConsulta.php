@@ -1,6 +1,4 @@
-<?php 
-    include "header.php";
-?>
+<?php include RAIZ . '/Views/header.php'; ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
