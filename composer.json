@@ -6,10 +6,7 @@
         "psr-4": {
             "DraAnaLuiza\\": "src/",
             "DraAnaLuiza\\Core\\": "Core/"
-        },
-        "files": [
-            "scripts/calendario-lib.html"
-        ] 
+        }
     },
     "authors": [
         {
