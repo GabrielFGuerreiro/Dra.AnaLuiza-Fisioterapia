@@ -20,7 +20,7 @@
             <?php if (isset($_SESSION['email'])): ?>
 
                 <span class="user">Olá, <?= htmlspecialchars($_SESSION['nome']) ?></span>
-                <?php if ($_SESSION['isAdm']): ?>
+                <?php if ($_SESSION['isAdmin']): ?>
 
                     <a class="msg" href="/agendamentos">Ver Agendamentos</a>
                     <a class="msg" href="/depoimentos">Gerenciar Depoimentos</a>

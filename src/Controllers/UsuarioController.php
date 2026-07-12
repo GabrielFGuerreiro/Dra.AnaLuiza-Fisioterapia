@@ -42,7 +42,7 @@ class UsuarioController
         {
             $_SESSION['email'] = $emailForm;
             $_SESSION['nome'] = $dadosUsuario['nmUsuario'];
-            $_SESSION['isAdm'] = $dadosUsuario['isAdm'];
+            $_SESSION['isAdmin'] = $dadosUsuario['isAdmin'];
             header("Location: /Dra.AnaLuiza-Fisioterapia/");
             exit();
         }
