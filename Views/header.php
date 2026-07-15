@@ -1,9 +1,3 @@
-<?php
-    if(!isset($_SESSION)) {
-        session_start();
-    }
-?>
-
 <header>
     <style>html {color-scheme: light;}</style>
     <link rel="stylesheet" href="styles/light.css">

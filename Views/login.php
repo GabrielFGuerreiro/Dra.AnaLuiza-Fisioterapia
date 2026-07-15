@@ -1,9 +1,4 @@
-<?php
-    include RAIZ . '/Views/header.php';
-    if(session_id() == ''){
-        session_start();
-    }
-?>
+<?php include RAIZ . '/Views/header.php'; ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
