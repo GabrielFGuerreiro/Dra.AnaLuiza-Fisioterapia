@@ -8,7 +8,7 @@
                     <h2>&nbsp;&nbsp;Dra. Ana &nbsp;&nbsp;Fisioterapia</h2>
                 </div>
                 <a class="msg" href="<?= BASE_URL ?>/">Início</a>
-                <a class="msg" href="/preconsulta">Entre em Contato</a>
+                <a class="msg" href="<?= BASE_URL ?>/preconsulta">Entre em Contato</a>
             </div>
 
             <?php if (isset($_SESSION['email'])): ?>

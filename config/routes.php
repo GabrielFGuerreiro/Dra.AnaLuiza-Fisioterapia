@@ -7,6 +7,7 @@ return [
         '/login' => 'UsuarioController@Login',
         '/cadastro' => 'UsuarioController@Cadastro',
         '/logout' => 'UsuarioController@Logout',
+        '/preconsulta' => 'UsuarioController@PreConsulta',
         '/agendamentos' => 'AdmController@Agendamentos',
         '/listarAgendamentosJson' => 'AdmController@ListarAgendamentosJson',
         '/gerenciarDepoimentos' => 'AdmController@GerenciarDepoimentos'

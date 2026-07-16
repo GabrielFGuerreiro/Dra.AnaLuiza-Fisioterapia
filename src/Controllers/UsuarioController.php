@@ -62,4 +62,9 @@ class UsuarioController
         header("Location: " . BASE_URL . "/login");
         exit();
     }
+
+    public function PreConsulta()
+    {
+        require_once RAIZ . "/Views/preConsulta.php";
+    }
 }
