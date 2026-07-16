@@ -21,6 +21,12 @@ Class Router
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $uri = str_replace('/Dra.AnaLuiza-Fisioterapia', '', $uri);
 
+        $rotasPublicas = ['/', '/login', '/logar', '/cadastro', '/cadastrar'];
+        if (!in_array($uri, $rotasPublicas) && !isset($_SESSION['email'])) {
+            header("Location: " . BASE_URL . "/login");
+            exit();
+        }
+
         //Busca, no array de rotas, a rota correspondente ao método da requisição (GET/POST) e à URL acessada.
         //Exemplo: $this->rotas['POST']['/login'] => "UsuarioController@logar"
         $rota = $this->rotas[$requisicao][$uri];
