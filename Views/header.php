@@ -17,7 +17,7 @@
                 <?php if ($_SESSION['isAdmin']): ?>
 
                     <a class="msg" href="<?= BASE_URL ?>/agendamentos">Ver Agendamentos</a>
-                    <a class="msg" href="/depoimentos">Gerenciar Depoimentos</a>
+                    <a class="msg" href="<?= BASE_URL ?>/gerenciarDepoimentos">Gerenciar Depoimentos</a>
 
                 <?php endif; ?>
 

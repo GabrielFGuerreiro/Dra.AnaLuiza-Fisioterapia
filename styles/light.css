@@ -212,7 +212,7 @@ input, textarea{
     resize: none;
 }
 
-input:focus {
+input:focus, textarea:focus {
     outline: 2px solid var(--border);
 }
 

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Depoimento</title>
+    <title>Adicionar Depoimento</title>
 </head>
 <body>
     <style>
@@ -15,15 +15,15 @@
     }
     </style>
     <div class="conteudo">
-        <h2>Avaliação de Atendimento</h2><BR>
-        <form action="salvarDepoimentos.php" method="POST" enctype="multipart/form-data"><br>
+        <h2>Avaliação de Atendimento</h2>
+        <form action="<?= BASE_URL ?>/cadastrarDepoimento" method="POST" enctype="multipart/form-data">
             <label for="opiniao">O que o cliente achou do atendimento?</label>
-            <input name="opiniao" id="opiniao" type="text"><br>
+            <textarea name="opiniao" id="opiniao" type="textarea" rows="5"></textarea>
             <label for="arqDepoimento">Insira uma foto ou um video do atendimento:</label>
-            <input type="file" name="arqDepoimento" id="arqDepoimento" accept="image/*, video/*"><br>
-
-        <button type="submit">Salvar</button>
-    </form>
+            <input type="file" name="arqDepoimento" id="arqDepoimento" accept="image/*, video/*">
+            <button type="submit">Salvar</button>
+        </form>
+    <div style='text-align: center;'><?php if (isset($_GET['msg'])): echo $_GET['msg']; endif; ?></div>
 </body>
 </html>
 

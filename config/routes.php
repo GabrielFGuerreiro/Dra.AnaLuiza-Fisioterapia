@@ -8,12 +8,14 @@ return [
         '/cadastro' => 'UsuarioController@Cadastro',
         '/logout' => 'UsuarioController@Logout',
         '/agendamentos' => 'AdmController@Agendamentos',
-        '/listarAgendamentosJson' => 'AdmController@ListarAgendamentosJson'
+        '/listarAgendamentosJson' => 'AdmController@ListarAgendamentosJson',
+        '/gerenciarDepoimentos' => 'AdmController@GerenciarDepoimentos'
     ],
 
     'POST' => [
         '/cadastrar' => 'UsuarioController@Cadastrar',
-        '/logar' => 'UsuarioController@Logar'
+        '/logar' => 'UsuarioController@Logar',
+        '/cadastrarDepoimento' => 'AdmController@CadastrarDepoimento'
     ]
 
 ];

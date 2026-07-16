@@ -23,4 +23,67 @@ class Adm
             return [];
         }
     }
+
+    public function CadastrarDepoimento(string $opiniao, array $arquivo): Array
+    {
+        $caminho = null;
+
+        if (isset($arquivo) && $arquivo['error'] !== UPLOAD_ERR_NO_FILE)
+        {
+            if ($arquivo['error'] !== UPLOAD_ERR_OK) {
+                return [
+                    'sucesso' => false,
+                    'msg' => 'Erro no Upload do Arquivo.'
+                ];
+            }
+
+            $pastaDestino = RAIZ . "/arquivosDepoimentos";
+            if (!is_dir($pastaDestino))
+                mkdir($pastaDestino, 0777, true);
+
+            $nomeArq = time() . "_" . preg_replace("/[^a-zA-Z0-9.]/", "_", $arquivo["name"]);
+            $caminho = "$pastaDestino/$nomeArq";
+
+            if (!move_uploaded_file($arquivo["tmp_name"], $caminho)) {
+                return [
+                    'sucesso' => false,
+                    'msg' => 'Erro ao Mover o Arquivo.'
+                ];
+            }
+        }
+            
+        try
+        {
+            $db = new Database();
+            $pdo = $db->getConnection();
+
+            $opiniao = $_POST['opiniao'];
+            $sql = "INSERT INTO DEPOIMENTOS (dsDepoimento) VALUES (:opiniao)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([":opiniao" => $opiniao]);
+            
+            $idDepoimento = $pdo->lastInsertId();
+
+            if ($caminho !== null) {
+                $sql = "INSERT INTO DepoimentosImagens (idDepoimento, caminhoArquivo) VALUES (:idDepoimento, :caminho)";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([
+                    ":idDepoimento" => $idDepoimento,
+                    ":caminho" => $caminho
+                ]);
+            }
+
+            return [
+                'sucesso' => true,
+                'msg' => 'Depoimento Salvo Com Sucesso!'
+            ];
+        }
+        catch (PDOException  $th)
+        {
+            return [
+                'sucesso' => false,
+                'msg' => "Erro: {$th->getMessage()}."
+            ];
+        }
+    }
 }
