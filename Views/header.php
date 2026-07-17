@@ -10,6 +10,7 @@
                 <a class="msg" href="<?= BASE_URL ?>/">Início</a>
             </div>
 
+            <div>
             <?php if (isset($_SESSION['email'])): ?>
 
                 <span class="user">Olá, <?= htmlspecialchars($_SESSION['nome']) ?></span>
@@ -28,6 +29,9 @@
                 <a class="msg" href="<?= BASE_URL ?>/cadastro">Cadastre-se</a>
 
             <?php endif; ?>
+            </div>
         </div>
     </div>
 </header>
+
+
