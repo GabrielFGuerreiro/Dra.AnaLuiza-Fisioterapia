@@ -44,7 +44,8 @@
             </div>
 
             <button type="button" id="btnCadastrar">Cadastrar</button>
-        
+            <a href="<?= BASE_URL ?>/login">Já tem uma conta? Faça Login!</a>
+
         <!-- <?php //if ($mensagem): ?>
             <div class="notif <?php //echo ($tipoMensagem === 'Sucesso') ? 'Sucesso' : 'Erro'; ?>">
                 <?php //echo htmlspecialchars($mensagem); ?>
