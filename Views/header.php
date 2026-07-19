@@ -1,10 +1,3 @@
-<head>
-    <style>html {color-scheme: light;}</style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles/light.css">
-</head>
 <header>
     <nav class="navbar navbar-expand-sm ">
       <div class="container">
@@ -45,24 +38,4 @@
           </div>
       </div>
     </nav>
-    <script>
-    
-    document.addEventListener("DOMContentLoaded", function()
-    {
-        var links = document.querySelectorAll(".nav-link");
-        var uriAtual = "<?php echo $_SERVER['REQUEST_URI'];?>";
-        console.log(uriAtual);
-        links.forEach(link => {
-            console.log(link.getAttribute("href"));
-            if(link.getAttribute("href") == uriAtual)
-            {
-                link.classList.add("active");
-                
-            }
-            else
-                link.classList.remove("active");
-        });
-            
-    });
-</script>
 </header>

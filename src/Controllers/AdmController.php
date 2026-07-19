@@ -5,9 +5,15 @@ use DraAnaLuiza\Models\Adm;
 
 class AdmController
 {
+    protected function MostrarView(string $view)
+    {
+        $view = RAIZ . "/Views/" . $view . ".php";
+        include RAIZ . "/Views/layout.php";
+    }
+
     public function Agendamentos()
     {
-        require_once RAIZ . "/Views/agendamentos.php";
+        $this->MostrarView("agendamentos");
     }
 
      public function ListarAgendamentosJson()
@@ -21,8 +27,8 @@ class AdmController
     }
 
     public function GerenciarDepoimentos()
-    {                   
-        require_once RAIZ . "/Views/gerenciarDepoimentos.php";
+    {
+        $this->MostrarView("gerenciarDepoimentos");
     }
 
     public function CadastrarDepoimento()

@@ -1,43 +1,30 @@
 <?php
-    include RAIZ . '/Views/header.php'; 
     require_once RAIZ . "/scripts/calendario-lib.html";
 ?>
+<div class="conteudo">
+    <h2>Lista de Agendamentos</h2>
+    <div id="listaAgendamentos"></div>
+</div>
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agendamentos</title>
-</head>
-<body>
-    <div class="conteudo">
-        <h2>Lista de Agendamentos</h2>
-        <div id="listaAgendamentos"></div>
-    </div>
+<script>
+document.addEventListener("DOMContentLoaded", function()
+{
+    chamarListaAgendamentos();
+});
 
-    <script>
-    document.addEventListener("DOMContentLoaded", function()
-    {
-        chamarListaAgendamentos();
-    });
+function chamarListaAgendamentos()
+{
+    fetch("/Dra.AnaLuiza-Fisioterapia/listarAgendamentosJson") // uma rota que devolve JSON puro
+        .then(response => response.json())
+        .then(dados => {
+            const { Schedule } = calendarjs;
+        
 
-    function chamarListaAgendamentos()
-    {
-        fetch("/Dra.AnaLuiza-Fisioterapia/listarAgendamentosJson") // uma rota que devolve JSON puro
-            .then(response => response.json())
-            .then(dados => {
-                const { Schedule } = calendarjs;
-           
-
-                Schedule(document.getElementById('listaAgendamentos'), {
-                    type: 'week',
-                    value: '2026-07-12',
-                    data: dados
-                });
+            Schedule(document.getElementById('listaAgendamentos'), {
+                type: 'week',
+                value: '2026-07-12',
+                data: dados
             });
-    }
-    </script>
-</body>
-</html>
-
+        });
+}
+</script>

@@ -5,14 +5,20 @@ use DraAnaLuiza\Models\Usuario;
 
 class UsuarioController
 {
+    protected function MostrarView(string $view)
+    {
+        $view = RAIZ . "/Views/" . $view . ".php";
+        include RAIZ . "/Views/layout.php";
+    }
+
     public function Login()
     {
-        require_once RAIZ . "/Views/login.php";
+        $this->MostrarView("login");
     }
 
     public function Cadastro()
     {
-        require_once RAIZ . "/Views/cadastrar.php";
+        $this->MostrarView("cadastrar");
     }
 
     public function Cadastrar()
@@ -65,6 +71,6 @@ class UsuarioController
 
     public function PreConsulta()
     {
-        require_once RAIZ . "/Views/preConsulta.php";
+        $this->MostrarView("preConsulta");
     }
 }

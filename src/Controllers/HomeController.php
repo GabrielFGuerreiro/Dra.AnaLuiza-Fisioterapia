@@ -5,7 +5,7 @@ class HomeController
 {
     public function Home()
     {
-        require_once RAIZ . "/Views/home.php";
+        $view = RAIZ."/Views/home.php";
+        include RAIZ."/Views/layout.php";
     }
-
 }
