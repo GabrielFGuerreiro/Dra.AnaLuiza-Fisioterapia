@@ -10,6 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/light.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/header.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/styles/login.css">
 </head>
 
 <body>
@@ -21,12 +22,10 @@
         document.addEventListener("DOMContentLoaded", function()
         {
             var links = document.querySelectorAll(".nav-link");
-            var uriAtual = "<?php echo $_SERVER['REQUEST_URI'];?>";
-
             links.forEach(link => {
-                link.getAttribute("href") == uriAtual
-                    ? link.classList.add("active")
-                    : link.classList.remove("active");
+                if (link.pathname === window.location.pathname) {
+                    link.classList.add("active");
+                }
             });
         });
     </script>
