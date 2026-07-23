@@ -42,6 +42,7 @@
     <?php //endif; ?> -->
 
     <script>
+        const BASE_URL = "<?= BASE_URL ?>";
         var senhaValida = true;
         var circulos = document.querySelectorAll(".fa-circle");
 
@@ -92,7 +93,9 @@
                 msgSenha.style.display = "none";
 
             if(senhaValida && icCadastrar)        
-                document.getElementById("formCadastrar").submit();        
+                document.getElementById("formCadastrar").submit();
+                window.location.href = BASE_URL + "/login";
+                
 
             senhaValida = true;
         });
