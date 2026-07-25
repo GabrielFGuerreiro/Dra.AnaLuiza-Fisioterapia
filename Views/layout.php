@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/light.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/header.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/login.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/styles/cadastro.css">
 </head>
 
 <body>
