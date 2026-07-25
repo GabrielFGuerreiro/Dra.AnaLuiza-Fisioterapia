@@ -28,6 +28,26 @@
                 }
             });
         });
+
+        const alerta = document.getElementById("msgAlerta");
+        function mostrarAlerta(msg) {
+            alerta.querySelector("span").textContent = msg;
+
+            alerta.classList.remove("alerta-form");
+            void alerta.offsetWidth; // força o navegador a reiniciar a animação
+            alerta.classList.add("alerta-form");
+
+            alerta.style.display = "block";
+        }
+
+        const campos = document.querySelectorAll(".campo-form");
+        campos.forEach(campo => {
+            campo.addEventListener("input",  function()
+            {
+                alerta.style.display = "none";
+            });
+        });
+       
     </script>
 </body>
 </html>
