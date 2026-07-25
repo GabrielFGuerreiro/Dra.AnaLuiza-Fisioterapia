@@ -32,6 +32,7 @@ img {
 
 body{
     min-height:100vh;
+    overflow-y: scroll;
     background:var(--dark);
     color: var(--text);
 }
