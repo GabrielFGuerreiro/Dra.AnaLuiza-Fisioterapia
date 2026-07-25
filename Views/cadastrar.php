@@ -41,7 +41,29 @@
         </div>
     <?php //endif; ?> -->
 
-    <script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const params = new URLSearchParams(window.location.search);
+        const msg = params.get("msg");
+        if (msg)
+            mostrarAlerta(msg);
+    });
+
+    var circulos = document.querySelectorAll(".password-hints .fa-circle");
+
+    document.getElementById("btnCadastrar").addEventListener("click", function() {
+        var nome = document.getElementById("nome").value;
+        if (!nome) {
+            mostrarAlerta("Informe seu nome completo.");
+            return;
+        }
+
+        var cpf = document.getElementById("cpf").value;
+        if (!cpf) {
+            mostrarAlerta("Informe seu CPF.");
+            return;
+        }
+
         var senhaValida = true;
         var circulos = document.querySelectorAll(".fa-circle");
 
@@ -75,39 +97,39 @@
                     senhaValida = false;
             });
 
-            var senhaCad = document.getElementById("senhaCad").value;  
-            var msgSenha = document.getElementById("msgSenha");
-            if(!senhaCad) //Verifica se o campo senha está vazio
-            {
-                msgSenha.style.display = "block";
-                msgSenha.innerHTML = "A <b>Senha</b> é Obrigatória.";
-                icCadastrar = false;
-            }
-            else if(!senhaValida) //E se os requisitos da senha foram atendidos
-            {
-                msgSenha.style.display = "block";
-                msgSenha.innerHTML = "Requisitos da Senha não Foram Atendidos.";
-            }
-            else
-                msgSenha.style.display = "none";
+        var senhaCad = document.getElementById("senhaCad").value;
+        var senhaAux = document.getElementById("confirmSenha").value;
+        if (!senhaCad) {
+            mostrarAlerta("Crie uma senha para continuar.");
+            return;
+        }
+        
+        if (!senhaValida) {
+            mostrarAlerta("Sua senha não atende aos requisitos.");
+            return;
+        }
 
-            if(senhaValida && icCadastrar)        
-                document.getElementById("formCadastrar").submit();        
-
-            senhaValida = true;
-        });
-
-        document.getElementById("senhaCad").addEventListener("input", function()
+        if(senhaCad !== senhaAux)
         {
-            var senha = this.value;
+            mostrarAlerta("As senhas não coincidem.");
+            return;
+        }
 
-            circulos[0].style.color = senha.length >= 8 ? "#61c9b4" : "gray";
-            circulos[1].style.color = senha.match(/[a-z]/g) ? "#61c9b4" : "gray";
-            circulos[2].style.color = senha.match(/[A-Z]/g) ? "#61c9b4" : "gray";
-            circulos[3].style.color = senha.match(/\d/g) ? "#61c9b4" : "gray";
-            circulos[4].style.color = senha.match(/\W|_/g) ? "#61c9b4" : "gray";
-        });
-    </script>
+        if (senhaValida) {
+            document.getElementById("formCadastrar").submit();
+            return;
+        }
+    });
+
+    document.getElementById("senhaCad").addEventListener("input", function() {
+        var senha = this.value;
+        circulos[0].style.color = senha.length >= 8 ? "#4f9564" : "gray";
+        circulos[1].style.color = senha.match(/[a-z]/g) ? "#4f9564" : "gray";
+        circulos[2].style.color = senha.match(/[A-Z]/g) ? "#4f9564" : "gray";
+        circulos[3].style.color = senha.match(/\d/g) ? "#4f9564" : "gray";
+        circulos[4].style.color = senha.match(/\W|_/g) ? "#4f9564" : "gray";
+    });
+</script>
 
     </form>
 </div>
