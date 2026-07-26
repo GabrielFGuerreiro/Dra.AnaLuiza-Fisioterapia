@@ -176,10 +176,10 @@
     document.getElementById("senhaCad").addEventListener("input", function() {
         var senha = this.value;
         circulos[0].style.color = senha.length >= 8 ? "#4f9564" : "gray";
-        circulos[1].style.color = senha.match(/[a-z]/g) ? "#4f9564" : "gray";
-        circulos[2].style.color = senha.match(/[A-Z]/g) ? "#4f9564" : "gray";
-        circulos[3].style.color = senha.match(/\d/g) ? "#4f9564" : "gray";
-        circulos[4].style.color = senha.match(/\W|_/g) ? "#4f9564" : "gray";
+        circulos[1].style.color = /[a-z]/.test(senha) ? "#4f9564" : "gray";
+        circulos[2].style.color = /[A-Z]/.test(senha) ? "#4f9564" : "gray";
+        circulos[3].style.color = /\d/.test(senha) ? "#4f9564" : "gray";
+        circulos[4].style.color = /[\W_]/.test(senha) ? "#4f9564" : "gray";
     });
 
     document.getElementById("cpf").addEventListener("input", function ()
