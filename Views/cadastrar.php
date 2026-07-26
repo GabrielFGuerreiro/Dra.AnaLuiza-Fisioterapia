@@ -133,6 +133,12 @@
             return;
         }
 
+        var cel = document.getElementById("cel").value;
+        if (!cel) {
+            mostrarAlerta("Informe seu Celular.");
+            return;
+        }
+
         var senhaValida = true;
         circulos.forEach(function(circulo) {
             if (circulo.style.color === "gray") senhaValida = false;
