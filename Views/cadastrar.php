@@ -184,6 +184,12 @@
             return;
         }
 
+        var email = document.getElementById("emailCad").value;
+        if (!email) {
+            mostrarAlerta("Informe seu E-mail.");
+            return;
+        }
+
         var senhaCad = document.getElementById("senhaCad").value;
         var senhaAux = document.getElementById("confirmSenha").value;
         if (!senhaCad) {
