@@ -128,6 +128,35 @@
         }
     });
 
+    function validarCPF(cpf)
+    {
+        function calcularDigito(soma) {
+            let resultado = 11 - (soma % 11);
+            return resultado >= 10 ? 0 : resultado;
+        }
+
+        cpf = cpf.replace(/\D/g, "");
+        if(cpf.length != 11) return false; //11 Dígitos        
+        if (/^(\d)\1{10}$/.test(cpf)) return false; //Não pode ter o msm num repetido
+
+        const verificador1 = cpf.substring(9, 10);
+        const verificador2 = cpf.substring(10, 11);
+        let soma = 0;
+
+        for (let i = 0, num = 10; i < 9; i++, num--) {
+            soma += cpf[i] * num;   
+        }        
+        if(calcularDigito(soma) != verificador1) return false;
+
+        soma = 0;
+        for (let i = 0, num = 11; i < 10; i++, num--) {
+            soma += cpf[i] * num;   
+        }
+        if(calcularDigito(soma) != verificador2) return false;
+
+        return true;
+    }
+
     var circulos = document.querySelectorAll(".password-hints .fa-circle");
 
     document.getElementById("btnCadastrar").addEventListener("click", function() {
@@ -140,6 +169,12 @@
         var cpf = document.getElementById("cpf").value;
         if (!cpf) {
             mostrarAlerta("Informe seu CPF.");
+            return;
+        }
+
+        if(!validarCPF(cpf))
+        {
+            mostrarAlerta("Digite um CPF válido");
             return;
         }
 
