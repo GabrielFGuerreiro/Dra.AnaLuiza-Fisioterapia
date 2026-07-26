@@ -24,9 +24,9 @@ class UsuarioController
     public function Cadastrar()
     {
         $nome = $_POST['nome'];
-        $cpf = $_POST['cpf'];
-        $dtNasc = $_POST['dtNasc'];
-        $email = $_POST['emailCad'];
+        $cpf = preg_replace('/\D/', '', $_POST['cpf']);
+        $dtNasc = !empty($_POST['dtNasc']) ? $_POST['dtNasc'] : null;
+        $email = !empty($_POST['emailCad']) ? $_POST['emailCad'] : null;
         $cel = $_POST['cel'];
         $senha = $_POST['senhaCad'];
 
