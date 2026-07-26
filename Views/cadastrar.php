@@ -149,11 +149,6 @@
             return;
         }
 
-        var senhaValida = true;
-        circulos.forEach(function(circulo) {
-            if (circulo.style.color === "gray") senhaValida = false;
-        });
-
         var senhaCad = document.getElementById("senhaCad").value;
         var senhaAux = document.getElementById("confirmSenha").value;
         if (!senhaCad) {
@@ -161,9 +156,11 @@
             return;
         }
         
-        if (!senhaValida) {
-            mostrarAlerta("Sua senha não atende aos requisitos.");
-            return;
+        for (const circulo of circulos) {
+            if (circulo.style.color === "gray") {
+                mostrarAlerta("Sua senha não atende aos requisitos.");
+                return;
+            }
         }
 
         if(senhaCad !== senhaAux)
@@ -172,10 +169,8 @@
             return;
         }
 
-        if (senhaValida) {
-            document.getElementById("formCadastrar").submit();
-            return;
-        }
+        document.getElementById("formCadastrar").submit();
+        return;
     });
 
     document.getElementById("senhaCad").addEventListener("input", function() {
