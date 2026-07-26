@@ -170,4 +170,21 @@
         circulos[3].style.color = senha.match(/\d/g) ? "#4f9564" : "gray";
         circulos[4].style.color = senha.match(/\W|_/g) ? "#4f9564" : "gray";
     });
+
+    document.getElementById("cpf").addEventListener("input", function ()
+    {
+        let cpfNum = this.value.replace(/\D/g, "");
+        let valor = cpfNum;
+
+        if (cpfNum.length > 3)
+            valor = valor.substring(0, 3) + "." + valor.substring(3);
+
+        if (cpfNum.length > 6)
+            valor = valor.substring(0, 7) + "." + valor.substring(7);
+
+        if (cpfNum.length > 9)
+            valor = valor.substring(0, 11) + "-" + valor.substring(11);
+
+        this.value = valor.substring(0, 14);
+    });
 </script>
