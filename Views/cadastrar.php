@@ -114,8 +114,18 @@
     document.addEventListener("DOMContentLoaded", function () {
         const params = new URLSearchParams(window.location.search);
         const msg = params.get("msg");
+        const sucesso = params.get("sucesso");
         if (msg)
-            mostrarAlerta(msg);
+        {
+            Swal.fire({
+                title: msg,
+                icon: sucesso === "1" ? "success" : "error",
+                confirmButtonText: 'Ok'
+            }).then((resulta) => {
+                if(sucesso === "1")
+                    window.location.href = "/Dra.AnaLuiza-Fisioterapia/login";
+            });
+        }
     });
 
     var circulos = document.querySelectorAll(".password-hints .fa-circle");
