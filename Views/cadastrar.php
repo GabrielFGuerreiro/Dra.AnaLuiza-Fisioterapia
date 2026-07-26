@@ -114,9 +114,48 @@
     document.addEventListener("DOMContentLoaded", function () {
         const params = new URLSearchParams(window.location.search);
         const msg = params.get("msg");
+        const sucesso = params.get("sucesso");
         if (msg)
-            mostrarAlerta(msg);
+        {
+            Swal.fire({
+                title: msg,
+                icon: sucesso === "1" ? "success" : "error",
+                confirmButtonText: 'Ok'
+            }).then((resulta) => {
+                if(sucesso === "1")
+                    window.location.href = "/Dra.AnaLuiza-Fisioterapia/login";
+            });
+        }
     });
+
+    function validarCPF(cpf)
+    {
+        function calcularDigito(soma) {
+            let resultado = 11 - (soma % 11);
+            return resultado >= 10 ? 0 : resultado;
+        }
+
+        cpf = cpf.replace(/\D/g, "");
+        if(cpf.length != 11) return false; //11 Dígitos        
+        if (/^(\d)\1{10}$/.test(cpf)) return false; //Não pode ter o msm num repetido
+
+        const verificador1 = cpf.substring(9, 10);
+        const verificador2 = cpf.substring(10, 11);
+        let soma = 0;
+
+        for (let i = 0, num = 10; i < 9; i++, num--) {
+            soma += cpf[i] * num;   
+        }        
+        if(calcularDigito(soma) != verificador1) return false;
+
+        soma = 0;
+        for (let i = 0, num = 11; i < 10; i++, num--) {
+            soma += cpf[i] * num;   
+        }
+        if(calcularDigito(soma) != verificador2) return false;
+
+        return true;
+    }
 
     var circulos = document.querySelectorAll(".password-hints .fa-circle");
 
@@ -133,10 +172,17 @@
             return;
         }
 
-        var senhaValida = true;
-        circulos.forEach(function(circulo) {
-            if (circulo.style.color === "gray") senhaValida = false;
-        });
+        if(!validarCPF(cpf))
+        {
+            mostrarAlerta("Digite um CPF válido");
+            return;
+        }
+
+        var cel = document.getElementById("cel").value;
+        if (!cel) {
+            mostrarAlerta("Informe seu Celular.");
+            return;
+        }
 
         var senhaCad = document.getElementById("senhaCad").value;
         var senhaAux = document.getElementById("confirmSenha").value;
@@ -145,9 +191,11 @@
             return;
         }
         
-        if (!senhaValida) {
-            mostrarAlerta("Sua senha não atende aos requisitos.");
-            return;
+        for (const circulo of circulos) {
+            if (circulo.style.color === "gray") {
+                mostrarAlerta("Sua senha não atende aos requisitos.");
+                return;
+            }
         }
 
         if(senhaCad !== senhaAux)
@@ -156,18 +204,50 @@
             return;
         }
 
-        if (senhaValida) {
-            document.getElementById("formCadastrar").submit();
-            return;
-        }
+        document.getElementById("formCadastrar").submit();
+        return;
     });
 
     document.getElementById("senhaCad").addEventListener("input", function() {
         var senha = this.value;
         circulos[0].style.color = senha.length >= 8 ? "#4f9564" : "gray";
-        circulos[1].style.color = senha.match(/[a-z]/g) ? "#4f9564" : "gray";
-        circulos[2].style.color = senha.match(/[A-Z]/g) ? "#4f9564" : "gray";
-        circulos[3].style.color = senha.match(/\d/g) ? "#4f9564" : "gray";
-        circulos[4].style.color = senha.match(/\W|_/g) ? "#4f9564" : "gray";
+        circulos[1].style.color = /[a-z]/.test(senha) ? "#4f9564" : "gray";
+        circulos[2].style.color = /[A-Z]/.test(senha) ? "#4f9564" : "gray";
+        circulos[3].style.color = /\d/.test(senha) ? "#4f9564" : "gray";
+        circulos[4].style.color = /[\W_]/.test(senha) ? "#4f9564" : "gray";
+    });
+
+    document.getElementById("cpf").addEventListener("input", function ()
+    {
+        let cpfNum = this.value.replace(/\D/g, "");
+        let valor = cpfNum;
+
+        if (cpfNum.length > 3)
+            valor = valor.substring(0, 3) + "." + valor.substring(3);
+
+        if (cpfNum.length > 6)
+            valor = valor.substring(0, 7) + "." + valor.substring(7);
+
+        if (cpfNum.length > 9)
+            valor = valor.substring(0, 11) + "-" + valor.substring(11);
+
+        this.value = valor.substring(0, 14);
+    });
+
+    document.getElementById("cel").addEventListener("input", function ()
+    {
+        let celNum = this.value.replace(/\D/g, "");
+        let valor = celNum;
+
+        if (celNum.length > 0)
+            valor = "(" + valor.substring(0);
+
+        if (celNum.length > 2)
+            valor = valor.substring(0, 3) + ") " + valor.substring(3);
+
+        if (celNum.length > 7)
+            valor = valor.substring(0, 10) + "-" + valor.substring(10);
+
+        this.value = valor.substring(0, 15);
     });
 </script>
