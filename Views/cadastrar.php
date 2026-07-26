@@ -198,4 +198,21 @@
 
         this.value = valor.substring(0, 14);
     });
+
+    document.getElementById("cel").addEventListener("input", function ()
+    {
+        let celNum = this.value.replace(/\D/g, "");
+        let valor = celNum;
+
+        if (celNum.length > 0)
+            valor = "(" + valor.substring(0);
+
+        if (celNum.length > 2)
+            valor = valor.substring(0, 3) + ") " + valor.substring(3);
+
+        if (celNum.length > 7)
+            valor = valor.substring(0, 10) + "-" + valor.substring(10);
+
+        this.value = valor.substring(0, 15);
+    });
 </script>

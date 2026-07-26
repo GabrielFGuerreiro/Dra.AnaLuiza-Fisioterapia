@@ -27,7 +27,7 @@ class UsuarioController
         $cpf = preg_replace('/\D/', '', $_POST['cpf']);
         $dtNasc = !empty($_POST['dtNasc']) ? $_POST['dtNasc'] : null;
         $email = !empty($_POST['emailCad']) ? $_POST['emailCad'] : null;
-        $cel = $_POST['cel'];
+        $cel = preg_replace('/\D/', '', $_POST['cel']);
         $senha = $_POST['senhaCad'];
 
         $usuario = new Usuario();
