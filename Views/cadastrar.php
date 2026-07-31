@@ -217,9 +217,14 @@
         circulos[4].style.color = /[\W_]/.test(senha) ? "#4f9564" : "gray";
     });
 
-    document.getElementById("cpf").addEventListener("input", function ()
+    cpf.addEventListener("input", function ()
     {
-        let cpfNum = this.value.replace(/\D/g, "");
+        formatarCpf();
+    });
+
+    function formatarCpf()
+    {
+        let cpfNum = cpf.value.replace(/\D/g, "");
         let valor = cpfNum;
 
         if (cpfNum.length > 3)
@@ -231,7 +236,28 @@
         if (cpfNum.length > 9)
             valor = valor.substring(0, 11) + "-" + valor.substring(11);
 
-        this.value = valor.substring(0, 14);
+        cpf.value = valor.substring(0, 14);
+    }
+
+    cpf.addEventListener("keydown", function (e) {
+        if (e.key !== "Backspace") return;
+
+        const pos = this.selectionStart;
+
+        if (pos === 0) return;
+
+        const c = this.value.charAt(pos - 1);
+
+        if (c === "." || c === "-") {
+            e.preventDefault();
+
+            this.value =
+                this.value.slice(0, pos - 2) +
+                this.value.slice(pos);
+
+            formatarCpf();
+            this.setSelectionRange(pos - 2, pos - 2);
+        }
     });
 
     document.getElementById("cel").addEventListener("input", function ()
