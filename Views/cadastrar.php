@@ -126,6 +126,17 @@
                     window.location.href = "/Dra.AnaLuiza-Fisioterapia/login";
             });
         }
+
+        document.getElementById("formCadastrar").querySelectorAll("input").forEach(element => {
+            element.addEventListener('keypress', function(event)
+            {
+                if (event.key === "Enter")
+                {
+                    event.preventDefault();
+                    cadastrar();
+                }
+            });
+        });
     });
 
     function validarCPF(cpf)
@@ -160,6 +171,11 @@
     var circulos = document.querySelectorAll(".password-hints .fa-circle");
 
     document.getElementById("btnCadastrar").addEventListener("click", function() {
+        cadastrar();
+    });
+
+    function cadastrar()
+    {        
         var nome = document.getElementById("nome").value;
         if (!nome) {
             mostrarAlerta("Informe seu nome completo.");
@@ -206,7 +222,7 @@
 
         document.getElementById("formCadastrar").submit();
         return;
-    });
+    }
 
     document.getElementById("senhaCad").addEventListener("input", function() {
         var senha = this.value;
