@@ -29,6 +29,22 @@
                     link.classList.add("active");
                 }
             });
+
+            const form = document.getElementById("formCadastrar") ?? document.getElementById("formLogin");
+            let funcao = document.getElementById("formCadastrar") ? cadastrar :  logar;
+            if(form)
+            {
+                form.querySelectorAll("input").forEach(element => {
+                    element.addEventListener('keypress', function(event)
+                    {
+                        if (event.key === "Enter")
+                        {
+                            event.preventDefault();
+                            funcao();
+                        }
+                    });
+                });
+            }     
         });
 
         const alerta = document.getElementById("msgAlerta");

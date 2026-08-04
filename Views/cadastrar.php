@@ -126,17 +126,6 @@
                     window.location.href = "/Dra.AnaLuiza-Fisioterapia/login";
             });
         }
-
-        document.getElementById("formCadastrar").querySelectorAll("input").forEach(element => {
-            element.addEventListener('keypress', function(event)
-            {
-                if (event.key === "Enter")
-                {
-                    event.preventDefault();
-                    cadastrar();
-                }
-            });
-        });
     });
 
     function validarCPF(cpf)

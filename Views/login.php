@@ -49,27 +49,31 @@
         const msg = params.get("msg");
         if (msg)
             mostrarAlerta(msg);
+    });
 
-        document.getElementById("btnLogin").addEventListener("click", function () {
-
-            const inputEmail = document.getElementById("email");
-            if (!inputEmail.value.trim()) {
-                mostrarAlerta("Digite o E-mail.");
-                return;
-            }
-
-            if (!inputEmail.checkValidity()) {
-                mostrarAlerta("Digite um E-mail Válido.");
-                return;
-            }
-
-            const senha = document.getElementById("password").value;
-            if (!senha) {
-                mostrarAlerta("Digite a Senha.");
-                return;
-            }
-
-            document.getElementById("formLogin").submit();
-        });
+    function logar()
+    {
+        const inputEmail = document.getElementById("email");
+        if (!inputEmail.value.trim()) {
+            mostrarAlerta("Digite o E-mail.");
+            return;
+        }
+        
+        if (!inputEmail.checkValidity()) {
+            mostrarAlerta("Digite um E-mail Válido.");
+            return;
+        }
+        
+        const senha = document.getElementById("password").value;
+        if (!senha) {
+            mostrarAlerta("Digite a Senha.");
+            return;
+        }
+        
+        document.getElementById("formLogin").submit();
+    }
+    
+    document.getElementById("btnLogin").addEventListener("click", function () {
+        logar();
     });
 </script>
