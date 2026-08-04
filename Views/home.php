@@ -23,7 +23,7 @@
     <div class="position-relative d-flex justify-content-center align-items-center" style="min-height: 450px;">
 
         <img src="<?= BASE_URL ?>/Images/Fisioterapia.png"
-            class="position-absolute top-50 start-50 translate-middle opacity-25"
+            class="position-absolute top-50 start-50 translate-middle opacity-75"
             style="max-width: 650px; z-index: 1;">
 
         <div class="text-center position-relative" style="z-index: 2; max-width: 700px;">
