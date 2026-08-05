@@ -1,11 +1,10 @@
 <?php
 namespace DraAnaLuiza\Controllers;
 
-class HomeController
+class HomeController extends GeralController
 {
     public function Home()
     {
-        $view = RAIZ."/Views/home.php";
-        include RAIZ."/Views/layout.php";
+        $this->MostrarView("home");
     }
 }

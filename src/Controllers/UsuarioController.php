@@ -3,14 +3,8 @@
 namespace DraAnaLuiza\Controllers;
 use DraAnaLuiza\Models\Usuario;
 
-class UsuarioController
+class UsuarioController extends GeralController
 {
-    protected function MostrarView(string $view)
-    {
-        $view = RAIZ . "/Views/" . $view . ".php";
-        include RAIZ . "/Views/layout.php";
-    }
-
     public function Login()
     {
         $this->MostrarView("login");
