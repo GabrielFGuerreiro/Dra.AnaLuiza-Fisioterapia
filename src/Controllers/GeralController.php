@@ -8,4 +8,8 @@ class GeralController
         $view = RAIZ . "/Views/" . $view . ".php";
         include RAIZ . "/Views/layout.php";
     }
+
+    public function notFound(){
+        $this->MostrarView('404');
+    }
 }

@@ -1,5 +1,6 @@
 <?php
 namespace DraAnaLuiza\Core;
+use DraAnaLuiza\Controllers\GeralController;
 
 Class Router
 {
@@ -23,15 +24,17 @@ Class Router
 
         //Busca, no array de rotas, a rota correspondente ao método da requisição (GET/POST) e à URL acessada.
         //Exemplo: $this->rotas['POST']['/login'] => "UsuarioController@logar"
-        $rota = $this->rotas[$requisicao][$uri];
+        $rota = $this->rotas[$requisicao][$uri] ?? [];
 
         //Verifica se a rota existe
-        if (!isset($rota))
+        if (empty($rota))
         {
             http_response_code(404);
-            require __DIR__ . '/../Views/404.php';
+            $geral = new GeralController();
+            $geral->notFound();
             return;
         }
+
 
         if (($uri == '/login' || $uri == '/cadastro') && isset($_SESSION['email'])) { //Impede que o usuario entre nas telas de cadastro ou login se ele já estiver logado.
             header("Location: " . BASE_URL . "/");
