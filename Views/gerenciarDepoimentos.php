@@ -1,20 +1,34 @@
-<style>
-body {
-    position: relative;
-    right:30px;
-}
-</style>
-<div class="conteudo">
-    <h2>Avaliação de Atendimento</h2>
-    <form action="<?= BASE_URL ?>/cadastrarDepoimento" method="POST" enctype="multipart/form-data">
-        <label for="opiniao">O que o cliente achou do atendimento?</label>
-        <textarea name="opiniao" id="opiniao" type="textarea" rows="5"></textarea>
-        <label for="arqDepoimento">Insira uma foto ou um video do atendimento:</label>
-        <input type="file" name="arqDepoimento" id="arqDepoimento" accept="image/*, video/*">
-        <button type="submit">Salvar</button>
-    </form>
-<div style='text-align: center;'><?php if (isset($_GET['msg'])): echo $_GET['msg']; endif; ?></div>
+<section class="py-5">
+    <div class="position-relative d-flex justify-content-center align-items-center" style="min-height: 55.9vh;">
+        <img src="<?= BASE_URL ?>/Images/Fisioterapia.png"
+            class="position-absolute top-50 start-50 translate-middle opacity-50"
+            style="max-width: 650px; z-index: -1;">
 
+        <div class="position-relative text-center w-100" style="z-index: 2;">
+            <h1 class="display-4 fw-bold text-success mb-4">Avaliação de Atendimento</h1>
+
+            <div class="card shadow-sm mx-auto p-4"
+                 style="max-width: 700px;">
+
+                <form action="<?= BASE_URL ?>/cadastrarDepoimento" method="POST" enctype="multipart/form-data" class="d-flex flex-column gap-3">
+                    <div class="text-start">
+                        <label for="opiniao" class="form-label fw-semibold">O que o cliente achou do atendimento?</label>
+                        <textarea name="opiniao" id="opiniao" rows="5" class="form-control" required></textarea>
+                    </div>
+
+                    <div class="text-start">
+                        <label for="arqDepoimento" class="form-label fw-semibold">Insira uma foto ou vídeo do atendimento</label>
+                        <input type="file" name="arqDepoimento" id="arqDepoimento" accept="image/*,video/*" class="form-control">
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-lg">Salvar Avaliação</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php require "footer.php"; ?>
 
 <!-- 
     Precisamos adicionar o integração ao banco, para que possa ser feito o ADD do depoimento, 

@@ -20,7 +20,7 @@
 ?>
 
 <section class="py-5">
-    <div class="position-relative d-flex justify-content-center align-items-center" style="min-height: 450px;">
+    <div class="position-relative d-flex justify-content-center align-items-center" style="min-height: 40vh;">
 
         <img src="<?= BASE_URL ?>/Images/Fisioterapia.png"
             class="position-absolute top-50 start-50 translate-middle opacity-75"
