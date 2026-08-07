@@ -2,7 +2,7 @@
     <div class="container register-container">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-9 col-xl-8">
-                <div class="register-card">
+                <div class="moving-card">
                     <div class="register-heading">
                         <span class="register-icon"><i class="fa-regular fa-user"></i></span>
                         <h1>Crie sua conta</h1>
