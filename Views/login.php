@@ -2,7 +2,7 @@
     <div class="container login-container">
         <div class="row justify-content-center">
             <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
-                <div class="login-card">
+                <div class="moving-card">
                     <div class="login-card-heading">
                         <span class="login-icon"><i class="fa-regular fa-heart"></i></span>
                         <h1>Área do Paciente</h1>
