@@ -189,6 +189,17 @@
             return;
         }
 
+        var inputEmail = document.getElementById("emailCad");
+        if (!inputEmail.value.trim()) {
+            mostrarAlerta("Digite o E-mail.");
+            return;
+        }
+
+        if (!inputEmail.checkValidity()) {
+            mostrarAlerta("Digite um E-mail Válido.");
+            return;
+        }
+
         var senhaCad = document.getElementById("senhaCad").value;
         var senhaAux = document.getElementById("confirmSenha").value;
         if (!senhaCad) {
