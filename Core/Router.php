@@ -1,5 +1,6 @@
 <?php
 namespace DraAnaLuiza\Core;
+use DraAnaLuiza\Controllers\GeralController;
 
 Class Router
 {
@@ -21,22 +22,29 @@ Class Router
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $uri = str_replace('/Dra.AnaLuiza-Fisioterapia', '', $uri);
 
+        //Busca, no array de rotas, a rota correspondente ao método da requisição (GET/POST) e à URL acessada.
+        //Exemplo: $this->rotas['POST']['/login'] => "UsuarioController@logar"
+        $rota = $this->rotas[$requisicao][$uri] ?? [];
+
+        //Verifica se a rota existe
+        if (empty($rota))
+        {
+            http_response_code(404);
+            $geral = new GeralController();
+            $geral->notFound();
+            return;
+        }
+
+
+        if (($uri == '/login' || $uri == '/cadastro') && isset($_SESSION['email'])) { //Impede que o usuario entre nas telas de cadastro ou login se ele já estiver logado.
+            header("Location: " . BASE_URL . "/");
+            exit();
+        }
+
         $rotasPublicas = ['/', '/login', '/logar', '/cadastro', '/cadastrar'];
         if (!in_array($uri, $rotasPublicas) && !isset($_SESSION['email'])) {
             header("Location: " . BASE_URL . "/login");
             exit();
-        }
-
-        //Busca, no array de rotas, a rota correspondente ao método da requisição (GET/POST) e à URL acessada.
-        //Exemplo: $this->rotas['POST']['/login'] => "UsuarioController@logar"
-        $rota = $this->rotas[$requisicao][$uri];
-
-        //Verifica se a rota existe
-        if (!isset($rota))
-        {
-            http_response_code(404);
-            echo "Página não encontrada.";
-            return;
         }
         
         $partes = explode('@', $rota);

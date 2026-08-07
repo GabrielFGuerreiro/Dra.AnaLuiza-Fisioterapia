@@ -3,14 +3,8 @@ namespace DraAnaLuiza\Controllers;
 use DraAnaLuiza\Models\Database;
 use DraAnaLuiza\Models\Adm;
 
-class AdmController
+class AdmController extends GeralController
 {
-    protected function MostrarView(string $view)
-    {
-        $view = RAIZ . "/Views/" . $view . ".php";
-        include RAIZ . "/Views/layout.php";
-    }
-
     public function Agendamentos()
     {
         $this->MostrarView("agendamentos");
