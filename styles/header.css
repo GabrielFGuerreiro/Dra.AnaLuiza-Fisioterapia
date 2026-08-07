@@ -108,7 +108,7 @@
 }
 
 .navbar .nav-principal:hover,
-.navbar .nav-principal.active {
+.navbar .nav-principal:active {
     border-color: #fff;
     background: #fff;
     color: #254e3c;
