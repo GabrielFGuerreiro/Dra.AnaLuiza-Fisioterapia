@@ -1,4 +1,6 @@
 <?php
+
+use DraAnaLuiza\Models\Database;
     $servicos = [
         [
             "titulo" => "Foo",
@@ -16,7 +18,16 @@
             "titulo" => "Sem",
             "descricao" => "Ideia."
         ]
-    ];
+    ];      
+    
+    $db = new Database()
+
+    $depoimento = getDepoimento();
+    function getTipoArquivo() {
+        if (isset($depoimento['caminhoArquivo'])) {
+            
+        }
+    }
 ?>
 
 <section class="py-5">
@@ -88,4 +99,66 @@
 
 </section>
 
+<section class="container py-5"> <!-- Depoimentos -->
+    <!--
+        fazer algum jeito de traduzir automaticamente que tipo de conteudo será usado no depoimento,
+        tipo um if ou switch que alterna entre <img> e <video>
+            -rodrigo
+    } -->
+
+    <h2 class="text-center fw-bold mb-5">
+        Depoimentos de pacientes
+    </h2>
+
+    <div class="row g-4">
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <p>
+                        "A Dra. Ana Luiza é uma excelente profissional! Me ajudou muito na minha recuperação."
+                    </p>
+                    <h6 class="fw-bold mb-0">João Silva</h6>
+                    <iframe class="embed-responsive-item align-items-center justify-content-center text-align-center" src="Images/Nyan.mp4" ></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <p>
+                        "Recomendo a clínica para todos que precisam de fisioterapia. Atendimento de qualidade!"
+                    </p>
+                    <h6 class="fw-bold mb-0">Maria Oliveira</h6><br>
+
+                    <video class="img-fluid mb-2 object-fit-scale border rounded" controls>
+                        <source src="Images/Nyan.mp4" type="video/mp4">
+                        <span style="color: crimson">Seu navegador não suporta o elemento de vídeo.</span>
+                    </video>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <p>
+                        "Profissional dedicada e atenciosa. Me senti muito bem cuidada durante todo o tratamento."
+                    </p>
+                    <h6 class="fw-bold mb-0">Carlos Pereira</h6><br>
+
+                    <img src="Images/kratosverde.png" class="img-fluid mb-2 object-fit-scale border rounded" alt="Depoimento de paciente">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
 <?php require  "footer.php"; ?>
+
+

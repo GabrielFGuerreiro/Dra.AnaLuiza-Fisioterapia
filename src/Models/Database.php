@@ -29,5 +29,12 @@ class Database {
         }
         return $this->conn;
     }
+
+    public function getDepoimento() {
+        $query = "SELECT dsDepoimento FROM depoimentos JOIN depoimentosimagens ON depoimentos.idDepoimento = depoimentosimagens.idDepoimento ORDER BY idDepoimento ASC ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>
