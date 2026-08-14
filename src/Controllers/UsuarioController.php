@@ -30,6 +30,18 @@ class UsuarioController extends GeralController
         header("Location: /Dra.AnaLuiza-Fisioterapia/cadastro?sucesso={$retorno["sucesso"]}&msg={$retorno["mensagem"]}"); //Quando cadastrar, não fica na requisição POST, vai para GET, impedindo o reenvio do form quando recarregar.
     }
 
+    public function cadastrarConsulta()
+    {
+        $preHora = $_POST['preHora'];
+        $localDor = $_POST['localDor'];
+        $tempoSintoma = $_POST['tempoSintoma'];
+        $descricaoSintoma = $_POST['descricaoSintoma'];
+        $escalaDor = $_POST['escalaDor'];
+        $comorbidades = $_POST['comorbidades'];
+
+        
+    }
+
     public function Logar()
     {
         $usuario = new Usuario();

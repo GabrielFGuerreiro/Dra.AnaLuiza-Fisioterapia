@@ -16,7 +16,8 @@ return [
     'POST' => [
         '/cadastrar' => 'UsuarioController@Cadastrar',
         '/logar' => 'UsuarioController@Logar',
-        '/cadastrarDepoimento' => 'AdmController@CadastrarDepoimento'
+        '/cadastrarDepoimento' => 'AdmController@CadastrarDepoimento',
+        '/cadastrarConsulta' => 'UsuarioController@PreConsulta'
     ]
 
 ];
