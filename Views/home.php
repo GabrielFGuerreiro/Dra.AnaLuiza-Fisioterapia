@@ -18,16 +18,15 @@ use DraAnaLuiza\Models\Database;
             "titulo" => "Sem",
             "descricao" => "Ideia."
         ]
-    ];      
-    
-    $db = new Database()
+    ];
 
-    $depoimento = getDepoimento();
-    function getTipoArquivo() {
-        if (isset($depoimento['caminhoArquivo'])) {
-            
-        }
-    }
+    $video = ["mp4", "mkv", "avi", "mov", "webm"];
+    $imagem = ["png", "jpg", "jpeg", "gif", "webp"];
+    
+    $db = new Database();
+
+    $db->getConnection();
+    $depoimento = $db->getDepoimento();
 ?>
 
 <section class="py-5">
@@ -112,51 +111,54 @@ use DraAnaLuiza\Models\Database;
 
     <div class="row g-4">
 
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <p>
-                        "A Dra. Ana Luiza é uma excelente profissional! Me ajudou muito na minha recuperação."
-                    </p>
-                    <h6 class="fw-bold mb-0">João Silva</h6>
-                    <iframe class="embed-responsive-item align-items-center justify-content-center text-align-center" src="Images/Nyan.mp4" ></iframe>
-                </div>
-            </div>
-        </div>
+        <?php foreach ($depoimento as $d) { ?>
 
         <div class="col-md-6 col-lg-4">
             <div class="card h-100 shadow-sm">
                 <div class="card-body">
                     <p>
-                        "Recomendo a clínica para todos que precisam de fisioterapia. Atendimento de qualidade!"
+                        <?= htmlspecialchars($d['dsDepoimento'] ?? '') ?>
                     </p>
-                    <h6 class="fw-bold mb-0">Maria Oliveira</h6><br>
+                    <?php if (!empty($d['nome'])) { ?>
+                        <h6 class="fw-bold mb-0"><?= htmlspecialchars($d['nome']) ?></h6><br>
+                    <?php } ?>
 
-                    <video class="img-fluid mb-2 object-fit-scale border rounded" controls>
-                        <source src="Images/Nyan.mp4" type="video/mp4">
-                        <span style="color: crimson">Seu navegador não suporta o elemento de vídeo.</span>
-                    </video>
+                    <?php if (!empty($d['caminhoArquivo'])) {
+                        $tipo = pathinfo($d['caminhoArquivo'], PATHINFO_EXTENSION);
+                        $raw = str_replace('\\', '/', $d['caminhoArquivo']);
+
+                        $publicFolders = ['Images', 'arquivosDepoimentos', 'uploads'];
+                        $rel = $raw;
+                        foreach ($publicFolders as $f) {
+                            $p = stripos($raw, '/' . $f . '/');
+                            if ($p !== false) { $rel = substr($raw, $p + 1); break; }
+                            $p2 = stripos($raw, $f . '/');
+                            if ($p2 !== false) { $rel = substr($raw, $p2); break; }
+                        }
+
+                        $url = rtrim(BASE_URL, '/') . '/' . ltrim($rel, '/');
+
+                        if (in_array($tipo, $video)) { ?>
+
+                            <video class="img-fluid mb-2 object-fit-scale border rounded" controls>
+                                <source src="<?= $url ?>" type="video/<?= $tipo ?>">
+                                <span style="color: crimson">Seu navegador não suporta o elemento de vídeo.</span>
+                            </video>
+
+                        <?php } elseif (in_array($tipo, $imagem)) { ?>
+
+                            <img src="<?= $url ?>" class="img-fluid mb-2 object-fit-scale border rounded" alt="Depoimento de paciente">
+
+                        <?php }
+                    } ?>
 
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <p>
-                        "Profissional dedicada e atenciosa. Me senti muito bem cuidada durante todo o tratamento."
-                    </p>
-                    <h6 class="fw-bold mb-0">Carlos Pereira</h6><br>
-
-                    <img src="Images/kratosverde.png" class="img-fluid mb-2 object-fit-scale border rounded" alt="Depoimento de paciente">
-
-                </div>
-            </div>
-        </div>
+        <?php } ?>
 
     </div>
-
 </section>
 
 <?php require  "footer.php"; ?>
