@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/styles/light.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/styles/base.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/header.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/login.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/cadastro.css">
@@ -29,6 +29,22 @@
                     link.classList.add("active");
                 }
             });
+
+            const form = document.getElementById("formCadastrar") ?? document.getElementById("formLogin");
+            let funcao = document.getElementById("formCadastrar") ? cadastrar :  logar;
+            if(form)
+            {
+                form.querySelectorAll("input").forEach(element => {
+                    element.addEventListener('keypress', function(event)
+                    {
+                        if (event.key === "Enter")
+                        {
+                            event.preventDefault();
+                            funcao();
+                        }
+                    });
+                });
+            }     
         });
 
         const alerta = document.getElementById("msgAlerta");

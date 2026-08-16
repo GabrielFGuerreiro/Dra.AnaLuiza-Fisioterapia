@@ -2,7 +2,7 @@
     <div class="container login-container">
         <div class="row justify-content-center">
             <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
-                <div class="login-card">
+                <div class="moving-card">
                     <div class="login-card-heading">
                         <span class="login-icon"><i class="fa-regular fa-heart"></i></span>
                         <h1>Área do Paciente</h1>
@@ -49,27 +49,31 @@
         const msg = params.get("msg");
         if (msg)
             mostrarAlerta(msg);
+    });
 
-        document.getElementById("btnLogin").addEventListener("click", function () {
-
-            const inputEmail = document.getElementById("email");
-            if (!inputEmail.value.trim()) {
-                mostrarAlerta("Digite o E-mail.");
-                return;
-            }
-
-            if (!inputEmail.checkValidity()) {
-                mostrarAlerta("Digite um E-mail Válido.");
-                return;
-            }
-
-            const senha = document.getElementById("password").value;
-            if (!senha) {
-                mostrarAlerta("Digite a Senha.");
-                return;
-            }
-
-            document.getElementById("formLogin").submit();
-        });
+    function logar()
+    {
+        const inputEmail = document.getElementById("email");
+        if (!inputEmail.value.trim()) {
+            mostrarAlerta("Digite o E-mail.");
+            return;
+        }
+        
+        if (!inputEmail.checkValidity()) {
+            mostrarAlerta("Digite um E-mail Válido.");
+            return;
+        }
+        
+        const senha = document.getElementById("password").value;
+        if (!senha) {
+            mostrarAlerta("Digite a Senha.");
+            return;
+        }
+        
+        document.getElementById("formLogin").submit();
+    }
+    
+    document.getElementById("btnLogin").addEventListener("click", function () {
+        logar();
     });
 </script>

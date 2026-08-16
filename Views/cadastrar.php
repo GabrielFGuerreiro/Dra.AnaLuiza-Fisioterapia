@@ -2,7 +2,7 @@
     <div class="container register-container">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-9 col-xl-8">
-                <div class="register-card">
+                <div class="moving-card">
                     <div class="register-heading">
                         <span class="register-icon"><i class="fa-regular fa-user"></i></span>
                         <h1>Crie sua conta</h1>
@@ -160,6 +160,11 @@
     var circulos = document.querySelectorAll(".password-hints .fa-circle");
 
     document.getElementById("btnCadastrar").addEventListener("click", function() {
+        cadastrar();
+    });
+
+    function cadastrar()
+    {        
         var nome = document.getElementById("nome").value;
         if (!nome) {
             mostrarAlerta("Informe seu nome completo.");
@@ -184,9 +189,14 @@
             return;
         }
 
-        var email = document.getElementById("emailCad").value;
-        if (!email) {
-            mostrarAlerta("Informe seu E-mail.");
+        var inputEmail = document.getElementById("emailCad");
+        if (!inputEmail.value.trim()) {
+            mostrarAlerta("Digite o E-mail.");
+            return;
+        }
+
+        if (!inputEmail.checkValidity()) {
+            mostrarAlerta("Digite um E-mail Válido.");
             return;
         }
 
@@ -212,7 +222,7 @@
 
         document.getElementById("formCadastrar").submit();
         return;
-    });
+    }
 
     document.getElementById("senhaCad").addEventListener("input", function() {
         var senha = this.value;
@@ -223,21 +233,47 @@
         circulos[4].style.color = /[\W_]/.test(senha) ? "#4f9564" : "gray";
     });
 
-    document.getElementById("cpf").addEventListener("input", function ()
+    cpf.addEventListener("input", function ()
     {
-        let cpfNum = this.value.replace(/\D/g, "");
-        let valor = cpfNum;
+        formatarCpf();
+    });
 
+    function formatarCpf()
+    {
+        let cpfNum = cpf.value.replace(/\D/g, "");
+        let valor = cpfNum;
+        
         if (cpfNum.length > 3)
             valor = valor.substring(0, 3) + "." + valor.substring(3);
-
+        
         if (cpfNum.length > 6)
             valor = valor.substring(0, 7) + "." + valor.substring(7);
-
+        
         if (cpfNum.length > 9)
             valor = valor.substring(0, 11) + "-" + valor.substring(11);
+        
+        cpf.value = valor.substring(0, 14);
+    }
 
-        this.value = valor.substring(0, 14);
+    cpf.addEventListener("keydown", function (e) {
+        if (e.key !== "Backspace") return;
+
+        const pos = this.selectionStart;
+
+        if (pos === 0) return;
+
+        const c = this.value.charAt(pos - 1);
+
+        if (c === "." || c === "-") {
+            e.preventDefault();
+
+            this.value =
+                this.value.slice(0, pos - 2) +
+                this.value.slice(pos);
+
+            formatarCpf();
+            this.setSelectionRange(pos - 2, pos - 2);
+        }
     });
 
     document.getElementById("cel").addEventListener("input", function ()
