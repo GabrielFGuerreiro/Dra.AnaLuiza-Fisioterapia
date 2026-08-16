@@ -23,14 +23,6 @@
     box-shadow: 0 8px 18px rgba(61, 105, 75, .22);
 }
 
-.register-heading h1 {
-    margin: 0;
-    color: #294a38;
-    font-size: clamp(1.7rem, 4vw, 2.05rem);
-    font-weight: 700;
-    letter-spacing: -.035em;
-}
-
 .register-heading > p:last-child {
     margin: 10px 0 0;
     color: #65766b;
