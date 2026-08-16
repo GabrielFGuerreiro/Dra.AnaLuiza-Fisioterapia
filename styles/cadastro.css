@@ -2,7 +2,7 @@
     position: relative;
     min-height: calc(100vh - 88px);
     overflow: hidden;
-    padding: 54px 0;
+    padding: 30px 0;
     background: linear-gradient(135deg, #dce4de 0%, #edf1ea 50%, #d6e2d5 100%);
 }
 
