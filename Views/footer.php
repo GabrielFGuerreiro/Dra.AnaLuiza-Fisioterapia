@@ -8,16 +8,13 @@
             </div>
             <div class="col-md-6 text-end">
                 <h5 class="mb-2">Redes Sociais</h5>
-                <a href="https://www.facebook.com/dra.ana.luiza/" target="_blank" class="text-light ms-2">
-                    <i class="fab fa-facebook"></i> Facebook
-                </a>
-                <a href="https://www.instagram.com/dra.ana.luiza/" target="_blank" class="text-light ms-2">
+                <a href="https://www.instagram.com/draanaluiza.silva/" target="_blank" class="text-light ms-2">
                     <i class="fab fa-instagram"></i> Instagram
                 </a>
-                <a href="mailto:contato@clinicafisio.com" target="_blank" class="text-light ms-2">
+                <a href="mailto:als.fisiot@gmail.com" target="_blank" class="text-light ms-2">
                     <i class="fas fa-envelope"></i> E-mail
                 </a>
-                <a href="https://wa.me/5511999999999" target="_blank" class="text-light ms-2">
+                <a href="https://wa.me/5513991930336" target="_blank" class="text-light ms-2">
                     <i class="fab fa-whatsapp"></i> WhatsApp
                 </a>
             </div>
