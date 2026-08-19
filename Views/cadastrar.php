@@ -1,19 +1,19 @@
-<section class="register-page">
+<section class="page">
     <div class="container register-container">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-9 col-xl-8">
                 <div class="moving-card">
-                    <div class="register-heading">
-                        <span class="register-icon"><i class="fa-regular fa-user"></i></span>
+                    <div class="register-heading form-heading">
+                        <span class="register-icon form-icon"><i class="fa-regular fa-user"></i></span>
                         <h1>Crie sua conta</h1>
                     </div>
 
-                    <div id="msgAlerta" class="alerta-form">
+                    <div id="msgAlerta" class="alerta-form form-alert">
                         <i class="fa-solid fa-circle-exclamation"></i>
                         <span></span>
                     </div>
 
-                    <form class="register-form" action="<?= BASE_URL ?>/cadastrar" method="POST" id="formCadastrar">
+                    <form class="register-form form-layout" action="<?= BASE_URL ?>/cadastrar" method="POST" id="formCadastrar">
                         <div class="row g-3">
                             <div class="col-12">
                                 <div class="register-field">
@@ -97,13 +97,13 @@
                             </div>
                         </div>
 
-                        <button class="register-submit" type="button" id="btnCadastrar">
+                        <button class="register-submit form-submit" type="button" id="btnCadastrar">
                             <span>Criar minha conta</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </form>
 
-                    <p class="register-login">Já possui uma conta? <a href="<?= BASE_URL ?>/login">Entrar</a></p>
+                    <p class="register-login form-footer">Já possui uma conta? <a class="form-footer-link" href="<?= BASE_URL ?>/login">Entrar</a></p>
                 </div>
             </div>
         </div>

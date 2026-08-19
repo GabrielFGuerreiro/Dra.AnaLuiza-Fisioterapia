@@ -15,6 +15,14 @@ body{
     color: var(--text);
 }
 
+.page {
+    position: relative;
+    min-height: calc(100vh - 88px);
+    overflow: hidden;
+    padding: 30px 0;
+    background: linear-gradient(135deg, #dce4de 0%, #edf1ea 50%, #d6e2d5 100%);
+}
+
 .moving-card {
     padding: clamp(30px, 5vw, 46px);
     padding-bottom: 25px;
@@ -33,4 +41,131 @@ body{
     font-size: clamp(1.65rem, 4vw, 2rem);
     font-weight: 700;
     letter-spacing: -.035em;
+}
+
+/* Componentes compartilhados dos formulários */
+.form-heading { text-align: center; }
+
+.form-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 17px;
+    border-radius: 16px;
+    background: #4f795c;
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(61, 105, 75, .22);
+}
+
+.form-alert {
+    display: none;
+    align-items: flex-start;
+    gap: 9px;
+    margin-top: 24px;
+    padding: 12px 14px;
+    border: 1px solid #f2c5c0;
+    border-radius: 10px;
+    background: #fff4f2;
+    color: #9a3d36;
+    font-size: .88rem;
+    line-height: 1.4;
+    animation: form-alert-in .3s ease;
+}
+
+.form-alert i { margin-top: 2px; }
+.form-layout { margin-top: 10px; }
+.form-input-wrap,
+.login-input-wrap,
+.register-input-wrap { position: relative; }
+
+.form-input-wrap > i,
+.login-input-wrap > i,
+.register-input-wrap > i {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    z-index: 2;
+    color: #73907a;
+    font-size: .95rem;
+    transform: translateY(-50%);
+    transition: color .2s ease;
+}
+
+.form-control.form-input,
+.login-form .form-control,
+.register-form .form-control {
+    height: 51px;
+    padding: 0 15px 0 43px;
+    border: 1px solid #d3ded3;
+    border-radius: 11px;
+    background: rgba(255, 255, 255, .86);
+    color: #294a38;
+    font-size: .96rem;
+    box-shadow: none;
+    transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+
+.form-control.form-input::placeholder,
+.login-form .form-control::placeholder,
+.register-form .form-control::placeholder { color: #a3b0a4; }
+
+.form-control.form-input:focus,
+.login-form .form-control:focus,
+.register-form .form-control:focus {
+    border-color: #6f9675;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(93, 138, 101, .14);
+}
+
+.form-input-wrap:focus-within > i,
+.login-input-wrap:focus-within > i,
+.register-input-wrap:focus-within > i { color: #477252; }
+
+.form-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 27px;
+    padding: 14px 18px;
+    border: 0;
+    border-radius: 11px;
+    background: linear-gradient(120deg, #3d6e4c, #5b8964);
+    color: #fff;
+    font-size: .97rem;
+    font-weight: 700;
+    box-shadow: 0 9px 18px rgba(53, 105, 68, .22);
+    transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+
+.form-submit:hover {
+    background: linear-gradient(120deg, #365f43, #527e5a);
+    box-shadow: 0 12px 22px rgba(53, 105, 68, .28);
+    filter: saturate(1.08);
+    transform: translateY(-2px);
+}
+
+.form-submit:active { transform: translateY(0); }
+
+.form-footer {
+    margin: 24px 0 0;
+    color: #718075;
+    font-size: .91rem;
+    text-align: center;
+}
+
+.form-footer-link {
+    color: #3f714c;
+    font-weight: 700;
+    text-decoration-color: rgba(63, 113, 76, .35);
+    text-underline-offset: 3px;
+}
+
+.form-footer-link:hover { color: #294f35; }
+
+@keyframes form-alert-in {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
 }
