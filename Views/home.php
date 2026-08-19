@@ -1,24 +1,6 @@
 <?php
 
 use DraAnaLuiza\Models\Database;
-    $servicos = [
-        [
-            "titulo" => "Foo",
-            "descricao" => "Bar."
-        ],
-        [
-            "titulo" => "Lorem",
-            "descricao" => "Ipsum."
-        ],
-        [
-            "titulo" => "Hotel?",
-            "descricao" => "Trivago."
-        ],
-        [
-            "titulo" => "Sem",
-            "descricao" => "Ideia."
-        ]
-    ];
 
     $video = ["mp4", "mkv", "avi", "mov", "webm"];
     $imagem = ["png", "jpg", "jpeg", "gif", "webp"];
@@ -83,9 +65,9 @@ use DraAnaLuiza\Models\Database;
 
         <?php foreach ($servicos as $servico): ?>
 
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-4 col-lg-4">
                 <div class="card h-100 shadow-sm">
-                    <div class="card-body">
+                    <div class="card-body text-center">
                         <h5><?= $servico["titulo"] ?></h5>
                         <p><?= $servico["descricao"] ?></p>
                     </div>
