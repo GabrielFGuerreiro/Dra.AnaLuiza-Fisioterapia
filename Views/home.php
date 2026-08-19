@@ -17,11 +17,30 @@ use DraAnaLuiza\Models\Database;
         [
             "titulo" => "Sem",
             "descricao" => "Ideia."
+        ],
+        [
+            "titulo" => "Mais",
+            "descricao" => "Serviços."
+        ],
+        [
+            "titulo" => "E",
+            "descricao" => "Depoimentos."
         ]
+
     ];
 
-    $video = ["mp4", "mkv", "avi", "mov", "webm"];
-    $imagem = ["png", "jpg", "jpeg", "gif", "webp"];
+const MIDIA = [
+    'mp4'  => 'video/mp4',
+    'mkv'  => 'video/x-matroska',
+    'avi'  => 'video/x-msvideo',
+    'mov'  => 'video/quicktime',
+    'webm' => 'video/webm',
+    'png'  => 'image/png',
+    'jpg'  => 'image/jpeg',
+    'jpeg' => 'image/jpeg',
+    'gif'  => 'image/gif',
+    'webp' => 'image/webp',
+];
     
     $db = new Database();
 
@@ -83,11 +102,11 @@ use DraAnaLuiza\Models\Database;
 
         <?php foreach ($servicos as $servico): ?>
 
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
-                        <h5><?= $servico["titulo"] ?></h5>
-                        <p><?= $servico["descricao"] ?></p>
+                        <h5><?= htmlspecialchars($servico["titulo"]) ?></h5>
+                        <p><?= htmlspecialchars($servico["descricao"]) ?></p>
                     </div>
                 </div>
             </div>
@@ -103,64 +122,73 @@ use DraAnaLuiza\Models\Database;
         fazer algum jeito de traduzir automaticamente que tipo de conteudo será usado no depoimento,
         tipo um if ou switch que alterna entre <img> e <video>
             -rodrigo
-    } -->
+    -->
 
     <h2 class="text-center fw-bold mb-5">
         Depoimentos de pacientes
     </h2>
 
     <div class="row g-4">
+        <?php
+        $carrossel = [];
+        foreach ($depoimento as $d) {
+            if (!empty($d['caminhoArquivo'])) {
+                $carrossel[] = [
+                    'src'  => rtrim(BASE_URL, '/') . '/arquivosDepoimentos/' . basename($d['caminhoArquivo']),
+                    'desc' => trim($d['dsDepoimento'] ?? ''),
+                ];
+            }
+        }
+        ?>
+        <?php if (!empty($carrossel)) { ?>
+        <div class="col-12">
+            <div id="demo" class="carousel slide" data-bs-ride="carousel">
 
-        <?php foreach ($depoimento as $d) { ?>
-
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <p>
-                        <?= htmlspecialchars($d['dsDepoimento'] ?? '') ?>
-                    </p>
-                    <?php if (!empty($d['nome'])) { ?>
-                        <h6 class="fw-bold mb-0"><?= htmlspecialchars($d['nome']) ?></h6><br>
+                <!-- Indicators/dots -->
+                <div class="carousel-indicators">
+                    <?php foreach ($carrossel as $index => $item) { ?>
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="<?= $index ?>"
+                            <?= $index === 0 ? 'class="active" aria-current="true"' : '' ?>></button>
                     <?php } ?>
-
-                    <?php if (!empty($d['caminhoArquivo'])) {
-                        $tipo = pathinfo($d['caminhoArquivo'], PATHINFO_EXTENSION);
-                        $raw = str_replace('\\', '/', $d['caminhoArquivo']);
-
-                        $publicFolders = ['Images', 'arquivosDepoimentos', 'uploads'];
-                        $rel = $raw;
-                        foreach ($publicFolders as $f) {
-                            $p = stripos($raw, '/' . $f . '/');
-                            if ($p !== false) { $rel = substr($raw, $p + 1); break; }
-                            $p2 = stripos($raw, $f . '/');
-                            if ($p2 !== false) { $rel = substr($raw, $p2); break; }
-                        }
-
-                        $url = rtrim(BASE_URL, '/') . '/' . ltrim($rel, '/');
-
-                        if (in_array($tipo, $video)) { ?>
-
-                            <video class="img-fluid mb-2 object-fit-scale border rounded" controls>
-                                <source src="<?= $url ?>" type="video/<?= $tipo ?>">
-                                <span style="color: crimson">Seu navegador não suporta o elemento de vídeo.</span>
-                            </video>
-
-                        <?php } elseif (in_array($tipo, $imagem)) { ?>
-
-                            <img src="<?= $url ?>" class="img-fluid mb-2 object-fit-scale border rounded" alt="Depoimento de paciente">
-
-                        <?php }
-                    } ?>
-
                 </div>
+
+                <!-- The slideshow/carousel -->
+                <div class="carousel-inner rounded shadow-sm" style="height: 380px; background-color: white;">
+                    <?php foreach ($carrossel as $index => $item) {
+                        $tipo = strtolower(pathinfo($item['src'], PATHINFO_EXTENSION));
+                        $mime = MIDIA[$tipo] ?? null;
+                        $isVideo = $mime && str_starts_with($mime, 'video/');
+                    ?>
+                        <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>" style="height: 380px;">
+                            <div class="d-flex flex-column justify-content-center align-items-center h-100 px-4 text-center">
+                                <?php if ($isVideo) { ?>
+                                    <video src="<?= $item['src'] ?>" controls class="mw-100" style="max-height: 220px; object-fit: contain;"></video>
+                                <?php } else { ?>
+                                    <img src="<?= $item['src'] ?>" alt="Depoimento de paciente" class="mw-100" style="max-height: 220px; object-fit: contain;">
+                                <?php } ?>
+
+                                <?php if ($item['desc'] !== '') { ?>
+                                    <p class="dsDepoimento mt-3 mb-0 fst-italic">
+                                        "<?= htmlspecialchars($item['desc']) ?>"
+                                    </p>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+ 
+                <!-- Left and right controls/icons -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-dark rounded-circle p-3"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-dark rounded-circle p-3"></span>
+                </button>
             </div>
         </div>
-
         <?php } ?>
-
+ 
     </div>
 </section>
 
 <?php require  "footer.php"; ?>
-
-
