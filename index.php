@@ -5,6 +5,8 @@ if (session_id() == '') {
     session_start();
 }
 
+date_default_timezone_set('America/Sao_Paulo');
+
 require_once __DIR__ . "/vendor/autoload.php";
 define('BASE_URL', '/Dra.AnaLuiza-Fisioterapia');
 define('RAIZ', __DIR__);
