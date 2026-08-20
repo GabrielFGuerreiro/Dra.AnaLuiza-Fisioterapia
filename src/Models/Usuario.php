@@ -132,4 +132,32 @@ class Usuario
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function AlterarSenha($email, $novaSenha): array
+    {
+        try
+        {
+            $db = new Database();
+            $pdo = $db->getConnection();
+
+            $sql = "UPDATE Usuarios set senha = :senha WHERE email = :email";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':email' => $email,
+                ':senha' => $novaSenha
+            ]);
+
+            return [
+                'sucesso' => true,
+                'mensagem' => 'Senha Alterada com Sucesso!'
+            ];
+        }
+        catch (\Throwable $th)
+        {
+            return [
+                'sucesso' => false,
+                'mensagem' => 'Não foi Possível Alterar a Senha no Momento. Favor Entrar em Contato.'
+            ];
+        }
+    }
 }

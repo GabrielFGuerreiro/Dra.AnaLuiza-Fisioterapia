@@ -179,4 +179,26 @@ class UsuarioController extends GeralController
         header("Location: " . BASE_URL .  "/novaSenha");
         exit();
     }
+
+    public function NovaSenha()
+    {
+        if (!isset($_SESSION['codigoRecuperacaoValidado']) ||
+            $_SESSION['codigoRecuperacaoValidado'] !== true)
+        {
+            header("Location: " . BASE_URL . "/esqueciMinhaSenha?teste");
+            exit();
+        }
+
+        $this->MostrarView("novaSenha");
+    }
+
+    public function AlterarSenha()
+    {
+        $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+
+        $retorno = (new Usuario())->AlterarSenha($_SESSION['emailRecuperacao'], $senha);
+
+        header("Location: " . BASE_URL . "/novaSenha?sucesso=" . $retorno['sucesso'] . "&msg=" . $retorno['mensagem']);
+        exit();
+    }
 }

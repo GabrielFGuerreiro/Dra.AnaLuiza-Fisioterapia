@@ -13,6 +13,7 @@ return [
         '/gerenciarDepoimentos' => 'AdmController@GerenciarDepoimentos',
         '/esqueciMinhaSenha' => 'UsuarioController@EsqueceuSenha',
         '/verificacaoCodigo' => 'UsuarioController@VerificacaoCodigo',
+        '/novaSenha' => 'UsuarioController@NovaSenha'
     ],
 
     'POST' => [
@@ -21,7 +22,8 @@ return [
         '/cadastrarDepoimento' => 'AdmController@CadastrarDepoimento',
         '/cadastrarConsulta' => 'UsuarioController@PreConsulta',
         '/enviarEmailCodigo' => 'UsuarioController@EnviarEmailCodigo',
-        '/verificarCodigo' => 'UsuarioController@VerificarCodigo'
+        '/verificarCodigo' => 'UsuarioController@VerificarCodigo',
+        '/alterarSenha' => 'UsuarioController@AlterarSenha'
     ]
 
 ];
