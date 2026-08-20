@@ -9,7 +9,9 @@ dataNasc DATETIME,
 email VARCHAR(50),
 celular CHAR(12) NOT NULL,
 isAdmin BIT NOT NULL,
-senha VARCHAR(255) NOT NULL
+senha VARCHAR(255) NOT NULL,
+codigoRecuperacaoSenha INT,
+dtExpiracaoCodigoSenha DATETIME
 )
 
 CREATE TABLE PreConsultas (
