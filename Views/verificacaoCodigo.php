@@ -24,7 +24,7 @@
                         >
 
                         <button type="submit">Verificar Código</button>
-                        
+                        <a href="<?= BASE_URL ?>/esqueciMinhaSenha">Voltar</a>
                     </form>
                 </div>
             </div>

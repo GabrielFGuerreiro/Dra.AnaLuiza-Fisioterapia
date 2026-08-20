@@ -23,6 +23,7 @@
                             </div>
                         </div>
                         <button type="submit">Enviar Código</button>
+                        <a href="<?= BASE_URL ?>/login">Voltar</a>
                     </form>
                 </div>
             </div>
