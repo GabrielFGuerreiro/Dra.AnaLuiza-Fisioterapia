@@ -125,6 +125,9 @@
                 if(sucesso === "1")
                     window.location.href = "/Dra.AnaLuiza-Fisioterapia/login";
             });
+
+            // O resultado já foi exibido; remove os dados do POST da URL.
+            window.history.replaceState({}, document.title, window.location.pathname);
         }
     });
 

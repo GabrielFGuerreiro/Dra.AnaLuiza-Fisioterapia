@@ -49,7 +49,10 @@
         const params = new URLSearchParams(window.location.search);
         const msg = params.get("msg");
         if (msg)
+        {
             mostrarAlerta(msg);
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
     });
 
     function submitForm()

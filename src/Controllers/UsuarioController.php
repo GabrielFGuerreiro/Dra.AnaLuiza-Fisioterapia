@@ -27,7 +27,8 @@ class UsuarioController extends GeralController
         $usuario = new Usuario();
         $retorno = $usuario->CadastrarUsuario($nome, $cpf, $dtNasc, $email, $cel, $senha);
 
-        header("Location: /Dra.AnaLuiza-Fisioterapia/cadastro?sucesso={$retorno["sucesso"]}&msg={$retorno["mensagem"]}"); //Quando cadastrar, não fica na requisição POST, vai para GET, impedindo o reenvio do form quando recarregar.
+        header("Location: " . BASE_URL . "/cadastro?sucesso=" . $retorno['sucesso'] . "&msg=" . urlencode($retorno['mensagem']), true, 303); //303 = Após o POST, redireciona para GET, evitando o reenvio do formulário ao recarregar.
+        exit();
     }
 
     public function cadastrarConsulta()
@@ -55,13 +56,13 @@ class UsuarioController extends GeralController
             $_SESSION['email'] = $emailForm;
             $_SESSION['nome'] = $dadosUsuario['nmUsuario'];
             $_SESSION['isAdmin'] = $dadosUsuario['isAdmin'];
-            header("Location: /Dra.AnaLuiza-Fisioterapia/");
+            header("Location: " . BASE_URL . "/", true, 303);
             exit();
         }
         else
         {
-            header("Location: /Dra.AnaLuiza-Fisioterapia/login?msg=E-mail ou Senha Inválidos.");
-            exit();          
+            header("Location: " . BASE_URL . "/login?msg=" . urlencode("E-mail ou Senha Inválidos."), true, 303);
+            exit();    
         }
     }
 
