@@ -13,15 +13,18 @@
                         <span></span>
                     </div>
 
-                    <form action="<?= BASE_URL ?>/verificarCodigo" method="POST" id="formVerificarCodigo">
+                    <form class="form-layout recovery-form" action="<?= BASE_URL ?>/verificarCodigo" method="POST" id="formVerificarCodigo">
                         <label for="codigo">Código</label>
-                        <input
+                        <div class="form-input-wrap">
+                            <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                        <input class="form-control form-input"
                             id="codigo"
                             name="codigo"
                             type="text"
                             maxlength="6"
                             placeholder="Digite o código"
                         >
+                        </div>
 
                         <button type="submit">Verificar Código</button>
                         <a href="<?= BASE_URL ?>/esqueciMinhaSenha">Voltar</a>

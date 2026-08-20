@@ -13,17 +13,19 @@
                         <span></span>
                     </div>
                     
-                    <form action="<?= BASE_URL ?>/alterarSenha" method="POST" id="formAlterarSenha">
+                    <form class="form-layout recovery-form" action="<?= BASE_URL ?>/alterarSenha" method="POST" id="formAlterarSenha">
                         <label for="senha">Nova senha</label>
-                        <input id="senha" name="senha" type="password">
+                        <div class="form-input-wrap">
+                            <i class="fa-solid fa-lock" aria-hidden="true"></i>
+                            <input class="form-control form-input" id="senha" name="senha" type="password" placeholder="Crie uma nova senha">
+                        </div>
 
                         <label for="confirmSenha">Confirmar senha</label>
-                        <input id="confirmSenha" name="confirmSenha" type="password">
+                        <div class="form-input-wrap">
+                            <i class="fa-solid fa-lock" aria-hidden="true"></i>
+                            <input class="form-control form-input" id="confirmSenha" name="confirmSenha" type="password" placeholder="Digite novamente">
+                        </div>
 
-                        <button type="submit">Alterar Senha</button>
-                        <a href="<?= BASE_URL ?>/verificacaoCodigo">Voltar</a>
-
-                        
                         <div class="password-hints">
                             <span class="requisitosSenha"><i class="fa fa-circle"></i>8 caracteres</span>
                             <span class="requisitosSenha"><i class="fa fa-circle"></i>Letra minúscula</span>
@@ -31,6 +33,9 @@
                             <span class="requisitosSenha"><i class="fa fa-circle"></i>Número</span>
                             <span class="requisitosSenha"><i class="fa fa-circle"></i>Caractere especial</span>
                         </div>
+
+                        <button type="submit">Alterar Senha</button>
+                        <a href="<?= BASE_URL ?>/verificacaoCodigo">Voltar</a>
                     </form>
                 </div>
             </div>

@@ -13,7 +13,7 @@
                         <span></span>
                     </div>
 
-                    <form class="form-layout" action="<?= BASE_URL ?>/enviarEmailCodigo" method="POST" id="formRecuperarSenha">
+                    <form class="form-layout recovery-form" action="<?= BASE_URL ?>/enviarEmailCodigo" method="POST" id="formRecuperarSenha">
 
                         <div class="form-field">
                             <label for="email">E-mail</label>

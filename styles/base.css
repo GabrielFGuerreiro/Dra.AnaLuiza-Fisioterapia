@@ -94,7 +94,8 @@ body{
 
 .form-control.form-input,
 .login-form .form-control,
-.register-form .form-control {
+.register-form .form-control,
+.recovery-form .form-control {
     height: 51px;
     padding: 0 15px 0 43px;
     border: 1px solid #d3ded3;
@@ -108,11 +109,13 @@ body{
 
 .form-control.form-input::placeholder,
 .login-form .form-control::placeholder,
-.register-form .form-control::placeholder { color: #a3b0a4; }
+.register-form .form-control::placeholder,
+.recovery-form .form-control::placeholder { color: #a3b0a4; }
 
 .form-control.form-input:focus,
 .login-form .form-control:focus,
-.register-form .form-control:focus {
+.register-form .form-control:focus,
+.recovery-form .form-control:focus {
     border-color: #6f9675;
     background: #fff;
     box-shadow: 0 0 0 4px rgba(93, 138, 101, .14);
@@ -122,7 +125,16 @@ body{
 .login-input-wrap:focus-within > i,
 .register-input-wrap:focus-within > i { color: #477252; }
 
-.form-submit {
+.recovery-form label {
+    display: block;
+    margin: 0 0 7px;
+    color: #385843;
+    font-size: .9rem;
+    font-weight: 650;
+}
+
+.form-submit,
+.recovery-form > button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -140,14 +152,16 @@ body{
     transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
 }
 
-.form-submit:hover {
+.form-submit:hover,
+.recovery-form > button:hover {
     background: linear-gradient(120deg, #365f43, #527e5a);
     box-shadow: 0 12px 22px rgba(53, 105, 68, .28);
     filter: saturate(1.08);
     transform: translateY(-2px);
 }
 
-.form-submit:active { transform: translateY(0); }
+.form-submit:active,
+.recovery-form > button:active { transform: translateY(0); }
 
 .form-footer {
     margin: 24px 0 0;
@@ -164,6 +178,18 @@ body{
 }
 
 .form-footer-link:hover { color: #294f35; }
+
+.recovery-form > a {
+    display: block;
+    margin-top: 17px;
+    color: #3f714c;
+    font-weight: 700;
+    text-decoration-color: rgba(63, 113, 76, .35);
+    text-underline-offset: 3px;
+    text-align: center;
+}
+
+.recovery-form > a:hover { color: #294f35; }
 
 @keyframes form-alert-in {
     from { opacity: 0; transform: translateY(-8px); }
