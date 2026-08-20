@@ -52,7 +52,7 @@
             mostrarAlerta(msg);
     });
 
-    function logar()
+    function submitForm()
     {
         const inputEmail = document.getElementById("email");
         if (!inputEmail.value.trim()) {
@@ -75,6 +75,6 @@
     }
     
     document.getElementById("btnLogin").addEventListener("click", function () {
-        logar();
+        submitForm();
     });
 </script>

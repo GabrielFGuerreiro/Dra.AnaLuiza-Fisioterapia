@@ -30,8 +30,7 @@
                 }
             });
 
-            const form = document.getElementById("formCadastrar") ?? document.getElementById("formLogin");
-            let funcao = document.getElementById("formCadastrar") ? cadastrar :  logar;
+            const form = document.querySelector("form");
             if(form)
             {
                 form.querySelectorAll("input").forEach(element => {
@@ -40,7 +39,7 @@
                         if (event.key === "Enter")
                         {
                             event.preventDefault();
-                            funcao();
+                            submitForm();
                         }
                     });
                 });

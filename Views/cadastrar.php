@@ -160,10 +160,10 @@
     var circulos = document.querySelectorAll(".password-hints .fa-circle");
 
     document.getElementById("btnCadastrar").addEventListener("click", function() {
-        cadastrar();
+        submitForm();
     });
 
-    function cadastrar()
+    function submitForm()
     {        
         var nome = document.getElementById("nome").value;
         if (!nome) {
