@@ -15,6 +15,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "twbs/bootstrap": "5.3.8"
+        "twbs/bootstrap": "5.3.8",
+        "phpmailer/phpmailer": "^6.9"
     }
 }
