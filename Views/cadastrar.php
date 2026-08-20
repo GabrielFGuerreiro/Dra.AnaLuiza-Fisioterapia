@@ -97,7 +97,7 @@
                             </div>
                         </div>
 
-                        <button class="register-submit form-submit" type="button" id="btnCadastrar">
+                        <button class="register-submit form-submit" type="submit">
                             <span>Criar minha conta</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
@@ -162,12 +162,9 @@
 
     var circulos = document.querySelectorAll(".password-hints .fa-circle");
 
-    document.getElementById("btnCadastrar").addEventListener("click", function() {
-        submitForm();
-    });
+    document.getElementById("formCadastrar").addEventListener("submit", function(e) {
+        e.preventDefault();
 
-    function submitForm()
-    {        
         var nome = document.getElementById("nome").value;
         if (!nome) {
             mostrarAlerta("Informe seu nome completo.");
@@ -223,9 +220,8 @@
             return;
         }
 
-        document.getElementById("formCadastrar").submit();
-        return;
-    }
+        this.submit();
+    });
 
     document.getElementById("senhaCad").addEventListener("input", function() {
         var senha = this.value;

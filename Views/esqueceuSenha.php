@@ -22,7 +22,7 @@
                                 <input id="email" name="email" class="form-control campo-form" type="email" placeholder="voce@exemplo.com">
                             </div>
                         </div>
-                        <button type="button" id="btnEnviarCodigo">Enviar Código</button>
+                        <button type="submit">Enviar Código</button>
                     </form>
                 </div>
             </div>
@@ -50,19 +50,17 @@
         }
     });
 
-    document.getElementById("btnEnviarCodigo").addEventListener("click", function(e)
+    document.getElementById("formRecuperarSenha").addEventListener("submit", function(e)
     {
-        submitForm();        
-    });
-
-    function submitForm()
-    {
+        e.preventDefault();
+        
         if(!document.getElementById("email").value)
         {
             mostrarAlerta("Digite o E-mail.");
             return;
         }
 
-        document.getElementById("formRecuperarSenha").submit();
-    }
+        this.submit();      
+    });
+
 </script>

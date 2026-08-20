@@ -28,22 +28,7 @@
                 if (link.pathname === window.location.pathname) {
                     link.classList.add("active");
                 }
-            });
-
-            const form = document.querySelector("form");
-            if(form)
-            {
-                form.querySelectorAll("input").forEach(element => {
-                    element.addEventListener('keypress', function(event)
-                    {
-                        if (event.key === "Enter")
-                        {
-                            event.preventDefault();
-                            submitForm();
-                        }
-                    });
-                });
-            }     
+            }); 
         });
 
         const alerta = document.getElementById("msgAlerta");

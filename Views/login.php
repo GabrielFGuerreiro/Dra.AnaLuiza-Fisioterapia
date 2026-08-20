@@ -31,7 +31,7 @@
                         </div>
                         <a class="forgot-password" href="<?= BASE_URL ?>/esqueciMinhaSenha">Esqueceu sua senha?</a>
 
-                        <button id="btnLogin" class="login-submit form-submit" type="button">
+                        <button class="login-submit form-submit" type="submit">
                             <span>Entrar na minha conta</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
@@ -55,8 +55,9 @@
         }
     });
 
-    function submitForm()
-    {
+    document.getElementById("formLogin").addEventListener("submit", function (e) {
+       e.preventDefault(); //Impede que o formulário seja enviado quando a validação falha.
+
         const inputEmail = document.getElementById("email");
         if (!inputEmail.value.trim()) {
             mostrarAlerta("Digite o E-mail.");
@@ -74,10 +75,6 @@
             return;
         }
         
-        document.getElementById("formLogin").submit();
-    }
-    
-    document.getElementById("btnLogin").addEventListener("click", function () {
-        submitForm();
+        this.submit();
     });
 </script>
