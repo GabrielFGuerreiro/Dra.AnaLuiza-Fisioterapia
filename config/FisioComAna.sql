@@ -10,7 +10,7 @@ email VARCHAR(50),
 celular CHAR(12) NOT NULL,
 isAdmin BIT NOT NULL,
 senha VARCHAR(255) NOT NULL,
-codigoRecuperacaoSenha INT,
+codigoRecuperacaoSenha CHAR(6),
 dtExpiracaoCodigoSenha DATETIME
 )
 
