@@ -92,6 +92,7 @@ class UsuarioController extends GeralController
     {
         $codigo = random_int(100000, 999999);
         $email = $_POST['email'];
+        $_SESSION['emailRecuperacao'] = $email;
 
         $usuario = new Usuario();
 
@@ -149,6 +150,33 @@ class UsuarioController extends GeralController
         }
 
         header("Location: " . BASE_URL ."/verificacaoCodigo");
+        exit();
+    }
+
+    public function VerificacaoCodigo()
+    {
+        $this->MostrarView("verificacaoCodigo");
+    }
+
+    public function VerificarCodigo()
+    {
+        $email = $_SESSION['emailRecuperacao'];
+        $dadosCodigo = (new Usuario())->RetornarCodigoRecuperacao($email);
+        
+        if (strtotime($dadosCodigo['dtExpiracao']) < time())
+        {
+            header("Location: " . BASE_URL .  "/verificacaoCodigo?sucesso=0&msg=Código Expirado.");
+            exit();     
+        }
+        
+        if($_POST['codigo'] != $dadosCodigo['codigo'])
+        {
+            header("Location: " . BASE_URL .  "/verificacaoCodigo?sucesso=0&msg=Código Inválido.");
+            exit();
+        }
+            
+        $_SESSION['codigoRecuperacaoValidado'] = true;
+        header("Location: " . BASE_URL .  "/novaSenha");
         exit();
     }
 }

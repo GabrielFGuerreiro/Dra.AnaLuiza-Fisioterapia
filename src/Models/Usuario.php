@@ -120,4 +120,16 @@ class Usuario
             ];
         }
     }
+
+    public function RetornarCodigoRecuperacao($email): array
+    {
+        $db = new Database();
+        $pdo = $db->getConnection();
+        
+        $sql = "SELECT codigoRecuperacaoSenha as codigo, dtExpiracaoCodigoSenha as dtExpiracao FROM USUARIOS WHERE email = :email";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([':email' => $email]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

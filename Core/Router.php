@@ -41,7 +41,7 @@ Class Router
             exit();
         }
 
-        $rotasPublicas = ['/', '/login', '/logar', '/esqueciMinhaSenha', '/enviarEmailCodigo', '/cadastro', '/cadastrar'];
+        $rotasPublicas = ['/', '/login', '/logar', '/esqueciMinhaSenha', '/enviarEmailCodigo', '/verificacaoCodigo', '/verificarCodigo', '/cadastro', '/cadastrar'];
         if (!in_array($uri, $rotasPublicas) && !isset($_SESSION['email'])) {
             header("Location: " . BASE_URL . "/login");
             exit();
