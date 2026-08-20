@@ -72,4 +72,52 @@ class Usuario
             return null;
         }
     }
+
+    public function EmailExiste($email): bool
+    {
+        $db = new Database();
+        $pdo = $db->getConnection();
+
+        $sql = "SELECT COUNT(*) FROM USUARIOS WHERE email = :email";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ":email" => $email
+        ]);
+
+        return $stmt->fetchColumn() > 0;
+    }
+
+    public function SalvarCodigoRecuperacaoSenha($codigo, $email): array
+    {
+        try
+        {
+            $db = new Database();
+            $pdo = $db->getConnection();
+                
+            $sql = "UPDATE USUARIOS 
+                    SET codigoRecuperacaoSenha = :codigo,
+                        dtExpiracaoCodigoSenha = DATE_ADD(NOW(), INTERVAL 5 MINUTE)
+                    WHERE email = :email";
+
+            $stmt = $pdo->prepare($sql);
+
+            $stmt->execute([
+                ":codigo" => $codigo,
+                ":email" => $email
+            ]);
+
+            return [
+                'sucesso' => true,
+                'mensagem' => 'Código Salvo.'
+            ];
+        }
+        catch (\Throwable $th)
+        {
+            return [
+                'sucesso' => false,
+                'mensagem' => 'Erro ao Salvar o Código. Favor Entrar em Contato.'
+            ];
+        }
+    }
 }

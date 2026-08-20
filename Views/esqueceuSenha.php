@@ -7,6 +7,12 @@
                         <span class="form-icon"><i class="fa-regular fa-user"></i></span>
                         <h1>Recuperar a Senha</h1>
                     </div>
+
+                    <div id="msgAlerta" class="alerta-form form-alert">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span></span>
+                    </div>
+
                     <form class="form-layout" action="<?= BASE_URL ?>/enviarEmailCodigo" method="POST" id="formRecuperarSenha">
 
                         <div class="form-field">
@@ -16,10 +22,47 @@
                                 <input id="email" name="email" class="form-control campo-form" type="email" placeholder="voce@exemplo.com">
                             </div>
                         </div>
-                        <button type="submit">Enviar Código</button>
+                        <button type="button" id="btnEnviarCodigo">Enviar Código</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const params = new URLSearchParams(window.location.search);
+        const msg = params.get("msg");
+        const sucesso = params.get("sucesso");
+        if (msg)
+        {
+            Swal.fire({
+                title: msg,
+                icon: sucesso === "1" ? "success" : "error",
+                confirmButtonText: 'Ok'
+            }).then((resulta) => {
+                if(sucesso === "1")
+                    window.location.href = "/Dra.AnaLuiza-Fisioterapia/verificacaoCodigo";
+            });
+
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    });
+
+    document.getElementById("btnEnviarCodigo").addEventListener("click", function(e)
+    {
+        submitForm();        
+    });
+
+    function submitForm()
+    {
+        if(!document.getElementById("email").value)
+        {
+            mostrarAlerta("Digite o E-mail.");
+            return;
+        }
+
+        document.getElementById("formRecuperarSenha").submit();
+    }
+</script>

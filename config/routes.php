@@ -10,14 +10,16 @@ return [
         '/preconsulta' => 'UsuarioController@PreConsulta',
         '/agendamentos' => 'AdmController@Agendamentos',
         '/listarAgendamentosJson' => 'AdmController@ListarAgendamentosJson',
-        '/gerenciarDepoimentos' => 'AdmController@GerenciarDepoimentos'
+        '/gerenciarDepoimentos' => 'AdmController@GerenciarDepoimentos',
+        '/esqueciMinhaSenha' => 'UsuarioController@EsqueceuSenha'
     ],
 
     'POST' => [
         '/cadastrar' => 'UsuarioController@Cadastrar',
         '/logar' => 'UsuarioController@Logar',
         '/cadastrarDepoimento' => 'AdmController@CadastrarDepoimento',
-        '/cadastrarConsulta' => 'UsuarioController@PreConsulta'
+        '/cadastrarConsulta' => 'UsuarioController@PreConsulta',
+        '/enviarEmailCodigo' => 'UsuarioController@EnviarEmailCodigo'
     ]
 
 ];

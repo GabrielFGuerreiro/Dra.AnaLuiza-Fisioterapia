@@ -2,6 +2,8 @@
 
 namespace DraAnaLuiza\Controllers;
 use DraAnaLuiza\Models\Usuario;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 
 class UsuarioController extends GeralController
 {
@@ -66,6 +68,11 @@ class UsuarioController extends GeralController
         }
     }
 
+    public function EsqueceuSenha()
+    {
+        $this->MostrarView("esqueceuSenha");
+    }
+
     public function Logout()
     {
         if (session_id() == '') {
@@ -79,5 +86,69 @@ class UsuarioController extends GeralController
     public function PreConsulta()
     {
         $this->MostrarView("preConsulta");
+    }
+
+    public function EnviarEmailCodigo()
+    {
+        $codigo = random_int(100000, 999999);
+        $email = $_POST['email'];
+
+        $usuario = new Usuario();
+
+        if (!$usuario->EmailExiste($email))
+        {
+            header(
+                "Location: " . BASE_URL .
+                "/esqueciMinhaSenha?sucesso=0&msg=" .
+                urlencode("E-mail Não Cadastrado.")
+            );
+            exit();
+        }
+
+        try
+        {
+            $mail = new PHPMailer(true);
+            $mail->isSMTP();
+            $mail->SMTPAuth = true;
+
+            $mail->Host = "smtp.gmail.com";
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+
+            $mail->Username = "gaferg2004@gmail.com";
+            $mail->Password = "wqbs viaf fdev qnio";
+
+            $mail->setFrom("gaferg2004@gmail.com");
+            $mail->addAddress($email);
+
+            $mail->Subject = "Recuperação de senha";
+            $mail->Body = "Seu código para recuperar a senha é: " . $codigo;
+            $mail->CharSet = 'UTF-8';
+            
+            $mail->send();
+        }
+        catch (\Throwable $th)
+        {
+            header(
+                "Location: " . BASE_URL .
+                "/esqueciMinhaSenha?sucesso=0&msg=" .
+                urlencode("Erro ao enviar o e-mail. Favor entrar em contato.")
+            );
+            exit();
+        }
+
+        $retorno = $usuario->SalvarCodigoRecuperacaoSenha($codigo, $email);
+        if (!$retorno['sucesso'])
+        {
+            header(
+                "Location: " . BASE_URL .
+                "/esqueciMinhaSenha?sucesso=0&msg=" .
+                urlencode($retorno['mensagem'])
+            );
+            exit();
+        }
+
+        header("Location: " . BASE_URL ."/verificacaoCodigo");
+        exit();
     }
 }
