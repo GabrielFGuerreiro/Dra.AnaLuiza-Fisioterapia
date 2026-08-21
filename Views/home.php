@@ -47,16 +47,17 @@ const MIDIA = [
     </div>
 </section>
 
-<section class="home-section container py-5">
-    <div class="text-center mb-5">
+<section class="home-section about-section container py-5">
+    <div class="about-heading text-center">
+        <span class="section-kicker">Movimento e bem-estar</span>
         <h2 class="fw-bold">O que é fisioterapia?</h2>
     </div>
 
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <p class="text-center fs-5">
-                A fisioterapia é a área da saúde responsável pela prevenção e tratamento de alterações do movimento,
-                promovendo mais independência, mobilidade e qualidade de vida aos pacientes.
+            <p class="about-copy text-center">
+                A fisioterapia ajuda a prevenir e tratar alterações do movimento, contribuindo para aliviar dores,
+                recuperar a funcionalidade e conquistar mais autonomia, mobilidade e qualidade de vida.
             </p>
         </div>
     </div>

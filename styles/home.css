@@ -46,6 +46,32 @@
     margin-left: 0;
 }
 
+.about-section {
+    padding-top: 78px !important;
+    padding-bottom: 78px !important;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .16), rgba(226, 237, 228, .3));
+}
+
+.about-heading {
+    max-width: 700px;
+    margin: 0 auto 28px;
+}
+
+.about-heading h2 {
+    margin: 0;
+    color: #203b2d;
+    font-size: clamp(1.8rem, 3vw, 2.25rem);
+    letter-spacing: -.035em;
+}
+
+.about-copy {
+    max-width: 760px;
+    margin: 0 auto;
+    color: #355244;
+    font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+    line-height: 1.75;
+}
+
 .services-section {
     position: relative;
     padding-top: 76px !important;
@@ -289,6 +315,14 @@
         padding-top: 54px !important;
         padding-bottom: 54px !important;
     }
+
+    .about-section {
+        padding-top: 54px !important;
+        padding-bottom: 54px !important;
+    }
+
+    .about-heading { margin-bottom: 22px; }
+    .about-copy { line-height: 1.6; }
 
     .services-heading { margin-bottom: 28px; }
     .service-card { min-height: 0; }
