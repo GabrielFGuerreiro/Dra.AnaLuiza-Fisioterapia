@@ -41,6 +41,11 @@
     max-width: 100%;
 }
 
+.home-section .row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
 .services-section {
     position: relative;
     padding-top: 76px !important;
