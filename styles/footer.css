@@ -1,0 +1,115 @@
+.site-footer {
+    margin-top: 56px;
+    padding: 38px 0 18px;
+    background:
+        radial-gradient(circle at 90% 0%, rgba(164, 204, 157, .18), transparent 34%),
+        linear-gradient(125deg, #294d3e 0%, #37634d 54%, #4d7757 100%);
+    color: rgba(255, 255, 255, .88);
+}
+
+.footer-main {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 28px;
+    padding-bottom: 28px;
+}
+
+.footer-brand h3 {
+    margin: 0;
+    color: #fff;
+    font-size: 1.28rem;
+    font-weight: 700;
+}
+
+.footer-brand h3 span {
+    color: #cfe5bd;
+    font-weight: 500;
+}
+
+.footer-brand p {
+    margin: 8px 0 0;
+    color: rgba(255, 255, 255, .68);
+    font-size: .9rem;
+}
+
+.footer-social { text-align: right; }
+
+.footer-social h5 {
+    margin: 0 0 11px;
+    color: #fff;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.footer-social-links {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.footer-social-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 11px;
+    border: 1px solid rgba(255, 255, 255, .18);
+    border-radius: 9px;
+    background: rgba(255, 255, 255, .09);
+    color: rgba(255, 255, 255, .88);
+    font-size: .82rem;
+    text-decoration: none;
+    transition: background-color .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.footer-social-links a:hover {
+    border-color: rgba(255, 255, 255, .4);
+    background: rgba(255, 255, 255, .18);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.footer-social-links i { font-size: .92rem; }
+
+.footer-map {
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 14px;
+    box-shadow: 0 12px 26px rgba(19, 43, 31, .18);
+}
+
+.footer-map iframe {
+    display: block;
+    width: 100%;
+    height: 190px;
+    border: 0;
+    filter: saturate(.78) contrast(.95);
+}
+
+.footer-bottom {
+    margin-top: 17px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, .14);
+    color: rgba(255, 255, 255, .55);
+    font-size: .75rem;
+    text-align: center;
+}
+
+@media (max-width: 767.98px) {
+    .site-footer { margin-top: 38px; padding-top: 30px; }
+
+    .footer-main {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .footer-social { width: 100%; text-align: left; }
+    .footer-social-links { justify-content: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .site-footer * { transition-duration: .01ms !important; }
+}

@@ -1,33 +1,6 @@
 <?php
 
 use DraAnaLuiza\Models\Database;
-    $servicos = [
-        [
-            "titulo" => "Foo",
-            "descricao" => "Bar."
-        ],
-        [
-            "titulo" => "Lorem",
-            "descricao" => "Ipsum."
-        ],
-        [
-            "titulo" => "Hotel?",
-            "descricao" => "Trivago."
-        ],
-        [
-            "titulo" => "Sem",
-            "descricao" => "Ideia."
-        ],
-        [
-            "titulo" => "Mais",
-            "descricao" => "Serviços."
-        ],
-        [
-            "titulo" => "E",
-            "descricao" => "Depoimentos."
-        ]
-
-    ];
 
 const MIDIA = [
     'mp4'  => 'video/mp4',
@@ -48,85 +21,74 @@ const MIDIA = [
     $depoimento = $db->getDepoimento();
 ?>
 
-<section class="py-5">
-    <div class="position-relative d-flex justify-content-center align-items-center" style="min-height: 40vh;">
-
-        <img src="<?= BASE_URL ?>/Images/Fisioterapia.png"
-            class="position-absolute top-50 start-50 translate-middle opacity-75"
-            style="max-width: 650px; z-index: 1;">
-
-        <div class="text-center position-relative" style="z-index: 2; max-width: 700px;">
-            <h1 class="display-4 fw-bold text-success">
-                Recupere sua qualidade de vida
-            </h1>
-
-            <p class="lead">
-                Atendimento fisioterapêutico especializado para prevenção,<br>
-                tratamento e reabilitação.
-            </p>
-
-            <a href="<?= BASE_URL ?>/preConsulta" class="btn btn-success btn-lg">
-                Agendar consulta
-            </a>
+<div class="home-page">
+<section class="home-hero py-5">
+    <div class="home-hero-inner position-relative">
+        <div class="home-hero-content">
+            <span class="hero-kicker">Cuidado que transforma</span>
+            <h1>Recupere o movimento.<br><strong>Viva melhor.</strong></h1>
+            <p>Atendimento fisioterapêutico especializado para aliviar dores, recuperar sua autonomia e cuidar da sua qualidade de vida.</p>
+            <div class="hero-actions">
+                <a href="<?= BASE_URL ?>/preConsulta" class="btn btn-success btn-lg">Agendar consulta</a>
+                <span class="hero-note">Cuidado individualizado para você</span>
+            </div>
+        </div>
+        <div class="home-hero-visual" aria-hidden="true">
+            <div class="hero-visual-ring"></div>
+            <img src="<?= BASE_URL ?>/Images/Fisioterapia.png" class="home-hero-watermark" alt="">
         </div>
 
     </div>
 </section>
 
-<section class="container py-5">
-
-    <div class="text-center mb-5">
+<section class="home-section about-section container py-5">
+    <div class="about-heading text-center">
+        <span class="section-kicker">Movimento e bem-estar</span>
         <h2 class="fw-bold">O que é fisioterapia?</h2>
     </div>
 
     <div class="row justify-content-center">
         <div class="col-lg-8">
-
-            <p class="text-center fs-5">
-                A fisioterapia é a área da saúde responsável pela prevenção e tratamento de alterações do movimento,
-                promovendo mais independência, mobilidade e qualidade de vida aos pacientes.
+            <p class="about-copy text-center">
+                A fisioterapia ajuda a prevenir e tratar alterações do movimento, contribuindo para aliviar dores,
+                recuperar a funcionalidade e conquistar mais autonomia, mobilidade e qualidade de vida.
             </p>
-
         </div>
     </div>
-
 </section>
 
-<section class="container py-5">
-
-    <h2 class="text-center fw-bold mb-5">
+<!-- [SERVIÇOS] -->
+<section class="home-section services-section container py-5">
+    <div class="services-heading text-center">
+        <span class="section-kicker">Cuidado personalizado</span>
+        <h2 class="fw-bold mb-2">
         Serviços oferecidos
-    </h2>
+        </h2>
+        <p>Encontre o cuidado ideal para recuperar seu movimento e bem-estar.</p>
+    </div>
 
-    <div class="row g-4">
-
-        <?php foreach ($servicos as $servico): ?>
-
+    <div class="services-grid row g-4">
+        <?php foreach ($servicos as $index => $servico): ?>
             <div class="col-md-6 col-lg-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
+                <article class="service-card h-100">
+                    <div class="service-card-body">
+                        <span class="service-number"><?= str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) ?></span>
                         <h5><?= htmlspecialchars($servico["titulo"]) ?></h5>
                         <p><?= htmlspecialchars($servico["descricao"]) ?></p>
                     </div>
-                </div>
+                </article>
             </div>
-
         <?php endforeach; ?>
-
     </div>
-
 </section>
 
-<section class="container py-5"> <!-- Depoimentos -->
-    <!--
-        fazer algum jeito de traduzir automaticamente que tipo de conteudo será usado no depoimento,
-        tipo um if ou switch que alterna entre <img> e <video>
-            -rodrigo
-    -->
-
-    <h2 class="text-center fw-bold mb-5">
-        Depoimentos de pacientes
-    </h2>
+<!-- [DEPOIMENTOS] -->
+<section class="home-section testimonials-section container py-5"> 
+    <div class="testimonials-heading text-center">
+        <span class="section-kicker">Experiências reais</span>
+        <h2 class="fw-bold mb-2">Depoimentos de pacientes</h2>
+        <p>Veja como o cuidado personalizado pode transformar a rotina.</p>
+    </div>
 
     <div class="row g-4">
         <?php
@@ -142,9 +104,9 @@ const MIDIA = [
         ?>
         <?php if (!empty($carrossel)) { ?>
         <div class="col-12">
-            <div id="demo" class="carousel slide" data-bs-ride="carousel">
+            <div id="demo" class="carousel slide testimonials-carousel" data-bs-interval="false" data-bs-touch="false">
 
-                <!-- Indicators/dots -->
+                <!-- Botões embaixo -->
                 <div class="carousel-indicators">
                     <?php foreach ($carrossel as $index => $item) { ?>
                         <button type="button" data-bs-target="#demo" data-bs-slide-to="<?= $index ?>"
@@ -152,14 +114,14 @@ const MIDIA = [
                     <?php } ?>
                 </div>
 
-                <!-- The slideshow/carousel -->
-                <div class="carousel-inner rounded shadow-sm" style="height: 380px; background-color: white;">
+                <!-- Carrossel -->
+                <div class="carousel-inner rounded shadow-sm testimonials-inner" style="height: 380px; background-color: white;">
                     <?php foreach ($carrossel as $index => $item) {
                         $tipo = strtolower(pathinfo($item['src'], PATHINFO_EXTENSION));
                         $mime = MIDIA[$tipo] ?? null;
                         $isVideo = $mime && str_starts_with($mime, 'video/');
                     ?>
-                        <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>" style="height: 380px;">
+                        <div class="carousel-item testimonials-item <?= $index === 0 ? 'active' : '' ?>" style="height: 380px;">
                             <div class="d-flex flex-column justify-content-center align-items-center h-100 px-4 text-center">
                                 <?php if ($isVideo) { ?>
                                     <video src="<?= $item['src'] ?>" controls class="mw-100" style="max-height: 220px; object-fit: contain;"></video>
@@ -177,7 +139,7 @@ const MIDIA = [
                     <?php } ?>
                 </div>
  
-                <!-- Left and right controls/icons -->
+                <!-- Botões de próximo/anterior -->
                 <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon bg-dark rounded-circle p-3"></span>
                 </button>
@@ -192,3 +154,17 @@ const MIDIA = [
 </section>
 
 <?php require  "footer.php"; ?>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const testimonialsCarousel = document.getElementById('demo');
+        if (!testimonialsCarousel) return;
+
+        testimonialsCarousel.addEventListener('slide.bs.carousel', function () {
+            testimonialsCarousel.querySelectorAll('video').forEach(function (video) {
+                video.pause();
+            });
+        });
+    });
+</script>

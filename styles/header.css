@@ -167,11 +167,20 @@
     }
 
     .navbar-nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         align-items: stretch;
-        gap: 2px;
+        gap: 6px;
     }
 
-    .navbar .nav-link { justify-content: flex-start; }
+    .navbar .nav-item { min-width: 0; }
+
+    .navbar .nav-link {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+
     .navbar .nav-principal,
     .navbar .nav-exit { margin-left: 0; }
 }
