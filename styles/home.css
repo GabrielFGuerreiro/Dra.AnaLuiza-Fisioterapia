@@ -41,6 +41,109 @@
     max-width: 100%;
 }
 
+.services-section {
+    position: relative;
+    padding-top: 76px !important;
+    padding-bottom: 76px !important;
+}
+
+.services-heading {
+    max-width: 620px;
+    margin: 0 auto 38px;
+}
+
+.section-kicker {
+    display: inline-block;
+    margin-bottom: 9px;
+    color: #4f795c;
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.services-heading h2 {
+    color: #294a38;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    letter-spacing: -.035em;
+}
+
+.services-heading p {
+    margin: 0;
+    color: #6b7c70;
+    font-size: .98rem;
+    line-height: 1.55;
+}
+
+.services-grid { align-items: stretch; }
+
+.services-grid > [class*="col-"] { display: flex; }
+
+.service-card {
+    position: relative;
+    width: 100%;
+    min-height: 190px;
+    overflow: hidden;
+    border: 1px solid #dce7dc;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, .82);
+    box-shadow: 0 9px 22px rgba(48, 79, 58, .07);
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+.service-card::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #4f795c, #a2c28d);
+    content: "";
+}
+
+.service-card:hover {
+    border-color: #a9c6aa;
+    box-shadow: 0 16px 30px rgba(48, 79, 58, .13);
+    transform: translateY(-5px);
+}
+
+.service-card-body {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 27px 25px 24px;
+}
+
+.service-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background: #edf5eb;
+    color: #4f795c;
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+.service-card h5 {
+    margin: 0 0 9px;
+    color: #294a38;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.service-card p {
+    margin: 0;
+    color: #6b7c70;
+    font-size: .92rem;
+    line-height: 1.55;
+}
+
 @media (max-width: 575.98px) {
     .home-hero { padding: 34px 0 !important; }
 
@@ -69,4 +172,12 @@
 
     .home-hero-content p br { display: none; }
     .home-section { padding-right: 12px !important; padding-left: 12px !important; }
+
+    .services-section {
+        padding-top: 54px !important;
+        padding-bottom: 54px !important;
+    }
+
+    .services-heading { margin-bottom: 28px; }
+    .service-card { min-height: 0; }
 }

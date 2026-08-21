@@ -1,33 +1,6 @@
 <?php
 
 use DraAnaLuiza\Models\Database;
-    $servicos = [
-        [
-            "titulo" => "Foo",
-            "descricao" => "Bar."
-        ],
-        [
-            "titulo" => "Lorem",
-            "descricao" => "Ipsum."
-        ],
-        [
-            "titulo" => "Hotel?",
-            "descricao" => "Trivago."
-        ],
-        [
-            "titulo" => "Sem",
-            "descricao" => "Ideia."
-        ],
-        [
-            "titulo" => "Mais",
-            "descricao" => "Serviços."
-        ],
-        [
-            "titulo" => "E",
-            "descricao" => "Depoimentos."
-        ]
-
-    ];
 
 const MIDIA = [
     'mp4'  => 'video/mp4',
@@ -93,23 +66,28 @@ const MIDIA = [
 
 </section>
 
-<section class="home-section container py-5">
+<section class="home-section services-section container py-5">
 
-    <h2 class="text-center fw-bold mb-5">
+    <div class="services-heading text-center">
+        <span class="section-kicker">Cuidado personalizado</span>
+        <h2 class="fw-bold mb-2">
         Serviços oferecidos
-    </h2>
+        </h2>
+        <p>Encontre o cuidado ideal para recuperar seu movimento e bem-estar.</p>
+    </div>
 
-    <div class="row g-4">
+    <div class="services-grid row g-4">
 
-        <?php foreach ($servicos as $servico): ?>
+        <?php foreach ($servicos as $index => $servico): ?>
 
             <div class="col-md-6 col-lg-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
+                <article class="service-card h-100">
+                    <div class="service-card-body">
+                        <span class="service-number"><?= str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) ?></span>
                         <h5><?= htmlspecialchars($servico["titulo"]) ?></h5>
                         <p><?= htmlspecialchars($servico["descricao"]) ?></p>
                     </div>
-                </div>
+                </article>
             </div>
 
         <?php endforeach; ?>
