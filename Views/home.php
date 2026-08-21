@@ -23,25 +23,19 @@ const MIDIA = [
 
 <div class="home-page">
 <section class="home-hero py-5">
-    <div class="home-hero-inner position-relative d-flex justify-content-center align-items-center">
-
-        <img src="<?= BASE_URL ?>/Images/Fisioterapia.png"
-            class="home-hero-watermark position-absolute top-50 start-50 translate-middle opacity-75"
-            alt="">
-
-        <div class="home-hero-content text-center position-relative">
-            <h1 class="display-4 fw-bold text-success">
-                Recupere sua qualidade de vida
-            </h1>
-
-            <p class="lead">
-                Atendimento fisioterapêutico especializado para prevenção,<br>
-                tratamento e reabilitação.
-            </p>
-
-            <a href="<?= BASE_URL ?>/preConsulta" class="btn btn-success btn-lg">
-                Agendar consulta
-            </a>
+    <div class="home-hero-inner position-relative">
+        <div class="home-hero-content">
+            <span class="hero-kicker">Cuidado que transforma</span>
+            <h1>Recupere o movimento.<br><strong>Viva melhor.</strong></h1>
+            <p>Atendimento fisioterapêutico especializado para aliviar dores, recuperar sua autonomia e cuidar da sua qualidade de vida.</p>
+            <div class="hero-actions">
+                <a href="<?= BASE_URL ?>/preConsulta" class="btn btn-success btn-lg">Agendar consulta</a>
+                <span class="hero-note">Cuidado individualizado para você</span>
+            </div>
+        </div>
+        <div class="home-hero-visual" aria-hidden="true">
+            <div class="hero-visual-ring"></div>
+            <img src="<?= BASE_URL ?>/Images/Fisioterapia.png" class="home-hero-watermark" alt="">
         </div>
 
     </div>
