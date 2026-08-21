@@ -22,11 +22,18 @@ class UsuarioController extends GeralController
         $nome = $_POST['nome'];
         $cpf = preg_replace('/\D/', '', $_POST['cpf']);
         $dtNasc = !empty($_POST['dtNasc']) ? $_POST['dtNasc'] : null;
-        $email = !empty($_POST['emailCad']) ? $_POST['emailCad'] : null;
+        $email = $_POST['emailCad'];
         $cel = preg_replace('/\D/', '', $_POST['cel']);
         $senha = $_POST['senhaCad'];
 
         $usuario = new Usuario();
+
+        if($usuario->EmailExiste($email))
+        {
+            header("Location: " . BASE_URL . "/cadastro?sucesso=0&msg=E-mail já Cadastrado.");
+            exit();
+        }
+
         $retorno = $usuario->CadastrarUsuario($nome, $cpf, $dtNasc, $email, $cel, $senha);
 
         header("Location: " . BASE_URL . "/cadastro?sucesso=" . $retorno['sucesso'] . "&msg=" . urlencode($retorno['mensagem']), true, 303); //303 = Após o POST, redireciona para GET, evitando o reenvio do formulário ao recarregar.
