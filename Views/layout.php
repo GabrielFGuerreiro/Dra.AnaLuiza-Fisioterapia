@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/login.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/cadastro.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/swal.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/styles/footer.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>    
 </head>
 
