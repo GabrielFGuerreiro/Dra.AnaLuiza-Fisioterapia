@@ -338,9 +338,14 @@
 
     .home-hero-content p br { display: none; }
     .hero-actions { justify-content: center; }
-    .home-hero-visual { min-height: 250px; width: 100%; }
-    .hero-visual-ring { width: 250px; }
-    .home-hero-watermark { width: 220px; }
+    .home-hero-visual {
+        order: -1;
+        min-height: 136px;
+        width: 100%;
+        margin-bottom: 2px;
+    }
+    .hero-visual-ring { width: 132px; }
+    .home-hero-watermark { width: 115px; }
     .home-section { padding-right: 12px !important; padding-left: 12px !important; }
 
     .services-section {
