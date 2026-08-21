@@ -48,26 +48,22 @@ const MIDIA = [
 </section>
 
 <section class="home-section container py-5">
-
     <div class="text-center mb-5">
         <h2 class="fw-bold">O que é fisioterapia?</h2>
     </div>
 
     <div class="row justify-content-center">
         <div class="col-lg-8">
-
             <p class="text-center fs-5">
                 A fisioterapia é a área da saúde responsável pela prevenção e tratamento de alterações do movimento,
                 promovendo mais independência, mobilidade e qualidade de vida aos pacientes.
             </p>
-
         </div>
     </div>
-
 </section>
 
+<!-- [SERVIÇOS] -->
 <section class="home-section services-section container py-5">
-
     <div class="services-heading text-center">
         <span class="section-kicker">Cuidado personalizado</span>
         <h2 class="fw-bold mb-2">
@@ -77,9 +73,7 @@ const MIDIA = [
     </div>
 
     <div class="services-grid row g-4">
-
         <?php foreach ($servicos as $index => $servico): ?>
-
             <div class="col-md-6 col-lg-4">
                 <article class="service-card h-100">
                     <div class="service-card-body">
@@ -89,23 +83,17 @@ const MIDIA = [
                     </div>
                 </article>
             </div>
-
         <?php endforeach; ?>
-
     </div>
-
 </section>
 
-<section class="home-section container py-5"> <!-- Depoimentos -->
-    <!--
-        fazer algum jeito de traduzir automaticamente que tipo de conteudo será usado no depoimento,
-        tipo um if ou switch que alterna entre <img> e <video>
-            -rodrigo
-    -->
-
-    <h2 class="text-center fw-bold mb-5">
-        Depoimentos de pacientes
-    </h2>
+<!-- [DEPOIMENTOS] -->
+<section class="home-section testimonials-section container py-5"> 
+    <div class="testimonials-heading text-center">
+        <span class="section-kicker">Experiências reais</span>
+        <h2 class="fw-bold mb-2">Depoimentos de pacientes</h2>
+        <p>Veja como o cuidado personalizado pode transformar a rotina.</p>
+    </div>
 
     <div class="row g-4">
         <?php
@@ -121,9 +109,9 @@ const MIDIA = [
         ?>
         <?php if (!empty($carrossel)) { ?>
         <div class="col-12">
-            <div id="demo" class="carousel slide" data-bs-ride="carousel">
+            <div id="demo" class="carousel slide testimonials-carousel" data-bs-interval="false" data-bs-touch="false">
 
-                <!-- Indicators/dots -->
+                <!-- Botões embaixo -->
                 <div class="carousel-indicators">
                     <?php foreach ($carrossel as $index => $item) { ?>
                         <button type="button" data-bs-target="#demo" data-bs-slide-to="<?= $index ?>"
@@ -131,14 +119,14 @@ const MIDIA = [
                     <?php } ?>
                 </div>
 
-                <!-- The slideshow/carousel -->
-                <div class="carousel-inner rounded shadow-sm" style="height: 380px; background-color: white;">
+                <!-- Carrossel -->
+                <div class="carousel-inner rounded shadow-sm testimonials-inner" style="height: 380px; background-color: white;">
                     <?php foreach ($carrossel as $index => $item) {
                         $tipo = strtolower(pathinfo($item['src'], PATHINFO_EXTENSION));
                         $mime = MIDIA[$tipo] ?? null;
                         $isVideo = $mime && str_starts_with($mime, 'video/');
                     ?>
-                        <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>" style="height: 380px;">
+                        <div class="carousel-item testimonials-item <?= $index === 0 ? 'active' : '' ?>" style="height: 380px;">
                             <div class="d-flex flex-column justify-content-center align-items-center h-100 px-4 text-center">
                                 <?php if ($isVideo) { ?>
                                     <video src="<?= $item['src'] ?>" controls class="mw-100" style="max-height: 220px; object-fit: contain;"></video>
@@ -156,7 +144,7 @@ const MIDIA = [
                     <?php } ?>
                 </div>
  
-                <!-- Left and right controls/icons -->
+                <!-- Botões de próximo/anterior -->
                 <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon bg-dark rounded-circle p-3"></span>
                 </button>
@@ -172,3 +160,16 @@ const MIDIA = [
 
 <?php require  "footer.php"; ?>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const testimonialsCarousel = document.getElementById('demo');
+        if (!testimonialsCarousel) return;
+
+        testimonialsCarousel.addEventListener('slide.bs.carousel', function () {
+            testimonialsCarousel.querySelectorAll('video').forEach(function (video) {
+                video.pause();
+            });
+        });
+    });
+</script>
