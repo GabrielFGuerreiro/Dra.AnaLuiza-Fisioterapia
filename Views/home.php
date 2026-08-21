@@ -48,14 +48,15 @@ const MIDIA = [
     $depoimento = $db->getDepoimento();
 ?>
 
-<section class="py-5">
-    <div class="position-relative d-flex justify-content-center align-items-center" style="min-height: 40vh;">
+<div class="home-page">
+<section class="home-hero py-5">
+    <div class="home-hero-inner position-relative d-flex justify-content-center align-items-center">
 
         <img src="<?= BASE_URL ?>/Images/Fisioterapia.png"
-            class="position-absolute top-50 start-50 translate-middle opacity-75"
-            style="max-width: 650px; z-index: 1;">
+            class="home-hero-watermark position-absolute top-50 start-50 translate-middle opacity-75"
+            alt="">
 
-        <div class="text-center position-relative" style="z-index: 2; max-width: 700px;">
+        <div class="home-hero-content text-center position-relative">
             <h1 class="display-4 fw-bold text-success">
                 Recupere sua qualidade de vida
             </h1>
@@ -73,7 +74,7 @@ const MIDIA = [
     </div>
 </section>
 
-<section class="container py-5">
+<section class="home-section container py-5">
 
     <div class="text-center mb-5">
         <h2 class="fw-bold">O que é fisioterapia?</h2>
@@ -92,7 +93,7 @@ const MIDIA = [
 
 </section>
 
-<section class="container py-5">
+<section class="home-section container py-5">
 
     <h2 class="text-center fw-bold mb-5">
         Serviços oferecidos
@@ -117,7 +118,7 @@ const MIDIA = [
 
 </section>
 
-<section class="container py-5"> <!-- Depoimentos -->
+<section class="home-section container py-5"> <!-- Depoimentos -->
     <!--
         fazer algum jeito de traduzir automaticamente que tipo de conteudo será usado no depoimento,
         tipo um if ou switch que alterna entre <img> e <video>
@@ -192,3 +193,4 @@ const MIDIA = [
 </section>
 
 <?php require  "footer.php"; ?>
+</div>
