@@ -103,10 +103,10 @@ const MIDIA = [
         }
         ?>
         <?php if (!empty($carrossel)) { ?>
-        <div class="col-12">
-            <div id="demo" class="carousel slide testimonials-carousel" data-bs-interval="false" data-bs-touch="false">
+        <div class="col-12 service-card mx-auto" style="width: 70%;">
+            <div id="demo" class="carousel slide" data-bs-ride="carousel">
 
-                <!-- Botões embaixo -->
+                <!-- contador de itens -->
                 <div class="carousel-indicators">
                     <?php foreach ($carrossel as $index => $item) { ?>
                         <button type="button" data-bs-target="#demo" data-bs-slide-to="<?= $index ?>"
@@ -114,14 +114,14 @@ const MIDIA = [
                     <?php } ?>
                 </div>
 
-                <!-- Carrossel -->
-                <div class="carousel-inner rounded shadow-sm testimonials-inner" style="height: 380px; background-color: white;">
+                <!-- o carrosel em si -->
+                <div class="carousel-inner rounded " style="height: 380px;">
                     <?php foreach ($carrossel as $index => $item) {
                         $tipo = strtolower(pathinfo($item['src'], PATHINFO_EXTENSION));
                         $mime = MIDIA[$tipo] ?? null;
                         $isVideo = $mime && str_starts_with($mime, 'video/');
                     ?>
-                        <div class="carousel-item testimonials-item <?= $index === 0 ? 'active' : '' ?>" style="height: 380px;">
+                        <div class="carousel-item <?= $index === 0 ? 'active' : '' ?> " style="height: 380px;">
                             <div class="d-flex flex-column justify-content-center align-items-center h-100 px-4 text-center">
                                 <?php if ($isVideo) { ?>
                                     <video src="<?= $item['src'] ?>" controls class="mw-100" style="max-height: 220px; object-fit: contain;"></video>
@@ -130,7 +130,7 @@ const MIDIA = [
                                 <?php } ?>
 
                                 <?php if ($item['desc'] !== '') { ?>
-                                    <p class="dsDepoimento mt-3 mb-0 fst-italic">
+                                    <p class="depoimento-legenda mt-3 mb-0 fst-italic">
                                         "<?= htmlspecialchars($item['desc']) ?>"
                                     </p>
                                 <?php } ?>
@@ -138,8 +138,8 @@ const MIDIA = [
                         </div>
                     <?php } ?>
                 </div>
- 
-                <!-- Botões de próximo/anterior -->
+
+                <!-- Setinhas de avancar e voltar -->
                 <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon bg-dark rounded-circle p-3"></span>
                 </button>

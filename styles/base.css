@@ -219,3 +219,12 @@ body{
         transform: translateY(0);
     }
 }
+
+.carousel-indicators [data-bs-target] {
+    background-color: var(--border);
+    opacity: .4;
+}
+
+.carousel-indicators [data-bs-target].active {
+    opacity: 1;
+}
