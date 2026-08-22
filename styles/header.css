@@ -183,6 +183,17 @@
 
     .navbar .nav-principal,
     .navbar .nav-exit { margin-left: 0; }
+
+    .navbar .nav-principal {
+        gap: 6px;
+        padding: 10px 8px;
+        font-size: .92rem;
+        white-space: nowrap;
+    }
+
+    .navbar .nav-principal i {
+        flex: 0 0 auto;
+    }
 }
 
 @media (max-width: 420px) { /*Só executa quando a tela for menor que 420px.*/
@@ -191,4 +202,5 @@
     .brand-copy strong { font-size: 1.16rem; }
     .brand-copy small { font-size: .66rem; }
     .navbar .nav-link { font-size: .98rem; }
+    .navbar .nav-principal { padding-right: 6px; padding-left: 6px; font-size: .88rem; }
 }
