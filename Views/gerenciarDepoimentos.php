@@ -1,4 +1,10 @@
 <section class="py-5">
+    <div class="text-center mb-5">
+        <span class="section-kicker">Painel administrativo</span>
+        <h2 class="fw-bold mb-2">Gerenciar Depoimentos</h2>
+        <p>Visualize e gerencie os depoimentos dos pacientes.</p>
+    </div>
+
     <div class="position-relative d-flex justify-content-center align-items-center" style="min-height: 55.9vh;">
         <div class="moving-card position-relative text-center" style="z-index: 2; max-width: 700px;">
             <img src="<?= BASE_URL ?>/Images/Fisioterapia.png"
