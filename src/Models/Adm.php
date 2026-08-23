@@ -12,7 +12,14 @@ class Adm
         {   
             $db = new Database();
             $pdo = $db->getConnection();
-            $sql = 'SELECT idPreConsulta as guid, u.nmUsuario as title, horarioInicial as start, horarioFinal as end, \'2026-07-11\' as date, \'gray\' as color  FROM preconsultas pc JOIN usuarios u ON pc.idUsuario = u.idUsuario';
+            $sql = "SELECT
+                        pc.idPreConsulta AS id,
+                        u.nmUsuario AS title,
+                        CONCAT(pc.dtConsulta, 'T', pc.horarioInicial) AS start,
+                        CONCAT(pc.dtConsulta, 'T', pc.horarioFinal) AS end
+                    FROM PreConsultas pc
+                    JOIN Usuarios u ON pc.idUsuario = u.idUsuario
+                    WHERE pc.dtConsulta IS NOT NULL";
 
             $stmt = $pdo->prepare($sql);
             $stmt->execute();
@@ -83,6 +90,71 @@ class Adm
             return [
                 'sucesso' => false,
                 'msg' => "Erro: {$th->getMessage()}."
+            ];
+        }
+    }
+
+    public function ListarPreConsultasPendentes(): array
+    {
+        try
+        {
+            $db = new Database();
+            $pdo = $db->getConnection();
+            $sql = "SELECT
+                        pc.idPreConsulta,
+                        u.nmUsuario,
+                        pc.nmDiaSemana,
+                        pc.horarioInicial,
+                        pc.horarioFinal,
+                        pc.localDor,
+                        pc.tempoSintoma,
+                        pc.descricaoSintoma,
+                        pc.escalaDor,
+                        pc.comorbidades
+                    FROM PreConsultas pc
+                    JOIN Usuarios u ON pc.idUsuario = u.idUsuario
+                    WHERE pc.dtConsulta IS NULL
+                    ORDER BY pc.idPreConsulta DESC";
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        }
+        catch (PDOException $e)
+        {
+            return [];
+        }
+    }
+
+    public function ConfirmarConsulta($idPreConsulta, string $dtConsulta, string $horarioInicial, string $horarioFinal): array
+    {
+        try
+        {
+            $db = new Database();
+            $pdo = $db->getConnection();
+
+            $sql = "UPDATE PreConsultas
+                    SET dtConsulta = :dtConsulta, horarioInicial = :horarioInicial, horarioFinal = :horarioFinal
+                    WHERE idPreConsulta = :idPreConsulta";
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':dtConsulta' => $dtConsulta,
+                ':horarioInicial' => $horarioInicial,
+                ':horarioFinal' => $horarioFinal,
+                ':idPreConsulta' => $idPreConsulta
+            ]);
+
+            return [
+                'sucesso' => true,
+                'mensagem' => 'Consulta Agendada com Sucesso!'
+            ];
+        }
+        catch (PDOException $e)
+        {
+            return [
+                'sucesso' => false,
+                'mensagem' => 'Não foi Possível Agendar a Consulta no Momento.'
             ];
         }
     }

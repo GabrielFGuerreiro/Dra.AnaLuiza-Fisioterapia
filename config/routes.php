@@ -11,6 +11,7 @@ return [
         '/agendamentos' => 'AdmController@Agendamentos',
         '/listarAgendamentosJson' => 'AdmController@ListarAgendamentosJson',
         '/gerenciarDepoimentos' => 'AdmController@GerenciarDepoimentos',
+        '/preConsultasPendentes' => 'AdmController@PreConsultasPendentes',
         '/esqueciMinhaSenha' => 'UsuarioController@EsqueceuSenha',
         '/verificacaoCodigo' => 'UsuarioController@VerificacaoCodigo',
         '/novaSenha' => 'UsuarioController@NovaSenha'
@@ -20,10 +21,11 @@ return [
         '/cadastrar' => 'UsuarioController@Cadastrar',
         '/logar' => 'UsuarioController@Logar',
         '/cadastrarDepoimento' => 'AdmController@CadastrarDepoimento',
-        '/cadastrarConsulta' => 'UsuarioController@PreConsulta',
+        '/cadastrarConsulta' => 'UsuarioController@CadastrarConsulta',
         '/enviarEmailCodigo' => 'UsuarioController@EnviarEmailCodigo',
         '/verificarCodigo' => 'UsuarioController@VerificarCodigo',
-        '/alterarSenha' => 'UsuarioController@AlterarSenha'
+        '/alterarSenha' => 'UsuarioController@AlterarSenha',
+        '/confirmarConsulta' => 'AdmController@ConfirmarConsulta'
     ]
 
 ];

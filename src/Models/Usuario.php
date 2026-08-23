@@ -160,4 +160,63 @@ class Usuario
             ];
         }
     }
+
+    public function CadastrarPreConsulta(
+        string $email,
+        string $nmDiaSemana,
+        string $horarioInicial,
+        string $horarioFinal,
+        string $localDor,
+        ?string $tempoSintoma,
+        ?string $descricaoSintoma,
+        ?int $escalaDor,
+        ?string $comorbidades
+    ): array
+    {
+        try
+        {
+            $db = new Database();
+            $pdo = $db->getConnection();
+
+            $sql = "SELECT idUsuario FROM Usuarios WHERE email = :email";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([':email' => $email]);
+            $idUsuario = $stmt->fetchColumn();
+
+            if (!$idUsuario)
+            {
+                return [
+                    'sucesso' => false,
+                    'mensagem' => 'Usuário não encontrado.'
+                ];
+            }
+
+            $sql = "INSERT INTO PreConsultas (idUsuario, nmDiaSemana, horarioInicial, horarioFinal, localDor, tempoSintoma, descricaoSintoma, escalaDor, comorbidades)
+                    VALUES (:idUsuario, :nmDiaSemana, :horarioInicial, :horarioFinal, :localDor, :tempoSintoma, :descricaoSintoma, :escalaDor, :comorbidades)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':idUsuario' => $idUsuario,
+                ':nmDiaSemana' => $nmDiaSemana,
+                ':horarioInicial' => $horarioInicial,
+                ':horarioFinal' => $horarioFinal,
+                ':localDor' => $localDor,
+                ':tempoSintoma' => $tempoSintoma,
+                ':descricaoSintoma' => $descricaoSintoma,
+                ':escalaDor' => $escalaDor,
+                ':comorbidades' => $comorbidades
+            ]);
+
+            return [
+                'sucesso' => true,
+                'mensagem' => 'Pré-Consulta Enviada com Sucesso! A Dra. entrará em contato para confirmar o dia e horário.'
+            ];
+        }
+        catch (\Throwable $th)
+        {
+            return [
+                'sucesso' => false,
+                'mensagem' => 'Não foi Possível Enviar a Pré-Consulta no Momento. Favor Entrar em Contato.'
+            ];
+        }
+    }
 }

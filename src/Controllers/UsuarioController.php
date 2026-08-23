@@ -40,16 +40,40 @@ class UsuarioController extends GeralController
         exit();
     }
 
-    public function cadastrarConsulta()
+    public function CadastrarConsulta()
     {
-        $preHora = $_POST['preHora'];
+        if (!isset($_SESSION['email']))
+        {
+            header("Location: " . BASE_URL . "/login?msg=" . urlencode("Faça login para enviar sua pré-consulta."));
+            exit();
+        }
+
+        $nmDiaSemana = $_POST['nmDiaSemana'];
+        $horarioInicial = $_POST['horarioInicial'];
         $localDor = $_POST['localDor'];
         $tempoSintoma = $_POST['tempoSintoma'];
         $descricaoSintoma = $_POST['descricaoSintoma'];
-        $escalaDor = $_POST['escalaDor'];
+        $escalaDor = !empty($_POST['escalaDor']) ? $_POST['escalaDor'] : null;
         $comorbidades = $_POST['comorbidades'];
 
-        
+        // Duração fixa de 1h por consulta (ajustar se a Dra usar outra duração padrão)
+        $horarioFinal = date('H:i:s', strtotime($horarioInicial . ' +1 hour'));
+
+        $usuario = new Usuario();
+        $retorno = $usuario->CadastrarPreConsulta(
+            $_SESSION['email'],
+            $nmDiaSemana,
+            $horarioInicial,
+            $horarioFinal,
+            $localDor,
+            $tempoSintoma,
+            $descricaoSintoma,
+            $escalaDor,
+            $comorbidades
+        );
+
+        header("Location: " . BASE_URL . "/preconsulta?sucesso=" . $retorno['sucesso'] . "&msg=" . urlencode($retorno['mensagem']), true, 303);
+        exit();
     }
 
     public function Logar()

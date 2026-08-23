@@ -36,11 +36,3 @@
 </section>
 
 <?php require "footer.php"; ?>
-
-<!-- 
-    Precisamos adicionar o integração ao banco, para que possa ser feito o ADD do depoimento, 
-    quanto tambem receber os depoimentos anteriores para mostrar ordenado por datetime 
-    
-
-    no input de imagem/video, fazer uma função com javascript para mostrar um preview, para o usuario saber que esta enviando a midia correta.
- -->

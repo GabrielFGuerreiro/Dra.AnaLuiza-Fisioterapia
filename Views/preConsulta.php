@@ -4,9 +4,26 @@
             <div class="position-relative text-center w-100" style="z-index: 2;">
                 <h1 class="display-4 fw-bold text-success mb-4">Pré-Consulta</h1>
 
-                <form action="<?= BASE_URL ?>/preconsulta" method="POST" enctype="multipart/form-data" class="d-flex flex-column gap-3">
-                    <label class="form-label fw-semibold" for="prefHora">Qual a sua preferencia de dia e horario?</label>
-                    <input class="form-control" type="text" id="prefHora" name="prefHora" placeholder="Ex: Segunda às 14:00hrs" size="70px">
+                <?php if (!empty($_GET['msg'])) { ?>
+                    <div class="alert <?= ($_GET['sucesso'] ?? '') === '1' ? 'alert-success' : 'alert-danger' ?> text-start">
+                        <?= htmlspecialchars($_GET['msg']) ?>
+                    </div>
+                <?php } ?>
+
+                <form action="<?= BASE_URL ?>/cadastrarConsulta" method="POST" class="d-flex flex-column gap-3">
+                    <label class="form-label fw-semibold" for="nmDiaSemana">Qual a sua preferência de dia?</label>
+                    <select class="form-control" id="nmDiaSemana" name="nmDiaSemana" required>
+                        <option value="" selected disabled>Selecione um dia</option>
+                        <option value="Segunda-feira">Segunda-feira</option>
+                        <option value="Terça-feira">Terça-feira</option>
+                        <option value="Quarta-feira">Quarta-feira</option>
+                        <option value="Quinta-feira">Quinta-feira</option>
+                        <option value="Sexta-feira">Sexta-feira</option>
+                        <option value="Sábado">Sábado</option>
+                    </select>
+
+                    <label class="form-label fw-semibold" for="horarioInicial">Qual a sua preferência de horário?</label>
+                    <input class="form-control" type="time" id="horarioInicial" name="horarioInicial" required>
 
                     <label class="form-label fw-semibold" for="localDor">Qual o principal local da dor ou desconforto?</label>
                     <input class="form-control" type="text" id="localDor" name="localDor" required placeholder="Ex: Dor no pescoço">

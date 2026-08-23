@@ -68,7 +68,7 @@ const MIDIA = [
     </div>
 
     <div class="services-grid row g-4">
-        <?php foreach ($servicos as $index => $servico): ?>
+        <?php foreach ($servicos as $index => $servico) { ?>
             <div class="col-md-6 col-lg-4">
                 <article class="service-card h-100">
                     <div class="service-card-body">
@@ -78,7 +78,7 @@ const MIDIA = [
                     </div>
                 </article>
             </div>
-        <?php endforeach; ?>
+        <?php } ?>
     </div>
 </section>
 

@@ -1,0 +1,52 @@
+.fc {
+    --fc-border-color: #e1e8e2;
+    --fc-page-bg-color: transparent;
+    --fc-neutral-bg-color: rgba(87, 122, 97, .06);
+    --fc-list-event-hover-bg-color: rgba(87, 122, 97, .08);
+    --fc-today-bg-color: rgba(87, 122, 97, .1);
+    font-family: inherit;
+}
+
+.fc .fc-toolbar-title {
+    color: #294a38;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.fc .fc-button-primary {
+    background: var(--border);
+    border-color: var(--border);
+    text-transform: capitalize;
+    box-shadow: none;
+}
+
+.fc .fc-button-primary:hover {
+    background: #46644d;
+    border-color: #46644d;
+}
+
+.fc .fc-button-primary:disabled {
+    background: #9db3a2;
+    border-color: #9db3a2;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+    background: #365f43;
+    border-color: #365f43;
+}
+
+.fc .fc-col-header-cell-cushion {
+    color: #385843;
+    font-weight: 650;
+}
+
+.fc .fc-daygrid-day-number {
+    color: var(--text);
+}
+
+.fc-event {
+    border: none;
+    border-radius: 6px;
+    padding: 1px 4px;
+}
