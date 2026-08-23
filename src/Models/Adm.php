@@ -6,6 +6,25 @@ use PDOException;
 
 class Adm
 {
+    public function ListarDepoimentos(?bool $ativo = null): array
+    {
+        try
+        {
+            $pdo = (new Database())->getConnection();
+            $sql = "SELECT idDepoimento, dsDepoimento, nmPaciente, ativo, caminhoArquivo
+                    FROM Depoimentos
+                    WHERE (ativo = :ativo OR :ativo IS NULL) AND dtExclusao IS NULL
+                    ORDER BY idDepoimento DESC";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([':ativo' => $ativo]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        }
+        catch (PDOException $e)
+        {
+            return [];
+        }
+    }
+
     public function ListarAgendamentos(): array
     {
         try
@@ -64,22 +83,14 @@ class Adm
             $db = new Database();
             $pdo = $db->getConnection();
 
-            $opiniao = $_POST['opiniao'];
-            $sql = "INSERT INTO DEPOIMENTOS (dsDepoimento) VALUES (:opiniao)";
+            $sql = "INSERT INTO DEPOIMENTOS (nmPaciente, dsDepoimento, caminhoArquivo, dtExclusao, ativo) VALUES (:nome, :opiniao, :caminho, null, 1)";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([":opiniao" => $opiniao]);
-            
-            $idDepoimento = $pdo->lastInsertId();
-
-            if ($caminho !== null) {
-                $sql = "INSERT INTO DepoimentosImagens (idDepoimento, caminhoArquivo) VALUES (:idDepoimento, :caminho)";
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute([
-                    ":idDepoimento" => $idDepoimento,
-                    ":caminho" => $caminho
-                ]);
-            }
-
+            $stmt->execute([
+                ":opiniao" => $opiniao,
+                ':nome' => $nomePaciente,
+                ':caminho' => $caminho
+            ]);
+        
             return [
                 'sucesso' => true,
                 'msg' => 'Depoimento Salvo Com Sucesso!'
