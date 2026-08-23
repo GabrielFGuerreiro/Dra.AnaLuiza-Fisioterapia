@@ -22,7 +22,10 @@ class AdmController extends GeralController
 
     public function GerenciarDepoimentos()
     {
-        $this->MostrarView("gerenciarDepoimentos");
+        $adm = new Adm();
+        $this->MostrarView("gerenciarDepoimentos", [
+            'depoimentos' => $adm->ListarDepoimentos(null)
+        ]);
     }
 
     public function CadastrarDepoimento()
