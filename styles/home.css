@@ -249,6 +249,14 @@
     gap: 8px;
 }
 
+.testimonial-media-wrap { position: relative; overflow: hidden; border-radius: 12px; }
+.testimonial-media-wrap img { display: block; }
+.testimonial-media-overlay { position: absolute; inset: auto 0 0; display: flex; flex-direction: column; gap: 3px; padding: 28px 14px 12px; background: linear-gradient(transparent, rgba(20, 38, 27, .88)); color: #fff; text-align: left; opacity: 0; transform: translateY(8px); transition: opacity .25s ease, transform .25s ease; }
+.testimonial-media-wrap:hover .testimonial-media-overlay, .testimonial-media-wrap:focus-within .testimonial-media-overlay { opacity: 1; transform: translateY(0); }
+.testimonial-media-overlay strong { font-size: .9rem; }
+.testimonial-media-overlay span { font-size: .82rem; line-height: 1.35; }
+@media (hover: none) { .testimonial-media-overlay { opacity: 1; transform: translateY(0); } }
+
 .testimonials-item img,
 .testimonials-item video {
     width: auto;

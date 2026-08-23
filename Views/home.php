@@ -75,6 +75,7 @@
                 $carrossel[] = [
                     'src'  => rtrim(BASE_URL, '/') . '/arquivosDepoimentos/' . basename($d['caminhoArquivo']),
                     'desc' => trim($d['dsDepoimento'] ?? ''),
+                    'nome' => trim($d['nmPaciente'] ?? ''),
                 ];
             }
         }
@@ -103,13 +104,15 @@
                                 <?php if ($isVideo) { ?>
                                     <video src="<?= $item['src'] ?>" controls class="mw-100" style="max-height: 220px; object-fit: contain;"></video>
                                 <?php } else { ?>
-                                    <img src="<?= $item['src'] ?>" alt="Depoimento de paciente" class="mw-100" style="max-height: 220px; object-fit: contain;">
-                                <?php } ?>
-
-                                <?php if ($item['desc'] !== '') { ?>
-                                    <p class="dsDepoimento  mt-3 mb-0 fst-italic">
-                                        "<?= htmlspecialchars($item['desc']) ?>"
-                                    </p>
+                                    <div class="testimonial-media-wrap">
+                                        <img src="<?= $item['src'] ?>" alt="Depoimento de paciente" class="mw-100" style="max-height: 220px; object-fit: contain;">
+                                        <?php if ($item['nome'] !== '' || $item['desc'] !== '') { ?>
+                                            <div class="testimonial-media-overlay">
+                                                <?php if ($item['nome'] !== '') { ?><strong><?= htmlspecialchars($item['nome']) ?></strong><?php } ?>
+                                                <?php if ($item['desc'] !== '') { ?><span>“<?= htmlspecialchars($item['desc']) ?>”</span><?php } ?>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
                                 <?php } ?>
                             </div>
                         </div>
