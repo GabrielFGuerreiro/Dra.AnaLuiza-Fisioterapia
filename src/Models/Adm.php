@@ -191,4 +191,25 @@ class Adm
             return false;
         }
     }
+    public function EditarDepoimento(int $id, string $opiniao, string $nomePaciente): bool
+    {
+        try {
+            $pdo = (new Database())->getConnection();
+            $stmt = $pdo->prepare("UPDATE Depoimentos SET dsDepoimento = :opiniao, nmPaciente = :nome WHERE idDepoimento = :id");
+            return $stmt->execute([':opiniao' => trim($opiniao), ':nome' => trim($nomePaciente) ?: null, ':id' => $id]);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function AlternarDepoimento(int $id): bool
+    {
+        try {
+            $pdo = (new Database())->getConnection();
+            $stmt = $pdo->prepare("UPDATE Depoimentos SET ativo = IF(ativo = 1, 0, 1) WHERE idDepoimento = :id");
+            return $stmt->execute([':id' => $id]);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }

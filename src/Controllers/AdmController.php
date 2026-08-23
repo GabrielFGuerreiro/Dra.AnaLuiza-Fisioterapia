@@ -36,6 +36,29 @@ class AdmController extends GeralController
         header("Location: " . BASE_URL . "/gerenciarDepoimentos?retorno=" . (int) $retorno['sucesso'] . "&msg=" . urlencode($retorno['msg']), true, 303);
         exit();
     }
+
+    public function EditarDepoimento()
+    {
+        $adm = new Adm();
+        $id = filter_input(INPUT_POST, 'idDepoimento', FILTER_VALIDATE_INT);
+        $opiniao = trim($_POST['opiniao'] ?? '');
+        $nomePaciente = trim($_POST['nomePaciente'] ?? '');
+        $sucesso = $id && $nomePaciente !== '' && $opiniao !== '' && $adm->EditarDepoimento($id, $opiniao, $nomePaciente);
+        $msg = $sucesso ? 'Depoimento atualizado com sucesso!' : 'Informe o nome e o relato do paciente.';
+        header("Location: " . BASE_URL . "/gerenciarDepoimentos?retorno=" . (int) $sucesso . "&msg=" . urlencode($msg), true, 303);
+        exit();
+    }
+
+    public function AlternarDepoimento()
+    {
+        $adm = new Adm();
+        $id = filter_input(INPUT_POST, 'idDepoimento', FILTER_VALIDATE_INT);
+        $sucesso = $id && $adm->AlternarDepoimento($id);
+        $msg = $sucesso ? 'Status do depoimento atualizado.' : 'Não foi possível alterar o status.';
+        header("Location: " . BASE_URL . "/gerenciarDepoimentos?retorno=" . (int) $sucesso . "&msg=" . urlencode($msg), true, 303);
+        exit();
+    }
+
     public function ExcluirDepoimento()
     {
         $retorno = (new Adm())->ExcluirDepoimento($_POST['idDepoimento']);        
