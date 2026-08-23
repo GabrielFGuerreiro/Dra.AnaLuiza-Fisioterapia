@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/swal.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/footer.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/home.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/styles/calendario.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>    
 </head>
 
