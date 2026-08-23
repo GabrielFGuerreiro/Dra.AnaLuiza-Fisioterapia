@@ -69,7 +69,7 @@
                                 <?php if (!$ehVideo) { ?><form action="<?= BASE_URL ?>/editarDepoimento" method="POST" class="testimonial-edit-form">
                                     <input type="hidden" name="idDepoimento" value="<?= (int) $depoimento['idDepoimento'] ?>">
                                     <label for="nome-<?= (int) $depoimento['idDepoimento'] ?>">Nome do paciente</label>
-                                    <input id="nome-<?= (int) $depoimento['idDepoimento'] ?>" type="text" name="nomePaciente" maxlength="120" value="<?= htmlspecialchars($depoimento['nmPaciente'] ?? '') ?>" required>
+                                    <input id="nome-<?= (int) $depoimento['idDepoimento'] ?>" type="text" name="nomePaciente" maxlength="120" value="<?= htmlspecialchars($depoimento['nmPaciente'] ?? '') ?>">
                                     <label for="opiniao-<?= (int) $depoimento['idDepoimento'] ?>">Depoimento</label>
                                     <textarea id="opiniao-<?= (int) $depoimento['idDepoimento'] ?>" name="opiniao" maxlength="255" style="resize: none"><?= htmlspecialchars($depoimento['dsDepoimento']) ?></textarea>
                                     <button type="submit" class="admin-secondary-button"><i class="fa-solid fa-pen"></i> Atualizar</button>
@@ -85,6 +85,29 @@
 <?php require "footer.php"; ?>
 
 <script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const params = new URLSearchParams(window.location.search);
+        const msg = params.get("msg");
+        const sucesso = params.get("sucesso");
+        if (msg)
+        {
+            Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: sucesso === "1" ? "success" : "error",
+                title: msg,
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+
+            // O resultado já foi exibido; remove os dados do POST da URL.
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    });
+
+
     document.getElementById("formNovoDepoimento").addEventListener("submit", function (e)
     {
         e.preventDefault();

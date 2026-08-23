@@ -33,7 +33,7 @@ class AdmController extends GeralController
         $adm = new Adm();
         $retorno = $adm->CadastrarDepoimento($_POST['opiniao'] ?? '', $_POST['nomePaciente'] ?? '', $_FILES['arqDepoimento'] ?? []);
 
-        header("Location: " . BASE_URL . "/gerenciarDepoimentos?retorno=" . (int) $retorno['sucesso'] . "&msg=" . urlencode($retorno['msg']), true, 303);
+        header("Location: " . BASE_URL . "/gerenciarDepoimentos?sucesso=" . (int) $retorno['sucesso'] . "&msg=" . urlencode($retorno['msg']), true, 303);
         exit();
     }
 
@@ -44,8 +44,8 @@ class AdmController extends GeralController
         $opiniao = trim($_POST['opiniao'] ?? '');
         $nomePaciente = trim($_POST['nomePaciente'] ?? '');
         $sucesso = $id && $nomePaciente !== '' && $opiniao !== '' && $adm->EditarDepoimento($id, $opiniao, $nomePaciente);
-        $msg = $sucesso ? 'Depoimento atualizado com sucesso!' : 'Informe o nome e o relato do paciente.';
-        header("Location: " . BASE_URL . "/gerenciarDepoimentos?retorno=" . (int) $sucesso . "&msg=" . urlencode($msg), true, 303);
+        $msg = $sucesso ? 'Depoimento Atualizado com Sucesso!' : 'Informe o Nome e o Relato do Paciente.';
+        header("Location: " . BASE_URL . "/gerenciarDepoimentos?sucesso=" . (int) $sucesso . "&msg=" . urlencode($msg), true, 303);
         exit();
     }
 
@@ -54,14 +54,16 @@ class AdmController extends GeralController
         $adm = new Adm();
         $id = filter_input(INPUT_POST, 'idDepoimento', FILTER_VALIDATE_INT);
         $sucesso = $id && $adm->AlternarDepoimento($id);
-        $msg = $sucesso ? 'Status do depoimento atualizado.' : 'Não foi possível alterar o status.';
-        header("Location: " . BASE_URL . "/gerenciarDepoimentos?retorno=" . (int) $sucesso . "&msg=" . urlencode($msg), true, 303);
+        $msg = $sucesso ? 'Status do Depoimento Atualizado.' : 'Não foi Possível Alterar o Status.';
+        header("Location: " . BASE_URL . "/gerenciarDepoimentos?sucesso=" . (int) $sucesso . "&msg=" . urlencode($msg), true, 303);
         exit();
     }
 
     public function ExcluirDepoimento()
     {
-        $retorno = (new Adm())->ExcluirDepoimento($_POST['idDepoimento']);        
+        $sucesso = (new Adm())->ExcluirDepoimento($_POST['idDepoimento']);
+        $msg = $sucesso ? 'Depoimento Excluído com Sucesso!' : 'Não foi Possível Excluir o Depoimento.';
+        header("Location: " . BASE_URL . "/gerenciarDepoimentos?sucesso=" . (int) $sucesso . "&msg=" . urlencode($msg), true, 303);
     }
 
     public function PreConsultasPendentes()
