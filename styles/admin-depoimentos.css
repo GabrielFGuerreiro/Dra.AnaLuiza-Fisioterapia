@@ -37,7 +37,9 @@
 .status-toggle { display: grid; margin-top: -5px; margin-bottom: 5px; place-items: center; width: 34px; height: 34px; border: 0; border-radius: 9px; background: transparent; cursor: pointer; font-size: .95rem; transition: transform .2s, background .2s, color .2s; }
 .status-toggle.is-active { color: #a15d58; background: #fff0ee; }
 .status-toggle.is-inactive { color: #4f795c; background: #edf5eb; }
-.status-toggle:hover { color: #294f35; background: #dcebdc; transform: translateY(-1px); }
+.status-toggle:hover { transform: translateY(-1px); }
+.status-toggle.is-active:hover { color: #8f4742; background: #f8deda; }
+.status-toggle.is-inactive:hover { color: #294f35; background: #dcebdc; }
 .testimonial-media-preview { display: grid; place-items: center; width: 100%; height: 220px !important; min-height: 220px; max-height: 220px !important; overflow: hidden; background: #edf3ed; color: #91a194; }
 .testimonial-media-preview img { display: block; width: 100%; height: 100% !important; max-height: 220px !important; object-fit: contain; background: #edf3ed; }
 .testimonial-media-preview video { display: block; width: auto; max-width: 100%; height: 100% !important; max-height: 220px !important; object-fit: contain; background: #1f2b23; }
