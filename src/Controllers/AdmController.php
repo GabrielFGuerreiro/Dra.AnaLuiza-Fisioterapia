@@ -31,9 +31,11 @@ class AdmController extends GeralController
     public function CadastrarDepoimento()
     {
         $adm = new Adm();
-        $retorno = $adm->CadastrarDepoimento($_POST['opiniao'], $_FILES['arqDepoimento']);
+        $retorno = $adm->CadastrarDepoimento($_POST['opiniao'] ?? '', $_POST['nomePaciente'] ?? '', $_FILES['arqDepoimento'] ?? []);
 
-        header("Location: " . BASE_URL . "/gerenciarDepoimentos?retorno={$retorno["sucesso"]}&msg={$retorno["msg"]}");
+        header("Location: " . BASE_URL . "/gerenciarDepoimentos?retorno=" . (int) $retorno['sucesso'] . "&msg=" . urlencode($retorno['msg']), true, 303);
+        exit();
+    }
     }
 
     public function PreConsultasPendentes()

@@ -50,11 +50,22 @@ class Adm
         }
     }
 
-    public function CadastrarDepoimento(string $opiniao, array $arquivo): Array
+    public function CadastrarDepoimento(string $opiniao, string $nomePaciente, array $arquivo): Array
     {
+        $opiniao = trim($opiniao);
+        $nomePaciente = trim($nomePaciente);
+        $temArquivo = !empty($arquivo) && isset($arquivo['error']) && $arquivo['error'] !== UPLOAD_ERR_NO_FILE;
+        $ehVideo = $temArquivo && (
+            (isset($arquivo['type']) && str_starts_with((string) $arquivo['type'], 'video/')) ||
+            in_array(strtolower(pathinfo($arquivo['name'] ?? '', PATHINFO_EXTENSION)), ['mp4', 'mkv', 'avi', 'mov', 'webm'], true)
+        );
+        if (!$ehVideo && ($nomePaciente === '' || $opiniao === '')) {
+            return ['sucesso' => false, 'msg' => 'Informe o nome e o relato do paciente.'];
+        }
+
         $caminho = null;
 
-        if (isset($arquivo) && $arquivo['error'] !== UPLOAD_ERR_NO_FILE)
+        if (!empty($arquivo) && isset($arquivo['error']) && $arquivo['error'] !== UPLOAD_ERR_NO_FILE)
         {
             if ($arquivo['error'] !== UPLOAD_ERR_OK) {
                 return [
