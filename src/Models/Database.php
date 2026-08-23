@@ -30,11 +30,5 @@ class Database {
         return $this->conn;
     }
 
-    public function getDepoimento() {
-        $query = "SELECT depoimentos.dsDepoimento, depoimentosimagens.caminhoArquivo FROM depoimentos JOIN depoimentosimagens ON depoimentos.idDepoimento = depoimentosimagens.idDepoimento ORDER BY depoimentos.idDepoimento ASC";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 }
 ?>

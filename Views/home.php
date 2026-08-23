@@ -1,26 +1,3 @@
-<?php
-
-use DraAnaLuiza\Models\Database;
-
-const MIDIA = [
-    'mp4'  => 'video/mp4',
-    'mkv'  => 'video/x-matroska',
-    'avi'  => 'video/x-msvideo',
-    'mov'  => 'video/quicktime',
-    'webm' => 'video/webm',
-    'png'  => 'image/png',
-    'jpg'  => 'image/jpeg',
-    'jpeg' => 'image/jpeg',
-    'gif'  => 'image/gif',
-    'webp' => 'image/webp',
-];
-    
-    $db = new Database();
-
-    $db->getConnection();
-    $depoimento = $db->getDepoimento();
-?>
-
 <div class="home-page">
 <section class="home-hero py-5">
     <div class="home-hero-inner position-relative">
@@ -93,7 +70,7 @@ const MIDIA = [
     <div class="row g-4">
         <?php
         $carrossel = [];
-        foreach ($depoimento as $d) {
+        foreach ($depoimentos as $d) {
             if (!empty($d['caminhoArquivo'])) {
                 $carrossel[] = [
                     'src'  => rtrim(BASE_URL, '/') . '/arquivosDepoimentos/' . basename($d['caminhoArquivo']),
@@ -118,7 +95,7 @@ const MIDIA = [
                 <div class="carousel-inner rounded shadow-sm testimonials-inner" style="height: 380px; background-color: white;">
                     <?php foreach ($carrossel as $index => $item) {
                         $tipo = strtolower(pathinfo($item['src'], PATHINFO_EXTENSION));
-                        $mime = MIDIA[$tipo] ?? null;
+                        $mime = $MIDIA[$tipo] ?? null;
                         $isVideo = $mime && str_starts_with($mime, 'video/');
                     ?>
                         <div class="carousel-item testimonials-item <?= $index === 0 ? 'active' : '' ?> " style="height: 380px;">

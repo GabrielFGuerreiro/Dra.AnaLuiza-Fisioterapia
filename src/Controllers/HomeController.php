@@ -1,5 +1,6 @@
 <?php
 namespace DraAnaLuiza\Controllers;
+use DraAnaLuiza\Models\Adm;
 
 class HomeController extends GeralController
 {
@@ -32,8 +33,25 @@ class HomeController extends GeralController
             ]
         ];
 
+        $depoimentos = (new Adm())->ListarDepoimentos(true);
+
+        $midia = [
+            'mp4'  => 'video/mp4',
+            'mkv'  => 'video/x-matroska',
+            'avi'  => 'video/x-msvideo',
+            'mov'  => 'video/quicktime',
+            'webm' => 'video/webm',
+            'png'  => 'image/png',
+            'jpg'  => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'gif'  => 'image/gif',
+            'webp' => 'image/webp',
+        ];
+        
         $this->MostrarView("home", [
-            "servicos" => $servicos
+            "servicos" => $servicos,
+            "depoimentos" => $depoimentos,
+            "MIDIA" => $midia
         ]);
     }
 }
