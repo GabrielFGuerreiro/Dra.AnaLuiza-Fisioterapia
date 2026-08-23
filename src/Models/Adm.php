@@ -55,6 +55,9 @@ class Adm
         $opiniao = trim($opiniao);
         $nomePaciente = trim($nomePaciente);
         $temArquivo = !empty($arquivo) && isset($arquivo['error']) && $arquivo['error'] !== UPLOAD_ERR_NO_FILE;
+        if (!$temArquivo) {
+            return ['sucesso' => false, 'msg' => 'Selecione uma imagem ou um vídeo para o depoimento.'];
+        }
         $ehVideo = $temArquivo && (
             (isset($arquivo['type']) && str_starts_with((string) $arquivo['type'], 'video/')) ||
             in_array(strtolower(pathinfo($arquivo['name'] ?? '', PATHINFO_EXTENSION)), ['mp4', 'mkv', 'avi', 'mov', 'webm'], true)
@@ -65,7 +68,7 @@ class Adm
 
         $caminho = null;
 
-        if (!empty($arquivo) && isset($arquivo['error']) && $arquivo['error'] !== UPLOAD_ERR_NO_FILE)
+        if ($temArquivo)
         {
             if ($arquivo['error'] !== UPLOAD_ERR_OK) {
                 return [

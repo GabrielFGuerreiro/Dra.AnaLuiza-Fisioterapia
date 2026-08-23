@@ -26,8 +26,8 @@
                         <textarea name="opiniao" id="opiniao" rows="6" maxlength="255" placeholder="Digite o depoimento..." style="resize: none"></textarea>
                     </div>
                     <div>
-                        <label for="arqDepoimento">Foto ou vídeo <span>(opcional)</span></label>
-                        <input type="file" name="arqDepoimento" id="arqDepoimento" accept="image/*,video/*"><small>Formatos aceitos: imagens e vídeos.</small>
+                        <label for="arqDepoimento">Foto ou vídeo</label>
+                        <input type="file" name="arqDepoimento" id="arqDepoimento" accept="image/*,video/*"><small>Vídeos podem ser cadastrados sem nome ou relato. Imagens exigem nome e relato.</small>
                     </div>
                     <button type="submit" class="admin-primary-button"><i class="fa-solid fa-check"></i> Salvar depoimento</button>
                 </form>
@@ -64,7 +64,7 @@
                                 <div class="testimonial-media-preview <?= $ehVideo ? 'is-video' : 'is-image' ?>">
                                     <?php if ($arquivo) { ?>
                                         <?php if ($ehVideo) { ?><video src="<?= BASE_URL ?>/arquivosDepoimentos/<?= htmlspecialchars(basename($arquivo)) ?>" controls></video><?php } else { ?><img src="<?= BASE_URL ?>/arquivosDepoimentos/<?= htmlspecialchars(basename($arquivo)) ?>" alt="Mídia do depoimento"><?php } ?>
-                                    <?php } else { ?><i class="fa-regular fa-image"></i><span>Sem mídia</span><?php } ?>
+                                    <?php } ?>
                                 </div>
                                 <?php if (!$ehVideo) { ?><form action="<?= BASE_URL ?>/editarDepoimento" method="POST" class="testimonial-edit-form">
                                     <input type="hidden" name="idDepoimento" value="<?= (int) $depoimento['idDepoimento'] ?>">
@@ -116,9 +116,14 @@
         let opiniao = document.getElementById("opiniao").value;
         let arquivo = document.getElementById("arqDepoimento").files[0];
         let ehVideo = arquivo && arquivo.type.startsWith("video/");
+        if(!arquivo)
+        {
+            mostrarAlerta("Selecione uma imagem ou um vídeo.");
+            return;
+        }
         if(!ehVideo && (!nome.trim() || !opiniao.trim()))
         {
-            mostrarAlerta("Informe o nome e o relato, ou selecione apenas um vídeo.");
+            mostrarAlerta("Para imagens, informe o nome e o relato do paciente.");
             return;
         }
         this.submit();
