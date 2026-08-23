@@ -36,6 +36,9 @@ class AdmController extends GeralController
         header("Location: " . BASE_URL . "/gerenciarDepoimentos?retorno=" . (int) $retorno['sucesso'] . "&msg=" . urlencode($retorno['msg']), true, 303);
         exit();
     }
+    public function ExcluirDepoimento()
+    {
+        $retorno = (new Adm())->ExcluirDepoimento($_POST['idDepoimento']);        
     }
 
     public function PreConsultasPendentes()

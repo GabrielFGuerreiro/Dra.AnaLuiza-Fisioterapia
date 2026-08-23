@@ -180,4 +180,15 @@ class Adm
             ];
         }
     }
+
+    public function ExcluirDepoimento(int $id): bool
+    {
+        try {
+            $pdo = (new Database())->getConnection();
+            $stmt = $pdo->prepare("UPDATE Depoimentos SET dtExclusao = NOW() WHERE idDepoimento = :id");
+            return $stmt->execute([':id' => $id]);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }
