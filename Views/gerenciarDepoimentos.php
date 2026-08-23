@@ -1,38 +1,120 @@
-<section class="py-5">
-    <div class="text-center mb-5">
-        <span class="section-kicker">Painel administrativo</span>
-        <h2 class="fw-bold mb-2">Gerenciar Depoimentos</h2>
-        <p>Visualize e gerencie os depoimentos dos pacientes.</p>
-    </div>
-
-    <div class="position-relative d-flex justify-content-center align-items-center" style="min-height: 55.9vh;">
-        <div class="moving-card position-relative text-center" style="z-index: 2; max-width: 700px;">
-            <img src="<?= BASE_URL ?>/Images/Fisioterapia.png"
-                class="position-absolute top-50 start-50 translate-middle opacity-50"
-                style="max-width: 650px; z-index: -1;">
-
-            <div class="position-relative text-center w-100" style="z-index: 2;">
-                <h1 class="display-4 fw-bold text-success mb-4">Avaliação de Atendimento</h1>
-
-                <div style="max-width: 700px;">
-
-                    <form action="<?= BASE_URL ?>/cadastrarDepoimento" method="POST" enctype="multipart/form-data" class="d-flex flex-column gap-3">
-                        <div class="text-start">
-                            <label for="opiniao" class="form-label fw-semibold">O que o cliente achou do atendimento?</label>
-                            <textarea name="opiniao" id="opiniao" rows="5" class="form-control" required></textarea>
-                        </div>
-
-                        <div class="text-start ">
-                            <label for="arqDepoimento" class="form-label fw-semibold">Insira uma foto ou vídeo do atendimento</label>
-                            <input type="file" name="arqDepoimento" id="arqDepoimento" accept="image/*,video/*" class="form-control">
-                        </div>
-
-                        <button type="submit" class="btn btn-success btn-lg">Salvar Avaliação</button>
-                    </form>
-                </div>
-            </div>
+<div class="admin-testimonials-page">
+    <section class="admin-testimonials container py-5">
+        <div class="admin-testimonials-heading">
+            <span class="section-kicker">Painel administrativo</span>
+            <h1>Gerenciar depoimentos</h1>
+            <p>Adicione novos relatos e mantenha as experiências dos pacientes sempre atualizadas.</p>
         </div>
-    </div>
-</section>
 
+        <div class="admin-testimonials-layout">
+            <section class="testimonial-form-card">
+                <div class="admin-card-heading">
+                    <span class="admin-card-icon"><i class="fa-solid fa-plus"></i></span>
+                    <div><h2>Novo depoimento</h2><p>Compartilhe uma nova experiência.</p></div>
+                </div>
+                <div id="msgAlerta" class="alerta-form form-alert">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span></span>
+                </div>
+                <form action="<?= BASE_URL ?>/cadastrarDepoimento" method="POST" enctype="multipart/form-data" class="testimonial-admin-form campo-form" id="formNovoDepoimento">
+                    <div>
+                        <label for="nomePaciente">Nome do paciente <span>(obrigatório com relato)</span></label>
+                        <input type="text" name="nomePaciente" id="nomePaciente" maxlength="120" placeholder="Ex.: Maria Silva">
+                    </div>
+                    <div>
+                        <label for="opiniao">Relato do paciente <span>(opcional apenas para vídeo)</span></label>
+                        <textarea name="opiniao" id="opiniao" rows="6" maxlength="255" placeholder="Digite o depoimento..." style="resize: none"></textarea>
+                    </div>
+                    <div>
+                        <label for="arqDepoimento">Foto ou vídeo <span>(opcional)</span></label>
+                        <input type="file" name="arqDepoimento" id="arqDepoimento" accept="image/*,video/*"><small>Formatos aceitos: imagens e vídeos.</small>
+                    </div>
+                    <button type="submit" class="admin-primary-button"><i class="fa-solid fa-check"></i> Salvar depoimento</button>
+                </form>
+            </section>
+
+            <section class="testimonial-list-section">
+                <div class="testimonial-list-heading">
+                    <div><span class="section-kicker">Conteúdo publicado</span>
+                        <h2>Depoimentos salvos</h2>
+                    </div>
+                    <span class="testimonial-count"><?= count($depoimentos ?? []) ?> <?= count($depoimentos ?? []) === 1 ? 'depoimento' : 'depoimentos' ?></span>
+                </div>
+                <?php if (empty($depoimentos)) { ?>
+                    <div class="testimonial-empty"><i class="fa-regular fa-comments"></i><p>Nenhum depoimento cadastrado ainda.</p></div>
+                <?php } else { ?>
+                    <div class="testimonial-admin-grid">
+                        <?php foreach ($depoimentos as $depoimento) { $arquivo = $depoimento['caminhoArquivo'] ?? ''; $extensao = strtolower(pathinfo($arquivo, PATHINFO_EXTENSION)); $ehVideo = in_array($extensao, ['mp4', 'mkv', 'avi', 'mov', 'webm'], true); $ativo = (int) ($depoimento['ativo'] ?? 1) === 1; ?>
+                            <article class="testimonial-admin-card <?= $ehVideo ? 'has-video' : 'has-image' ?>">
+                                <div class="testimonial-card-topline">
+                                    <form action="<?= BASE_URL ?>/excluirDepoimento" method="POST" id="formExcluirDepoimento">
+                                        <input type="hidden" name="idDepoimento" value="<?= (int) $depoimento['idDepoimento'] ?>">
+                                        <button type="submit" class="status-toggle is-active" title="Excluir Depoimento">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                    <span></span>
+                                    <form action="<?= BASE_URL ?>/alternarDepoimento" method="POST">
+                                        <input type="hidden" name="idDepoimento" value="<?= (int) $depoimento['idDepoimento'] ?>">
+                                        <button type="submit" class="status-toggle <?= $ativo ? 'is-active' : 'is-inactive' ?>" title="<?= $ativo ? 'Inativar depoimento' : 'Ativar depoimento' ?>">
+                                            <i class="fa-solid <?= $ativo ? 'fa-eye-slash' : 'fa-eye' ?>"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="testimonial-media-preview <?= $ehVideo ? 'is-video' : 'is-image' ?>">
+                                    <?php if ($arquivo) { ?>
+                                        <?php if ($ehVideo) { ?><video src="<?= BASE_URL ?>/arquivosDepoimentos/<?= htmlspecialchars(basename($arquivo)) ?>" controls></video><?php } else { ?><img src="<?= BASE_URL ?>/arquivosDepoimentos/<?= htmlspecialchars(basename($arquivo)) ?>" alt="Mídia do depoimento"><?php } ?>
+                                    <?php } else { ?><i class="fa-regular fa-image"></i><span>Sem mídia</span><?php } ?>
+                                </div>
+                                <?php if (!$ehVideo) { ?><form action="<?= BASE_URL ?>/editarDepoimento" method="POST" class="testimonial-edit-form">
+                                    <input type="hidden" name="idDepoimento" value="<?= (int) $depoimento['idDepoimento'] ?>">
+                                    <label for="nome-<?= (int) $depoimento['idDepoimento'] ?>">Nome do paciente</label>
+                                    <input id="nome-<?= (int) $depoimento['idDepoimento'] ?>" type="text" name="nomePaciente" maxlength="120" value="<?= htmlspecialchars($depoimento['nmPaciente'] ?? '') ?>" required>
+                                    <label for="opiniao-<?= (int) $depoimento['idDepoimento'] ?>">Depoimento</label>
+                                    <textarea id="opiniao-<?= (int) $depoimento['idDepoimento'] ?>" name="opiniao" maxlength="255" style="resize: none"><?= htmlspecialchars($depoimento['dsDepoimento']) ?></textarea>
+                                    <button type="submit" class="admin-secondary-button"><i class="fa-solid fa-pen"></i> Atualizar</button>
+                                </form><?php } ?>
+                            </article>
+                        <?php } ?>
+                    </div>
+                <?php } ?>
+            </section>
+        </div>
+    </section>
+</div>
 <?php require "footer.php"; ?>
+
+<script>
+    document.getElementById("formNovoDepoimento").addEventListener("submit", function (e)
+    {
+        e.preventDefault();
+
+        let nome = document.getElementById("nomePaciente").value;
+        let opiniao = document.getElementById("opiniao").value;
+        let arquivo = document.getElementById("arqDepoimento").files[0];
+        let ehVideo = arquivo && arquivo.type.startsWith("video/");
+        if(!ehVideo && (!nome.trim() || !opiniao.trim()))
+        {
+            mostrarAlerta("Informe o nome e o relato, ou selecione apenas um vídeo.");
+            return;
+        }
+        this.submit();
+    });
+
+    document.getElementById("formExcluirDepoimento")?.addEventListener("submit", function(e)
+    {
+        e.preventDefault();
+         Swal.fire({
+                title: "Deseja Excluir o Depoimento?",
+                icon: "warning",
+                confirmButtonText: "Sim",
+                showCancelButton: true,
+                cancelButtonText: "Não"
+            }).then((resultado) => {
+                if(resultado.isConfirmed)
+                    this.submit();
+            });
+    });
+
+
+</script>

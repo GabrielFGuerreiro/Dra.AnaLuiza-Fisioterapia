@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/footer.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/home.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/calendario.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/styles/admin-depoimentos.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/styles/404.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>    
 </head>
 
