@@ -1,52 +1,89 @@
-<section class="py-5">
-    <div class="position-relative d-flex justify-content-center align-items-center" style="min-height: 55.9vh;">
-        <div class="moving-card position-relative text-center" style="z-index: 2; max-width: 700px;">
-            <div class="position-relative text-center w-100" style="z-index: 2;">
-                <h1 class="display-4 fw-bold text-success mb-4">Pré-Consulta</h1>
-
-                <?php if (!empty($_GET['msg'])) { ?>
-                    <div class="alert <?= ($_GET['sucesso'] ?? '') === '1' ? 'alert-success' : 'alert-danger' ?> text-start">
-                        <?= htmlspecialchars($_GET['msg']) ?>
-                    </div>
-                <?php } ?>
-
-                <form action="<?= BASE_URL ?>/cadastrarConsulta" method="POST" class="d-flex flex-column gap-3">
-                    <label class="form-label fw-semibold" for="nmDiaSemana">Qual a sua preferência de dia?</label>
-                    <select class="form-control" id="nmDiaSemana" name="nmDiaSemana" required>
-                        <option value="" selected disabled>Selecione um dia</option>
-                        <option value="Segunda-feira">Segunda-feira</option>
-                        <option value="Terça-feira">Terça-feira</option>
-                        <option value="Quarta-feira">Quarta-feira</option>
-                        <option value="Quinta-feira">Quinta-feira</option>
-                        <option value="Sexta-feira">Sexta-feira</option>
-                        <option value="Sábado">Sábado</option>
-                    </select>
-
-                    <label class="form-label fw-semibold" for="horarioInicial">Qual a sua preferência de horário?</label>
-                    <input class="form-control" type="time" id="horarioInicial" name="horarioInicial" required>
-
-                    <label class="form-label fw-semibold" for="localDor">Qual o principal local da dor ou desconforto?</label>
-                    <input class="form-control" type="text" id="localDor" name="localDor" required placeholder="Ex: Dor no pescoço">
-
-                    <label class="form-label fw-semibold" for="tempoSintoma">Há quanto tempo você sente isso?</label>
-                    <input class="form-control" type="text" id="tempoSintoma" name="tempoSintoma">
-
-                    <label class="form-label fw-semibold" for="descricaoSintoma">Descreva brevemente o que você está sentindo:</label>
-                    <textarea class="form-control" id="descricaoSintoma" name="descricaoSintoma" rows="4" cols="50" placeholder="Escreva aqui..."></textarea>
-
-                    <label class="form-label fw-semibold" for="escalaDor">De 1 a 10, qual o nível da sua dor atual? </label>
-                    <input class="form-control" type="number" id="escalaDor" name="escalaDor" min="1" max="10">
-
-                    <label class="form-label fw-semibold" for="comorbidades">Possui alguma doença crônica?</label>
-                    <textarea class="form-control" id="comorbidades" name="comorbidades" rows="2" cols="50" placeholder="Ex: Diabetes, pressão alta..."></textarea>
-                    <br>
-                    <button type="submit" class="btn btn-success btn-lg">Enviar Pré-Consulta</button>
-                    <button type="reset" class="btn btn-secondary btn-lg">Limpar Tudo</button>
-
-                </form>
-            </div>
+<div class="preconsulta-page">
+    <section class="preconsulta-card">
+        <div class="preconsulta-heading">
+            <span class="section-kicker">Agende seu Atendimento</span>
+            <h1>Pré-consulta</h1>
+            <p>Informe a Data e o Horário Desejados.<br>A Confirmação será Feita pela Doutora.</p>
         </div>
-    </div>
-</section>
+
+        <div id="msgAlerta" class="alerta-form form-alert">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span></span>
+        </div>
+
+        <form action="<?= BASE_URL ?>/cadastrarConsulta" method="POST" class="preconsulta-form form-layout" id="formCadastrarConsulta">
+            <div class="preconsulta-field">
+                <label for="dtPreferencia">Data de preferência</label>
+                <input type="date" id="dtPreferencia" name="dtPreferencia">
+            </div>
+            <div class="preconsulta-field">
+                <label for="horarioInicial">Horário de preferência</label>
+                <input type="time" id="horarioInicial" name="horarioInicial">
+                <small>A consulta terá duração prevista de uma hora.</small>
+            </div>
+            <div class="preconsulta-field">
+                <label for="observacao">Observação <span>(opcional)</span></label>
+                <textarea id="observacao" name="observacao" rows="4" maxlength="450" placeholder="Escreva alguma informação importante para a Doutora." style="resize:none"></textarea>
+            </div>
+            <button type="submit" class="preconsulta-submit"><i class="fa-regular fa-calendar-check"></i>Enviar Consulta</button>
+        </form>
+    </section>
+</div>
 
 <?php require "footer.php"; ?>
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const params = new URLSearchParams(window.location.search);
+        const msg = params.get("msg");
+        const sucesso = params.get("sucesso");
+        if (msg)
+        {
+            Swal.fire({
+                title: msg,
+                icon: sucesso === "1" ? "success" : "error",
+                confirmButtonText: 'Ok'
+            }).then((resulta) => {
+                if(sucesso === "1")
+                    window.location.href = "/Dra.AnaLuiza-Fisioterapia/login";
+            });
+
+            // O resultado já foi exibido; remove os dados do POST da URL.
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    });
+
+
+    document.getElementById("formCadastrarConsulta").addEventListener("submit", function(e)
+    {
+        e.preventDefault();
+        const dataConsulta = document.getElementById("dtPreferencia");
+
+        const hoje = new Date();
+        const ano = hoje.getFullYear();
+        const mes = String(hoje.getMonth() + 1).padStart(2, "0");
+        const dia = String(hoje.getDate()).padStart(2, "0");
+
+        if(!dataConsulta.value)
+        {
+            mostrarAlerta("Informe o dia da consulta.");
+            return;
+        }
+
+        if(dataConsulta.value < `${ano}-${mes}-${dia}`)
+        {
+            mostrarAlerta("A data da consulta não pode ser anterior à data atual.");
+            return;
+        }
+
+        if(!document.getElementById("horarioInicial").value)
+        {
+            mostrarAlerta("Informe o horário da consulta.");
+            return;
+        }
+
+        this.submit();
+    });
+</script>

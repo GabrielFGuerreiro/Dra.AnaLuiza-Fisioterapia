@@ -161,17 +161,7 @@ class Usuario
         }
     }
 
-    public function CadastrarPreConsulta(
-        string $email,
-        string $nmDiaSemana,
-        string $horarioInicial,
-        string $horarioFinal,
-        string $localDor,
-        ?string $tempoSintoma,
-        ?string $descricaoSintoma,
-        ?int $escalaDor,
-        ?string $comorbidades
-    ): array
+    public function CadastrarPreConsulta(string $email, string $dtPreferencia, string $horarioInicial, string $horarioFinal, string $observacao = ''): array
     {
         try
         {
@@ -191,19 +181,14 @@ class Usuario
                 ];
             }
 
-            $sql = "INSERT INTO PreConsultas (idUsuario, nmDiaSemana, horarioInicial, horarioFinal, localDor, tempoSintoma, descricaoSintoma, escalaDor, comorbidades)
-                    VALUES (:idUsuario, :nmDiaSemana, :horarioInicial, :horarioFinal, :localDor, :tempoSintoma, :descricaoSintoma, :escalaDor, :comorbidades)";
+            $sql = "INSERT INTO PreConsultas (idUsuario, horarioInicial, horarioFinal, observacao)
+                    VALUES (:idUsuario, :horarioInicial, :horarioFinal, :observacao)";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
                 ':idUsuario' => $idUsuario,
-                ':nmDiaSemana' => $nmDiaSemana,
                 ':horarioInicial' => $horarioInicial,
                 ':horarioFinal' => $horarioFinal,
-                ':localDor' => $localDor,
-                ':tempoSintoma' => $tempoSintoma,
-                ':descricaoSintoma' => $descricaoSintoma,
-                ':escalaDor' => $escalaDor,
-                ':comorbidades' => $comorbidades
+                ':observacao' => 'Data de preferência: ' . $dtPreferencia . ($observacao !== '' ? "\nObservação: " . $observacao : '')
             ]);
 
             return [
