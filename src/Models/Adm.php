@@ -147,8 +147,7 @@ class Adm
                         pc.observacao
                     FROM PreConsultas pc
                     JOIN Usuarios u ON pc.idUsuario = u.idUsuario
-                    WHERE pc.dtConsulta IS NULL
-                      AND (pc.observacao IS NULL OR pc.observacao NOT LIKE '%STATUS: NEGADA%')
+                    WHERE aceito IS NULL
                     ORDER BY pc.idPreConsulta DESC";
 
             $stmt = $pdo->prepare($sql);

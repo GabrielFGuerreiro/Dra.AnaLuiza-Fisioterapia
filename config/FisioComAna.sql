@@ -21,9 +21,9 @@ dtConsulta DATE,
 horarioInicial TIME NOT NULL,
 horarioFinal TIME NOT NULL,
 observacao VARCHAR(500),
+aceito BIT,
 
 CONSTRAINT fk_PreConsultas_Usuarios FOREIGN KEY(idUsuario) REFERENCES Usuarios (idUsuario)
-
 )
 
 CREATE TABLE Depoimentos (
