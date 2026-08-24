@@ -5,6 +5,11 @@ use DraAnaLuiza\Models\Adm;
 
 class AdmController extends GeralController
 {
+    public function __construct()
+    {
+        $this->VerificarEhAdm();
+    }
+
     public function Agendamentos()
     {
         $this->MostrarView("agendamentos");
