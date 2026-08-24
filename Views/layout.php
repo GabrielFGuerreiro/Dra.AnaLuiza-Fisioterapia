@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/login.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/cadastro.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/preconsulta.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/styles/preconsultas-pendentes.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/swal.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/footer.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/home.css">
