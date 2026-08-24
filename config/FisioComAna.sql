@@ -17,15 +17,10 @@ dtExpiracaoCodigoSenha DATETIME
 CREATE TABLE PreConsultas (
 idPreConsulta INT PRIMARY KEY AUTO_INCREMENT,
 idUsuario INT,
-nmDiaSemana VARCHAR(30) NOT NULL,
+dtConsulta DATETIME,
 horarioInicial TIME NOT NULL,
 horarioFinal TIME NOT NULL,
-dtConsulta DATE,
-localDor VARCHAR(150) NOT NULL,
-tempoSintoma VARCHAR(100),
-descricaoSintoma VARCHAR(500),
-escalaDor TINYINT,
-comorbidades VARCHAR(500),
+observacao VARCHAR(500),
 
 CONSTRAINT fk_PreConsultas_Usuarios FOREIGN KEY(idUsuario) REFERENCES Usuarios (idUsuario)
 
