@@ -193,14 +193,15 @@ class Usuario
                 ];
             }
 
-            $sql = "INSERT INTO PreConsultas (idUsuario, horarioInicial, horarioFinal, observacao)
-                    VALUES (:idUsuario, :horarioInicial, :horarioFinal, :observacao)";
+            $sql = "INSERT INTO PreConsultas (idUsuario, dtConsulta, horarioInicial, horarioFinal, observacao)
+                    VALUES (:idUsuario, :dtConsulta, :horarioInicial, :horarioFinal, :observacao)";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
                 ':idUsuario' => $idUsuario,
+                ':dtConsulta' => $dtPreferencia,
                 ':horarioInicial' => $horarioInicial,
                 ':horarioFinal' => $horarioFinal,
-                ':observacao' => 'Data de preferência: ' . $dtPreferencia . ($observacao !== '' ? "\nObservação: " . $observacao : '')
+                ':observacao' => $observacao
             ]);
 
             return [
