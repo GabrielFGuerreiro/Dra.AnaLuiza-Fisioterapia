@@ -29,7 +29,8 @@ return [
         '/enviarEmailCodigo' => 'UsuarioController@EnviarEmailCodigo',
         '/verificarCodigo' => 'UsuarioController@VerificarCodigo',
         '/alterarSenha' => 'UsuarioController@AlterarSenha',
-        '/confirmarConsulta' => 'AdmController@ConfirmarConsulta'
+        '/confirmarConsulta' => 'AdmController@ConfirmarConsulta',
+        '/negarConsulta' => 'AdmController@NegarConsulta'
     ]
 
 ];

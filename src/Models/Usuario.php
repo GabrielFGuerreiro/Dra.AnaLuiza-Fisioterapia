@@ -88,6 +88,18 @@ class Usuario
         return $stmt->fetchColumn() > 0;
     }
 
+    public function ObterEmailAdministrador(): ?string
+    {
+        try {
+            $pdo = (new Database())->getConnection();
+            $stmt = $pdo->query("SELECT email FROM Usuarios WHERE isAdmin = 1 ORDER BY idUsuario LIMIT 1");
+            $email = $stmt->fetchColumn();
+            return $email !== false ? (string) $email : null;
+        } catch (\Throwable $e) {
+            return null;
+        }
+    }
+
     public function SalvarCodigoRecuperacaoSenha($codigo, $email): array
     {
         try

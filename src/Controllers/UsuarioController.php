@@ -2,6 +2,7 @@
 
 namespace DraAnaLuiza\Controllers;
 use DraAnaLuiza\Models\Usuario;
+use DraAnaLuiza\Services\EmailService;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
@@ -46,11 +47,29 @@ class UsuarioController extends GeralController
         $horarioInicial = $_POST['horarioInicial'] ?? '';
         $observacao = trim($_POST['observacao'] ?? '');
 
+        if ($dtPreferencia === '' || $horarioInicial === '') {
+            header("Location: " . BASE_URL . "/preconsulta?sucesso=0&msg=" . urlencode("Informe a data e o horário de preferência."), true, 303);
+            exit();
+        }
+
         // Duração fixa de 1h por consulta (ajustar se a Dra usar outra duração padrão)
         $horarioFinal = date('H:i:s', strtotime($horarioInicial . ' +1 hour'));
 
         $usuario = new Usuario();
         $retorno = $usuario->CadastrarPreConsulta($_SESSION['email'], $dtPreferencia, $horarioInicial, $horarioFinal, $observacao);
+
+        if ($retorno['sucesso']) {
+            $emailAdm = $usuario->ObterEmailAdministrador();
+            if ($emailAdm) {
+                EmailService::enviar(
+                    $emailAdm,
+                    'Nova pré-consulta solicitada',
+                    "Uma nova pré-consulta foi solicitada.\n\nData: " . date('d/m/Y', strtotime($dtPreferencia)) .
+                    "\nHorário: " . substr($horarioInicial, 0, 5) . " às " . substr($horarioFinal, 0, 5) .
+                    "\nAcesse o painel administrativo para confirmar ou negar o atendimento."
+                );
+            }
+        }
 
         header("Location: " . BASE_URL . "/preconsulta?sucesso=" . $retorno['sucesso'] . "&msg=" . urlencode($retorno['mensagem']), true, 303);
         exit();

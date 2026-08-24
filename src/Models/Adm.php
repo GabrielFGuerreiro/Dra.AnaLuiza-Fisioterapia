@@ -1,6 +1,7 @@
 <?php
 namespace DraAnaLuiza\Models;
 use DraAnaLuiza\Models\Database;
+use DraAnaLuiza\Services\EmailService;
 use PDO;
 use PDOException;
 
@@ -141,17 +142,13 @@ class Adm
             $sql = "SELECT
                         pc.idPreConsulta,
                         u.nmUsuario,
-                        pc.nmDiaSemana,
                         pc.horarioInicial,
                         pc.horarioFinal,
-                        pc.localDor,
-                        pc.tempoSintoma,
-                        pc.descricaoSintoma,
-                        pc.escalaDor,
-                        pc.comorbidades
+                        pc.observacao
                     FROM PreConsultas pc
                     JOIN Usuarios u ON pc.idUsuario = u.idUsuario
                     WHERE pc.dtConsulta IS NULL
+                      AND (pc.observacao IS NULL OR pc.observacao NOT LIKE '%STATUS: NEGADA%')
                     ORDER BY pc.idPreConsulta DESC";
 
             $stmt = $pdo->prepare($sql);
@@ -171,6 +168,16 @@ class Adm
             $db = new Database();
             $pdo = $db->getConnection();
 
+            $dados = $pdo->prepare("SELECT u.nmUsuario, u.email
+                                    FROM PreConsultas pc
+                                    JOIN Usuarios u ON pc.idUsuario = u.idUsuario
+                                    WHERE pc.idPreConsulta = :id AND pc.dtConsulta IS NULL");
+            $dados->execute([':id' => $idPreConsulta]);
+            $consulta = $dados->fetch(PDO::FETCH_ASSOC);
+            if (!$consulta) {
+                return ['sucesso' => false, 'mensagem' => 'Esta pré-consulta já foi processada ou não existe.'];
+            }
+
             $sql = "UPDATE PreConsultas
                     SET dtConsulta = :dtConsulta, horarioInicial = :horarioInicial, horarioFinal = :horarioFinal
                     WHERE idPreConsulta = :idPreConsulta";
@@ -183,9 +190,17 @@ class Adm
                 ':idPreConsulta' => $idPreConsulta
             ]);
 
+            $enviado = EmailService::enviar(
+                $consulta['email'],
+                'Sua consulta foi confirmada',
+                "Olá, {$consulta['nmUsuario']}!\n\nSua consulta foi confirmada para " . date('d/m/Y', strtotime($dtConsulta)) .
+                " das " . substr($horarioInicial, 0, 5) . " às " . substr($horarioFinal, 0, 5) .
+                ".\n\nA Dra. Ana Luiza agradece o contato."
+            );
+
             return [
                 'sucesso' => true,
-                'mensagem' => 'Consulta Agendada com Sucesso!'
+                'mensagem' => $enviado ? 'Consulta confirmada e e-mail enviado ao paciente!' : 'Consulta confirmada, mas não foi possível enviar o e-mail.'
             ];
         }
         catch (PDOException $e)
@@ -194,6 +209,46 @@ class Adm
                 'sucesso' => false,
                 'mensagem' => 'Não foi Possível Agendar a Consulta no Momento.'
             ];
+        }
+    }
+
+    public function NegarConsulta($idPreConsulta, string $motivo): array
+    {
+        $motivo = trim($motivo);
+        if ($motivo === '') {
+            return ['sucesso' => false, 'mensagem' => 'Informe o motivo da negativa.'];
+        }
+
+        try {
+            $pdo = (new Database())->getConnection();
+            $dados = $pdo->prepare("SELECT u.nmUsuario, u.email
+                                    FROM PreConsultas pc
+                                    JOIN Usuarios u ON pc.idUsuario = u.idUsuario
+                                    WHERE pc.idPreConsulta = :id AND pc.dtConsulta IS NULL
+                                      AND (pc.observacao IS NULL OR pc.observacao NOT LIKE '%STATUS: NEGADA%')");
+            $dados->execute([':id' => $idPreConsulta]);
+            $consulta = $dados->fetch(PDO::FETCH_ASSOC);
+            if (!$consulta) {
+                return ['sucesso' => false, 'mensagem' => 'Esta pré-consulta já foi processada ou não existe.'];
+            }
+
+            $stmt = $pdo->prepare("UPDATE PreConsultas
+                                   SET observacao = CONCAT(COALESCE(observacao, ''), '\\nSTATUS: NEGADA\\nMotivo: ', :motivo)
+                                   WHERE idPreConsulta = :id AND dtConsulta IS NULL");
+            $stmt->execute([':motivo' => $motivo, ':id' => $idPreConsulta]);
+
+            $enviado = EmailService::enviar(
+                $consulta['email'],
+                'Atualização da sua pré-consulta',
+                "Olá, {$consulta['nmUsuario']}!\n\nNo momento, não foi possível confirmar a data e o horário solicitados.\n\nMotivo informado pela clínica: {$motivo}\n\nEntre em contato para verificar novas possibilidades de agendamento."
+            );
+
+            return [
+                'sucesso' => true,
+                'mensagem' => $enviado ? 'Pré-consulta negada e e-mail enviado ao paciente.' : 'Pré-consulta negada, mas não foi possível enviar o e-mail.'
+            ];
+        } catch (\Throwable $e) {
+            return ['sucesso' => false, 'mensagem' => 'Não foi possível negar a pré-consulta.'];
         }
     }
 

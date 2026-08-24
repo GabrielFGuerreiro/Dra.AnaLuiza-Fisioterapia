@@ -100,4 +100,20 @@ class AdmController extends GeralController
         );
         exit();
     }
+
+    public function NegarConsulta()
+    {
+        $adm = new Adm();
+        $retorno = $adm->NegarConsulta(
+            filter_input(INPUT_POST, 'idPreConsulta', FILTER_VALIDATE_INT),
+            $_POST['motivoNegacao'] ?? ''
+        );
+
+        header(
+            "Location: " . BASE_URL . "/preConsultasPendentes?sucesso=" . (int) $retorno['sucesso'] . "&msg=" . urlencode($retorno['mensagem']),
+            true,
+            303
+        );
+        exit();
+    }
 }
