@@ -42,6 +42,20 @@
             eventDidMount: function (info) {
                 info.el.title = info.event.title;
             },
+            eventClick: function (info) {
+                fetch("<?= BASE_URL ?>/obterObservacaoAgendamento?id=" + encodeURIComponent(info.event.id))
+                    .then(response => response.json())
+                    .then(data => Swal.fire({
+                        title: info.event.title,
+                        text: data.observacao || "Nenhuma observação registrada.",
+                        confirmButtonText: "Fechar"
+                    }))
+                    .catch(() => Swal.fire({
+                        title: info.event.title,
+                        text: "Não foi possível carregar a observação.",
+                        confirmButtonText: "Fechar"
+                    }));
+            },
             loading: function (isLoading) {
                 calendarioEl.classList.toggle("is-loading", isLoading);
             }

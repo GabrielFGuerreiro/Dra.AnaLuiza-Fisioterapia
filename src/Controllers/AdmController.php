@@ -10,13 +10,22 @@ class AdmController extends GeralController
         $this->MostrarView("agendamentos");
     }
 
-     public function ListarAgendamentosJson()
+    public function ListarAgendamentosJson()
     {
         $adm = new Adm();
         $agendamentos = $adm->ListarAgendamentos() ?? [];
 
         header('Content-Type: application/json');
         echo json_encode($agendamentos);
+        exit();
+    }
+
+    public function ObterObservacaoAgendamento()
+    {
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+        $observacao = $id ? (new Adm())->ObterObservacaoAgendamento($id) : null;
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['observacao' => $observacao]);
         exit();
     }
 

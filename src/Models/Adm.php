@@ -50,6 +50,19 @@ class Adm
         }
     }
 
+    public function ObterObservacaoAgendamento(int $id): ?string
+    {
+        try {
+            $pdo = (new Database())->getConnection();
+            $stmt = $pdo->prepare("SELECT observacao FROM PreConsultas WHERE idPreConsulta = :id LIMIT 1");
+            $stmt->execute([':id' => $id]);
+            $observacao = $stmt->fetchColumn();
+            return $observacao !== false ? (string) $observacao : null;
+        } catch (PDOException $e) {
+            return null;
+        }
+    }
+
     public function CadastrarDepoimento(string $opiniao, string $nomePaciente, array $arquivo): Array
     {
         $opiniao = trim($opiniao);

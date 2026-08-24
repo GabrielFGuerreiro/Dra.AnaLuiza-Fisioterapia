@@ -10,6 +10,7 @@ return [
         '/preconsulta' => 'UsuarioController@PreConsulta',
         '/agendamentos' => 'AdmController@Agendamentos',
         '/listarAgendamentosJson' => 'AdmController@ListarAgendamentosJson',
+        '/obterObservacaoAgendamento' => 'AdmController@ObterObservacaoAgendamento',
         '/gerenciarDepoimentos' => 'AdmController@GerenciarDepoimentos',
         '/preConsultasPendentes' => 'AdmController@PreConsultasPendentes',
         '/esqueciMinhaSenha' => 'UsuarioController@EsqueceuSenha',
