@@ -17,7 +17,7 @@ dtExpiracaoCodigoSenha DATETIME
 CREATE TABLE PreConsultas (
 idPreConsulta INT PRIMARY KEY AUTO_INCREMENT,
 idUsuario INT,
-dtConsulta DATETIME,
+dtConsulta DATE,
 horarioInicial TIME NOT NULL,
 horarioFinal TIME NOT NULL,
 observacao VARCHAR(500),
