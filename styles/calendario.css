@@ -50,3 +50,7 @@
     border-radius: 6px;
     padding: 1px 4px;
 }
+
+#calendario { position: relative; min-height: 420px; }
+#calendario.is-loading { opacity: .55; pointer-events: none; }
+.calendar-error { margin-bottom: 12px; padding: 10px 14px; border: 1px solid #f2c5c0; border-radius: 9px; background: #fff4f2; color: #9a3d36; text-align: center; }

@@ -27,6 +27,7 @@
             initialView: "dayGridMonth",
             height: "auto",
             eventColor: "#577A61",
+            noEventsContent: "Nenhum agendamento neste período",
             headerToolbar: {
                 left: "prev,next today",
                 center: "title",
@@ -34,9 +35,16 @@
             },
             events: {
                 url: "<?= BASE_URL ?>/listarAgendamentosJson",
+                method: "GET",
                 failure: function () {
-                    console.error("Não foi possível carregar os agendamentos.");
+                    calendarioEl.insertAdjacentHTML("beforebegin", '<div class="calendar-error">Não foi possível carregar os agendamentos.</div>');
                 }
+            },
+            eventDidMount: function (info) {
+                info.el.title = info.event.title;
+            },
+            loading: function (isLoading) {
+                calendarioEl.classList.toggle("is-loading", isLoading);
             }
         });
 
