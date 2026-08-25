@@ -42,6 +42,7 @@
 
         const alerta = document.getElementById("msgAlerta");
         function mostrarAlerta(msg) {
+            if (!alerta) return;
             alerta.querySelector("span").textContent = msg;
 
             alerta.classList.remove("alerta-form");
@@ -54,7 +55,7 @@
     const forms = document.querySelectorAll(".form-layout");
     forms.forEach(form => {
         form.addEventListener("input", function() {
-            alerta.style.display = "none";
+            if (alerta) alerta.style.display = "none";
         });
     });
 
