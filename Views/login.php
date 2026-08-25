@@ -18,7 +18,7 @@
                             <label for="email">E-mail</label>
                             <div class="login-input-wrap form-input-wrap">
                                 <i class="fa-regular fa-envelope"></i>
-                                <input id="email" name="email" class="form-control campo-form" type="email" placeholder="voce@exemplo.com">
+                                <input id="email" name="email" class="form-control" type="email" placeholder="voce@exemplo.com">
                             </div>
                         </div>
 
@@ -26,7 +26,7 @@
                             <label for="password">Senha</label>
                             <div class="login-input-wrap form-input-wrap">
                                 <i class="fa-solid fa-lock"></i>
-                                <input id="password" name="password" class="form-control campo-form" type="password" placeholder="Digite sua senha">
+                                <input id="password" name="password" class="form-control" type="password" placeholder="Digite sua senha">
                             </div>
                         </div>
                         <a class="forgot-password" href="<?= BASE_URL ?>/esqueciMinhaSenha">Esqueceu sua senha?</a>

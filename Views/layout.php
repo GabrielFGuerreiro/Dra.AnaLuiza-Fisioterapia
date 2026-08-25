@@ -51,13 +51,13 @@
             alerta.style.display = "block";
         }
 
-        const campos = document.querySelectorAll(".campo-form");
-        campos.forEach(campo => {
-            campo.addEventListener("input",  function()
-            {
-                alerta.style.display = "none";
-            });
+    const forms = document.querySelectorAll(".form-layout");
+    forms.forEach(form => {
+        form.addEventListener("input", function() {
+            alerta.style.display = "none";
         });
+    });
+
        
     </script>
 </body>

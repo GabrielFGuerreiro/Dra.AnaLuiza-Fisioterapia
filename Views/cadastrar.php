@@ -20,7 +20,7 @@
                                     <label for="nome">Nome completo</label>
                                     <div class="register-input-wrap">
                                         <i class="fa-regular fa-user"></i>
-                                        <input type="text" id="nome" name="nome" class="form-control campo-form" placeholder="Como você gostaria de ser chamado?">
+                                        <input type="text" id="nome" name="nome" class="form-control" placeholder="Como você gostaria de ser chamado?">
                                     </div>
                                 </div>
                             </div>
@@ -30,7 +30,7 @@
                                     <label for="cpf">CPF</label>
                                     <div class="register-input-wrap">
                                         <i class="fa-regular fa-id-card"></i>
-                                        <input type="text" id="cpf" name="cpf" class="form-control campo-form" placeholder="000.000.000-00">
+                                        <input type="text" id="cpf" name="cpf" class="form-control" placeholder="000.000.000-00">
                                     </div>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                                     <label for="dtNasc">Data de nascimento</label>
                                     <div class="register-input-wrap">
                                         <i class="fa-regular fa-calendar"></i>
-                                        <input type="date" id="dtNasc" name="dtNasc" class="form-control campo-form">
+                                        <input type="date" id="dtNasc" name="dtNasc" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +50,7 @@
                                     <label for="cel">Celular</label>
                                     <div class="register-input-wrap">
                                         <i class="fa-solid fa-mobile-screen-button"></i>
-                                        <input type="text" id="cel" name="cel" class="form-control campo-form" placeholder="(00) 00000-0000">
+                                        <input type="text" id="cel" name="cel" class="form-control" placeholder="(00) 00000-0000">
                                     </div>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                                     <label for="emailCad">E-mail</label>
                                     <div class="register-input-wrap">
                                         <i class="fa-regular fa-envelope"></i>
-                                        <input type="email" id="emailCad" name="emailCad" class="form-control campo-form" placeholder="voce@exemplo.com">
+                                        <input type="email" id="emailCad" name="emailCad" class="form-control" placeholder="voce@exemplo.com">
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                                             <label for="senhaCad">Crie uma senha</label>
                                             <div class="register-input-wrap">
                                                 <i class="fa-solid fa-lock"></i>
-                                                <input type="password" id="senhaCad" name="senhaCad" class="form-control campo-form" placeholder="Escolha uma senha segura">
+                                                <input type="password" id="senhaCad" name="senhaCad" class="form-control" placeholder="Escolha uma senha segura">
                                             </div>
                                         </div>
                                     </div>
@@ -81,7 +81,7 @@
                                             <label for="confirmSenha">Confirme sua senha</label>
                                             <div class="register-input-wrap">
                                                 <i class="fa-solid fa-lock"></i>
-                                                <input type="password" id="confirmSenha" name="confirmSenha" class="form-control campo-form" placeholder="Digite a senha novamente">
+                                                <input type="password" id="confirmSenha" name="confirmSenha" class="form-control" placeholder="Digite a senha novamente">
                                             </div>
                                         </div>
                                     </div>

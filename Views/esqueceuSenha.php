@@ -19,7 +19,7 @@
                             <label for="email">E-mail</label>
                             <div class="form-input-wrap">
                                 <i class="fa-regular fa-envelope"></i>
-                                <input id="email" name="email" class="form-control campo-form" type="email" placeholder="voce@exemplo.com">
+                                <input id="email" name="email" class="form-control" type="email" placeholder="voce@exemplo.com">
                             </div>
                         </div>
                         <button type="submit">Enviar Código</button>

@@ -16,7 +16,7 @@
                     <i class="fa-solid fa-circle-exclamation"></i>
                     <span></span>
                 </div>
-                <form action="<?= BASE_URL ?>/cadastrarDepoimento" method="POST" enctype="multipart/form-data" class="testimonial-admin-form campo-form" id="formNovoDepoimento">
+                <form action="<?= BASE_URL ?>/cadastrarDepoimento" method="POST" enctype="multipart/form-data" class="testimonial-admin-form form-layout" id="formNovoDepoimento">
                     <div>
                         <label for="nomePaciente">Nome do paciente <span>(obrigatório com relato)</span></label>
                         <input type="text" name="nomePaciente" id="nomePaciente" maxlength="120" placeholder="Ex.: Maria Silva">
