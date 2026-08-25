@@ -47,7 +47,7 @@
                         <?php foreach ($depoimentos as $depoimento) { $arquivo = $depoimento['caminhoArquivo'] ?? ''; $extensao = strtolower(pathinfo($arquivo, PATHINFO_EXTENSION)); $ehVideo = in_array($extensao, ['mp4', 'mkv', 'avi', 'mov', 'webm'], true); $ativo = (int) ($depoimento['ativo'] ?? 1) === 1; ?>
                             <article class="testimonial-admin-card <?= $ehVideo ? 'has-video' : 'has-image' ?>">
                                 <div class="testimonial-card-topline">
-                                    <form action="<?= BASE_URL ?>/excluirDepoimento" method="POST" id="formExcluirDepoimento">
+                                    <form action="<?= BASE_URL ?>/excluirDepoimento" method="POST" class="formExcluirDepoimento">
                                         <input type="hidden" name="idDepoimento" value="<?= (int) $depoimento['idDepoimento'] ?>">
                                         <button type="submit" class="status-toggle is-active" title="Excluir Depoimento">
                                             <i class="fa-solid fa-trash"></i>
@@ -129,10 +129,10 @@
         this.submit();
     });
 
-    document.getElementById("formExcluirDepoimento")?.addEventListener("submit", function(e)
+    document.querySelectorAll(".formExcluirDepoimento").forEach(form => form.addEventListener("submit", function(e)
     {
         e.preventDefault();
-         Swal.fire({
+        Swal.fire({
                 title: "Deseja Excluir o Depoimento?",
                 icon: "warning",
                 confirmButtonText: "Sim",
@@ -140,9 +140,9 @@
                 cancelButtonText: "Não"
             }).then((resultado) => {
                 if(resultado.isConfirmed)
-                    this.submit();
+                    form.submit();
             });
-    });
+    }));
 
 
 </script>
