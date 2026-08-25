@@ -44,7 +44,7 @@
                 confirmButtonText: 'Ok'
             }).then((resulta) => {
                 if(sucesso === "1")
-                    window.location.href = "/Dra.AnaLuiza-Fisioterapia/verificacaoCodigo";
+                    window.location.href = "<?= BASE_URL ?>/verificacaoCodigo";
             });
 
             window.history.replaceState({}, document.title, window.location.pathname);

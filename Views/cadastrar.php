@@ -123,7 +123,7 @@
                 confirmButtonText: 'Ok'
             }).then((resulta) => {
                 if(sucesso === "1")
-                    window.location.href = "/Dra.AnaLuiza-Fisioterapia/login";
+                    window.location.href = "<?= BASE_URL ?>/login";
             });
 
             // O resultado já foi exibido; remove os dados do POST da URL.
