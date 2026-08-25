@@ -85,35 +85,46 @@ class AdmController extends GeralController
         $adm = new Adm();
         $pendentes = $adm->ListarPreConsultasPendentes() ?? [];
 
-        $this->MostrarView("preConsultasPendentes", ['pendentes' => $pendentes]);
+        $whatsappUrl = $_SESSION['whatsappUrl'] ?? null;
+        unset($_SESSION['whatsappUrl']);
+        $this->MostrarView("preConsultasPendentes", ['pendentes' => $pendentes, 'whatsappUrl' => $whatsappUrl]);
     }
 
     public function ConfirmarConsulta()
     {
         $adm = new Adm();
-        $retorno = $adm->ConfirmarConsulta(
-            $_POST['idPreConsulta'],
-            $_POST['dtConsulta'],
-            $_POST['horarioInicial'],
-            $_POST['horarioFinal']
-        );
+        $retorno = $adm->ConfirmarConsulta(filter_input(INPUT_POST, 'idPreConsulta', FILTER_VALIDATE_INT));
 
-        header(
-            "Location: " . BASE_URL . "/preConsultasPendentes?sucesso={$retorno['sucesso']}&msg=" . urlencode($retorno['mensagem']),
-            true,
-            303
-        );
-        exit();
+        $this->RedirecionarPreConsultasPendentes($retorno);
     }
 
-    public function NegarConsulta()
+    public function ProporHorario()
     {
         $adm = new Adm();
-        $retorno = $adm->NegarConsulta(
+        $retorno = $adm->ProporHorario(
             filter_input(INPUT_POST, 'idPreConsulta', FILTER_VALIDATE_INT),
-            $_POST['motivoNegacao'] ?? ''
+            $_POST['dtConsulta'] ?? '',
+            $_POST['horarioInicial'] ?? '',
+            $_POST['mensagem'] ?? ''
         );
 
+        $this->RedirecionarPreConsultasPendentes($retorno);
+    }
+
+    public function IndisponibilizarConsulta()
+    {
+        $adm = new Adm();
+        $retorno = $adm->IndisponibilizarConsulta(
+            filter_input(INPUT_POST, 'idPreConsulta', FILTER_VALIDATE_INT),
+            $_POST['mensagem'] ?? ''
+        );
+
+        $this->RedirecionarPreConsultasPendentes($retorno);
+    }
+
+    private function RedirecionarPreConsultasPendentes(array $retorno): void
+    {
+        if (!empty($retorno['whatsappUrl'])) $_SESSION['whatsappUrl'] = $retorno['whatsappUrl'];
         header(
             "Location: " . BASE_URL . "/preConsultasPendentes?sucesso=" . (int) $retorno['sucesso'] . "&msg=" . urlencode($retorno['mensagem']),
             true,

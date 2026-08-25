@@ -7,7 +7,7 @@
 .preconsulta-pendente-header .section-kicker { margin-bottom: 5px; }
 .preconsulta-pendente-header h3 { margin: 0; color: #294a38; font-size: 1.25rem; font-weight: 700; }
 .preconsulta-status { padding: 7px 11px; border-radius: 20px; background: #fff7df; color: #8a6a20; font-size: .78rem; font-weight: 700; white-space: nowrap; }
-.preconsulta-resumo { display: grid; gap: 12px; height: 100%; padding: 18px; border-radius: 14px; background: #f0f5f0; }
+.preconsulta-resumo { display: grid; align-content: start; gap: 12px; padding: 18px; border-radius: 14px; background: #f0f5f0; }
 .preconsulta-resumo p { display: grid; gap: 4px; margin: 0; color: #6b7c70; font-size: .9rem; }
 .preconsulta-resumo strong { color: #385843; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; }
 .preconsulta-resumo span { color: #294a38; line-height: 1.45; }
@@ -20,6 +20,19 @@
 .preconsulta-negacao-form label { color: #8d4943; font-size: .85rem; font-weight: 700; }
 .preconsulta-negacao-form textarea { width: 100%; padding: 10px 12px; border: 1px solid #e2bfba; border-radius: 9px; color: #54312d; resize: vertical; }
 .preconsulta-negacao-form textarea:focus { outline: 0; border-color: #b66a62; box-shadow: 0 0 0 3px rgba(182,106,98,.13); }
+.preconsulta-proposta-form { border-color: #c9ddcc; background: #f3f9f3; }
+.preconsulta-proposta-form label { color: #3d6e4c; }
+.preconsulta-proposta-form input, .preconsulta-proposta-form textarea { width: 100%; padding: 10px 12px; border: 1px solid #bad2bf; border-radius: 9px; color: #294a38; }
+.preconsulta-proposta-form input:focus, .preconsulta-proposta-form textarea:focus { outline: 0; border-color: #6f9675; box-shadow: 0 0 0 3px rgba(93,138,101,.14); }
+.preconsulta-proposta-form small { color: #6b7c70; font-size: .8rem; }
 .preconsulta-negar-button { background: #b35f57; color: #fff; }
 .preconsulta-negar-button:hover { background: #984a43; transform: translateY(-1px); }
+.preconsultas-empty { max-width: 540px; margin: 0 auto; padding: 38px 28px; border: 1px solid rgba(255,255,255,.9); border-radius: 22px; background: rgba(255,255,255,.82); box-shadow: 0 18px 42px rgba(48,79,58,.11); }
+.preconsultas-empty-icon { display: inline-grid; place-items: center; width: 52px; height: 52px; margin-bottom: 14px; border-radius: 50%; background: #eaf4eb; color: #3d6e4c; font-size: 1.35rem; }
+.preconsultas-empty h3 { margin: 0 0 7px; color: #294a38; font-size: 1.2rem; font-weight: 700; }
+.preconsultas-empty p { color: #6b7c70; }
+.preconsultas-back-button { position: relative; display: inline-flex; align-items: center; gap: 8px; overflow: hidden; padding: 11px 17px; border: 1px solid #3d6e4c; border-radius: 10px; color: #3d6e4c; font-weight: 700; text-decoration: none; transition: color .25s ease, box-shadow .25s ease; }
+.preconsultas-back-button::before { position: absolute; inset: 0; z-index: 0; width: 0; background: linear-gradient(120deg,#3d6e4c,#5b8964); content: ''; transition: width .3s ease; }
+.preconsultas-back-button { isolation: isolate; }.preconsultas-back-button i, .preconsultas-back-button span { position: relative; z-index: 1; }
+.preconsultas-back-button:hover { color: #fff; box-shadow: 0 8px 16px rgba(53,105,68,.2); }.preconsultas-back-button:hover::before { width: 100%; }
 @media (max-width: 575px) { .preconsulta-pendente-card { padding: 20px; }.preconsulta-pendente-header { display: grid; gap: 10px; }.preconsulta-status { justify-self: start; } }

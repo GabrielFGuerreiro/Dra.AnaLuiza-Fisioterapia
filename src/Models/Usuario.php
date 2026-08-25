@@ -193,8 +193,8 @@ class Usuario
                 ];
             }
 
-            $sql = "INSERT INTO PreConsultas (idUsuario, dtConsulta, horarioInicial, horarioFinal, observacao, aceito)
-                    VALUES (:idUsuario, :dtConsulta, :horarioInicial, :horarioFinal, :observacao, null)";
+            $sql = "INSERT INTO PreConsultas (idUsuario, dtConsulta, horarioInicial, horarioFinal, observacao, status)
+                    VALUES (:idUsuario, :dtConsulta, :horarioInicial, :horarioFinal, :observacao, 'pendente')";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
                 ':idUsuario' => $idUsuario,

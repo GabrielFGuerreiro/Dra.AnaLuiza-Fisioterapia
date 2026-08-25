@@ -21,7 +21,8 @@ dtConsulta DATE,
 horarioInicial TIME NOT NULL,
 horarioFinal TIME NOT NULL,
 observacao VARCHAR(500),
-aceito BIT,
+respostaClinica VARCHAR(500),
+status VARCHAR(30) NOT NULL DEFAULT 'pendente',
 
 CONSTRAINT fk_PreConsultas_Usuarios FOREIGN KEY(idUsuario) REFERENCES Usuarios (idUsuario)
 )

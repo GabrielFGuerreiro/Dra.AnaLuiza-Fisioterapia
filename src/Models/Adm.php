@@ -1,7 +1,6 @@
 <?php
 namespace DraAnaLuiza\Models;
 use DraAnaLuiza\Models\Database;
-use DraAnaLuiza\Services\EmailService;
 use PDO;
 use PDOException;
 
@@ -34,12 +33,13 @@ class Adm
             $pdo = $db->getConnection();
             $sql = "SELECT
                         pc.idPreConsulta AS id,
-                        u.nmUsuario AS title,
+                        CASE WHEN pc.status = 'proposta_enviada' THEN CONCAT('Proposta: ', u.nmUsuario) ELSE u.nmUsuario END AS title,
                         CONCAT(pc.dtConsulta, 'T', pc.horarioInicial) AS start,
-                        CONCAT(pc.dtConsulta, 'T', pc.horarioFinal) AS end
+                        CONCAT(pc.dtConsulta, 'T', pc.horarioFinal) AS end,
+                        CASE WHEN pc.status = 'proposta_enviada' THEN '#b78935' ELSE '#577A61' END AS color
                     FROM PreConsultas pc
                     JOIN Usuarios u ON pc.idUsuario = u.idUsuario
-                    WHERE pc.dtConsulta IS NOT NULL";
+                    WHERE pc.status IN ('confirmada', 'proposta_enviada')";
 
             $stmt = $pdo->prepare($sql);
             $stmt->execute();
@@ -142,12 +142,13 @@ class Adm
             $sql = "SELECT
                         pc.idPreConsulta,
                         u.nmUsuario,
+                        pc.dtConsulta,
                         pc.horarioInicial,
                         pc.horarioFinal,
                         pc.observacao
                     FROM PreConsultas pc
                     JOIN Usuarios u ON pc.idUsuario = u.idUsuario
-                    WHERE aceito IS NULL
+                    WHERE pc.status = 'pendente'
                     ORDER BY pc.idPreConsulta DESC";
 
             $stmt = $pdo->prepare($sql);
@@ -160,95 +161,153 @@ class Adm
         }
     }
 
-    public function ConfirmarConsulta($idPreConsulta, string $dtConsulta, string $horarioInicial, string $horarioFinal): array
+    public function ConfirmarConsulta(?int $idPreConsulta): array
     {
         try
         {
-            $db = new Database();
-            $pdo = $db->getConnection();
+            $pdo = (new Database())->getConnection();
 
-            $dados = $pdo->prepare("SELECT u.nmUsuario, u.email
+            if (!$idPreConsulta) return ['sucesso' => false, 'mensagem' => 'Pré-consulta inválida.'];
+
+            $dados = $pdo->prepare("SELECT u.nmUsuario, u.celular, pc.dtConsulta, pc.horarioInicial, pc.horarioFinal
                                     FROM PreConsultas pc
                                     JOIN Usuarios u ON pc.idUsuario = u.idUsuario
-                                    WHERE pc.idPreConsulta = :id AND pc.dtConsulta IS NULL");
+                                    WHERE pc.idPreConsulta = :id AND pc.status = 'pendente'");
             $dados->execute([':id' => $idPreConsulta]);
             $consulta = $dados->fetch(PDO::FETCH_ASSOC);
-            if (!$consulta) {
-                return ['sucesso' => false, 'mensagem' => 'Esta pré-consulta já foi processada ou não existe.'];
-            }
+
+            if (!$consulta) return ['sucesso' => false, 'mensagem' => 'Esta pré-consulta já foi processada ou não existe.'];
+
+            if (!$this->DataEHorarioValidos($consulta['dtConsulta'], substr($consulta['horarioInicial'], 0, 5)))
+                return ['sucesso' => false, 'mensagem' => 'A data ou o horário solicitado já não é válido. Envie uma nova proposta ao paciente.'];
 
             $sql = "UPDATE PreConsultas
-                    SET dtConsulta = :dtConsulta, horarioInicial = :horarioInicial, horarioFinal = :horarioFinal
-                    WHERE idPreConsulta = :idPreConsulta";
+                    SET status = 'confirmada'
+                    WHERE idPreConsulta = :idPreConsulta AND status = 'pendente'";
 
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
-                ':dtConsulta' => $dtConsulta,
-                ':horarioInicial' => $horarioInicial,
-                ':horarioFinal' => $horarioFinal,
                 ':idPreConsulta' => $idPreConsulta
             ]);
 
-            $enviado = EmailService::enviar(
-                $consulta['email'],
-                'Sua consulta foi confirmada',
-                "Olá, {$consulta['nmUsuario']}!\n\nSua consulta foi confirmada para " . date('d/m/Y', strtotime($dtConsulta)) .
-                " das " . substr($horarioInicial, 0, 5) . " às " . substr($horarioFinal, 0, 5) .
-                ".\n\nA Dra. Ana Luiza agradece o contato."
-            );
+            $mensagemWhatsApp = "Olá, {$consulta['nmUsuario']}!\n\nSua consulta foi confirmada para " . date('d/m/Y', strtotime($consulta['dtConsulta'])) .
+                " das " . substr($consulta['horarioInicial'], 0, 5) . " às " . substr($consulta['horarioFinal'], 0, 5) .
+                ".\n\nA Dra. Ana Luiza agradece o contato.";
 
             return [
                 'sucesso' => true,
-                'mensagem' => $enviado ? 'Consulta confirmada e e-mail enviado ao paciente!' : 'Consulta confirmada, mas não foi possível enviar o e-mail.'
+                'mensagem' => 'Consulta confirmada. Envie a confirmação ao paciente pelo WhatsApp.',
+                'whatsappUrl' => $this->CriarLinkWhatsApp($consulta['celular'], $mensagemWhatsApp)
             ];
         }
         catch (PDOException $e)
         {
             return [
                 'sucesso' => false,
-                'mensagem' => 'Não foi Possível Agendar a Consulta no Momento.'
+                'mensagem' => 'Não foi possível confirmar a consulta no momento.'
             ];
         }
     }
 
-    public function NegarConsulta($idPreConsulta, string $motivo): array
+    public function ProporHorario(?int $idPreConsulta, string $dtConsulta, string $horarioInicial, string $mensagem): array
     {
-        $motivo = trim($motivo);
-        if ($motivo === '') {
-            return ['sucesso' => false, 'mensagem' => 'Informe o motivo da negativa.'];
-        }
+        $mensagem = trim($mensagem);
+        if (!$idPreConsulta || !$this->DataEHorarioValidos($dtConsulta, $horarioInicial))
+            return ['sucesso' => false, 'mensagem' => 'Informe uma data futura e um horário válido para a proposta.'];
 
-        try {
+        $horarioFinal = date('H:i:s', strtotime($horarioInicial . ' +1 hour'));
+
+        try
+        {
             $pdo = (new Database())->getConnection();
-            $dados = $pdo->prepare("SELECT u.nmUsuario, u.email
+            $dados = $pdo->prepare("SELECT u.nmUsuario, u.celular
                                     FROM PreConsultas pc
                                     JOIN Usuarios u ON pc.idUsuario = u.idUsuario
-                                    WHERE pc.idPreConsulta = :id AND pc.dtConsulta IS NULL
-                                      AND (pc.observacao IS NULL OR pc.observacao NOT LIKE '%STATUS: NEGADA%')");
+                                    WHERE pc.idPreConsulta = :id AND pc.status = 'pendente'");
             $dados->execute([':id' => $idPreConsulta]);
             $consulta = $dados->fetch(PDO::FETCH_ASSOC);
-            if (!$consulta) {
-                return ['sucesso' => false, 'mensagem' => 'Esta pré-consulta já foi processada ou não existe.'];
-            }
+            if (!$consulta) return ['sucesso' => false, 'mensagem' => 'Esta pré-consulta já foi processada ou não existe.'];
 
             $stmt = $pdo->prepare("UPDATE PreConsultas
-                                   SET observacao = CONCAT(COALESCE(observacao, ''), '\\nSTATUS: NEGADA\\nMotivo: ', :motivo)
-                                   WHERE idPreConsulta = :id AND dtConsulta IS NULL");
-            $stmt->execute([':motivo' => $motivo, ':id' => $idPreConsulta]);
+                                   SET dtConsulta = :dtConsulta, horarioInicial = :horarioInicial, horarioFinal = :horarioFinal,
+                                       status = 'proposta_enviada'
+                                   WHERE idPreConsulta = :id AND status = 'pendente'");
+            $stmt->execute([
+                ':dtConsulta' => $dtConsulta,
+                ':horarioInicial' => $horarioInicial,
+                ':horarioFinal' => $horarioFinal,
+                ':id' => $idPreConsulta
+            ]);
 
-            $enviado = EmailService::enviar(
-                $consulta['email'],
-                'Atualização da sua pré-consulta',
-                "Olá, {$consulta['nmUsuario']}!\n\nNo momento, não foi possível confirmar a data e o horário solicitados.\n\nMotivo informado pela clínica: {$motivo}\n\nEntre em contato para verificar novas possibilidades de agendamento."
-            );
+            $mensagemWhatsApp = "Olá, {$consulta['nmUsuario']}!\n\nA Dra. Ana Luiza propôs o atendimento para " . date('d/m/Y', strtotime($dtConsulta)) .
+                " das " . substr($horarioInicial, 0, 5) . " às " . substr($horarioFinal, 0, 5) . "." .
+                ($mensagem !== '' ? "\n\nMensagem da clínica: {$mensagem}" : '') .
+                "\n\nSe esse horário não funcionar para você, entre em contato para verificarmos outra possibilidade.";
 
             return [
                 'sucesso' => true,
-                'mensagem' => $enviado ? 'Pré-consulta negada e e-mail enviado ao paciente.' : 'Pré-consulta negada, mas não foi possível enviar o e-mail.'
+                'mensagem' => 'Nova proposta registrada. Envie-a ao paciente pelo WhatsApp.',
+                'whatsappUrl' => $this->CriarLinkWhatsApp($consulta['celular'], $mensagemWhatsApp)
             ];
-        } catch (\Throwable $e) {
-            return ['sucesso' => false, 'mensagem' => 'Não foi possível negar a pré-consulta.'];
         }
+        catch (\Throwable $e)
+        {
+            return ['sucesso' => false, 'mensagem' => 'Não foi possível enviar a nova proposta.'];
+        }
+    }
+
+    public function IndisponibilizarConsulta(?int $idPreConsulta, string $mensagem): array
+    {
+        $mensagem = trim($mensagem);
+        if (!$idPreConsulta || $mensagem === '') {
+            return ['sucesso' => false, 'mensagem' => 'Explique ao paciente por que o horário não está disponível.'];
+        }
+
+        try
+        {
+            $pdo = (new Database())->getConnection();
+            $dados = $pdo->prepare("SELECT u.nmUsuario, u.celular
+                                    FROM PreConsultas pc
+                                    JOIN Usuarios u ON pc.idUsuario = u.idUsuario
+                                    WHERE pc.idPreConsulta = :id AND pc.status = 'pendente'");
+            $dados->execute([':id' => $idPreConsulta]);
+            $consulta = $dados->fetch(PDO::FETCH_ASSOC);
+            if (!$consulta) return ['sucesso' => false, 'mensagem' => 'Esta pré-consulta já foi processada ou não existe.'];
+
+            $stmt = $pdo->prepare("UPDATE PreConsultas
+                                   SET status = 'indisponivel'
+                                   WHERE idPreConsulta = :id AND status = 'pendente'");
+            $stmt->execute([':id' => $idPreConsulta]);
+
+            $mensagemWhatsApp = "Olá, {$consulta['nmUsuario']}!\n\nNo momento, não foi possível atender à solicitação no horário desejado.\n\nMensagem da clínica: {$mensagem}\n\nEntre em contato para verificarmos novas possibilidades de agendamento.";
+
+            return [
+                'sucesso' => true,
+                'mensagem' => 'Indisponibilidade registrada. Informe o paciente pelo WhatsApp.',
+                'whatsappUrl' => $this->CriarLinkWhatsApp($consulta['celular'], $mensagemWhatsApp)
+            ];
+        }
+        catch (\Throwable $e)
+        {
+            return ['sucesso' => false, 'mensagem' => 'Não foi possível registrar a indisponibilidade.'];
+        }
+    }
+
+    private function DataEHorarioValidos(string $data, string $horario): bool
+    {
+        $dataHora = \DateTime::createFromFormat('Y-m-d H:i', "{$data} {$horario}");
+        return $dataHora && $dataHora->format('Y-m-d H:i') === "{$data} {$horario}" && $dataHora >= new \DateTime('today');
+    }
+
+    private function CriarLinkWhatsApp(string $celular, string $mensagem): ?string
+    {
+        $numero = preg_replace('/\D/', '', $celular);
+        if (str_starts_with($numero, '0')) $numero = substr($numero, 1);
+        if (!str_starts_with($numero, '55')) $numero = '55' . $numero;
+
+        return strlen($numero) >= 12 && strlen($numero) <= 15
+            ? 'https://wa.me/' . $numero . '?text=' . rawurlencode($mensagem)
+            : null;
     }
 
     public function ExcluirDepoimento(int $id): bool

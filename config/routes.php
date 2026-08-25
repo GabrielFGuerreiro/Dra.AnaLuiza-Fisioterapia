@@ -30,7 +30,8 @@ return [
         '/verificarCodigo' => 'UsuarioController@VerificarCodigo',
         '/alterarSenha' => 'UsuarioController@AlterarSenha',
         '/confirmarConsulta' => 'AdmController@ConfirmarConsulta',
-        '/negarConsulta' => 'AdmController@NegarConsulta'
+        '/proporHorario' => 'AdmController@ProporHorario',
+        '/indisponibilizarConsulta' => 'AdmController@IndisponibilizarConsulta'
     ]
 
 ];
