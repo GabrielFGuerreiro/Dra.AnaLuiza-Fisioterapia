@@ -173,25 +173,12 @@ class Usuario
         }
     }
 
-    public function CadastrarPreConsulta(string $email, string $dtPreferencia, string $horarioInicial, string $horarioFinal, string $observacao = ''): array
+    public function CadastrarPreConsulta(int $idUsuario, string $dtPreferencia, string $horarioInicial, string $horarioFinal, string $observacao = ''): array
     {
         try
         {
             $db = new Database();
             $pdo = $db->getConnection();
-
-            $sql = "SELECT idUsuario FROM Usuarios WHERE email = :email";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([':email' => $email]);
-            $idUsuario = $stmt->fetchColumn();
-
-            if (!$idUsuario)
-            {
-                return [
-                    'sucesso' => false,
-                    'mensagem' => 'Usuário não encontrado.'
-                ];
-            }
 
             $sql = "INSERT INTO PreConsultas (idUsuario, dtConsulta, horarioInicial, horarioFinal, observacao, status)
                     VALUES (:idUsuario, :dtConsulta, :horarioInicial, :horarioFinal, :observacao, 'pendente')";

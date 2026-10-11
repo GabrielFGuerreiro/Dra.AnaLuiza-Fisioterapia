@@ -56,7 +56,7 @@ class UsuarioController extends GeralController
         $horarioFinal = date('H:i:s', strtotime($horarioInicial . ' +1 hour'));
 
         $usuario = new Usuario();
-        $retorno = $usuario->CadastrarPreConsulta($_SESSION['email'], $dtPreferencia, $horarioInicial, $horarioFinal, $observacao);
+        $retorno = $usuario->CadastrarPreConsulta($_SESSION['idUsuario'], $dtPreferencia, $horarioInicial, $horarioFinal, $observacao);
 
         if ($retorno['sucesso']) {
             $emailAdm = $usuario->ObterEmailAdministrador();
