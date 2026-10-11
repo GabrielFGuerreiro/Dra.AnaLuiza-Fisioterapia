@@ -62,7 +62,7 @@ class Usuario
             $db = new Database();
             $pdo = $db->getConnection();
             
-            $sql = "SELECT nmUsuario, isAdmin, senha FROM USUARIOS WHERE email = :email";
+            $sql = "SELECT idUsuario, nmUsuario, isAdmin, senha FROM USUARIOS WHERE email = :email";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([':email' => $email]);
             return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;

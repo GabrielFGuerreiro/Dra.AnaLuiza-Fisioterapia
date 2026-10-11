@@ -88,6 +88,8 @@ class UsuarioController extends GeralController
             $_SESSION['email'] = $emailForm;
             $_SESSION['nome'] = $dadosUsuario['nmUsuario'];
             $_SESSION['isAdmin'] = $dadosUsuario['isAdmin'];
+            $_SESSION['idUsuario'] = $dadosUsuario['idUsuario'];
+
             header("Location: " . BASE_URL . "/", true, 303);
             exit();
         }
