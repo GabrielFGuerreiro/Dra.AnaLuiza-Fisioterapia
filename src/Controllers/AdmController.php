@@ -2,6 +2,8 @@
 namespace DraAnaLuiza\Controllers;
 use DraAnaLuiza\Models\Database;
 use DraAnaLuiza\Models\Adm;
+use DraAnaLuiza\Models\Usuario;
+use DraAnaLuiza\Models\Geral;
 
 class AdmController extends GeralController
 {
