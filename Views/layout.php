@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/calendario.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/admin-depoimentos.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/documentos.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/styles/gerenciar-documentos.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/styles/404.css">
     <link rel="icon" type="image/x-icon" href="<?= BASE_URL ?>/favicon.png">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -53,12 +54,12 @@
             alerta.style.display = "block";
         }
 
-    const forms = document.querySelectorAll(".form-layout");
-    forms.forEach(form => {
-        form.addEventListener("input", function() {
-            if (alerta) alerta.style.display = "none";
+        const forms = document.querySelectorAll(".form-layout");
+        forms.forEach(form => {
+            form.addEventListener("input", function() {
+                if (alerta) alerta.style.display = "none";
+            });
         });
-    });
 
        
     </script>

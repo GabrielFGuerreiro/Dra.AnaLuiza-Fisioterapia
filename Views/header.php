@@ -25,6 +25,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?= BASE_URL ?>/gerenciarDepoimentos"><i class="fa-regular fa-comments"></i><span>Depoimentos</span></a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= BASE_URL ?>/gerenciarDocumentos"><i class="fa-regular fa-folder-open"></i><span>Gerenciar Documentos</span></a>
+                    </li>
                 <?php endif; ?>
 
                 <li class="nav-item">

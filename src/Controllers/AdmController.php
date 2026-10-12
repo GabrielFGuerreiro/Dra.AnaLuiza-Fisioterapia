@@ -132,4 +132,20 @@ class AdmController extends GeralController
         );
         exit();
     }
+
+    public function GerenciarDocumentos()
+    {
+        $geral = new Geral();
+        $pacientes = $geral->RetornarPacientes();
+        $tiposDocumento = $geral->RetornarTiposDocumentos();
+
+        $this->MostrarView("gerenciarDocumentos", ['pacientes' => $pacientes, 'tiposDocumento' => $tiposDocumento]);
+    }
+
+    public function EnviarDocumento()
+    {
+        $adm = new Adm();
+        $retorno = $adm->EnviarDocumento($_FILES['arquivoDocumento'], $_POST['idPaciente'], $_POST['tipoDocumento']);
+        header("Location: " . BASE_URL . "/gerenciarDocumentos?sucesso=" . (int) $retorno['sucesso'] . "&msg=" . $retorno['msg'], true, 303);
+    }
 }

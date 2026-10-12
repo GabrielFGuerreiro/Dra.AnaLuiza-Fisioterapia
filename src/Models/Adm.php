@@ -350,4 +350,53 @@ class Adm
             return false;
         }
     }
+
+    public function EnviarDocumento(array $arquivo, int $idPaciente, string $tipoDoc): array
+    {
+        try
+        {
+            $caminho = null;
+        
+            if ($arquivo['error'] !== UPLOAD_ERR_OK) {
+                return [
+                    'sucesso' => false,
+                    'msg' => 'Erro no Upload do Arquivo.'
+                ];
+            }
+
+            $pastaDestino = RAIZ . "/documentosPacientes/{$idPaciente}";
+            if (!is_dir($pastaDestino))
+                mkdir($pastaDestino, 0777, true);
+
+            $caminho = "$pastaDestino/{$arquivo['name']}";
+
+            if (!move_uploaded_file($arquivo["tmp_name"], $caminho)) {
+                return [
+                    'sucesso' => false,
+                    'msg' => 'Erro ao Mover o Arquivo.'
+                ];
+            }        
+            
+            $db = new Database();
+            $pdo = $db->getConnection();
+
+            $sql = "INSERT INTO documentos (nmDocumento, idTipoDocumento, caminhoDocumento, idUsuarioPaciente, dataRemocao) VALUES (:nmDocumento, :tipoDoc, :caminho, :idPaciente, null)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':nmDocumento' => $arquivo['name'],
+                ':tipoDoc' => $tipoDoc,
+                ':caminho' => $caminho,
+                ':idPaciente' => $idPaciente
+            ]);
+        
+            return [
+                'sucesso' => true,
+                'msg' => 'Documento Enviado Com Sucesso!'
+            ];
+        }
+        catch (\Throwable $e)
+        {
+            return ['sucesso' => false, 'msg' => "Não Foi Enviar o Documento: {$e->getMessage()}"];
+        }
+    }
 }

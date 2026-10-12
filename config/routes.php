@@ -32,7 +32,8 @@ return [
         '/alterarSenha' => 'UsuarioController@AlterarSenha',
         '/confirmarConsulta' => 'AdmController@ConfirmarConsulta',
         '/proporHorario' => 'AdmController@ProporHorario',
-        '/indisponibilizarConsulta' => 'AdmController@IndisponibilizarConsulta'
+        '/indisponibilizarConsulta' => 'AdmController@IndisponibilizarConsulta',
+        '/enviarDocumento' => 'AdmController@EnviarDocumento'
     ]
 
 ];
