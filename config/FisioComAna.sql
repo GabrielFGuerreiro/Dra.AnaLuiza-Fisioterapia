@@ -35,3 +35,26 @@ caminhoArquivo VARCHAR(300),
 dtExclusao DATETIME,
 ativo BIT NOT NULL DEFAULT 1
 )
+
+CREATE TABLE tiposDocumento (
+    idTipoDocumento INT PRIMARY KEY AUTO_INCREMENT,
+    nmTipo VARCHAR(50) UNIQUE NOT null,
+    dtRemocao DATETIME
+);
+
+CREATE TABLE documentos (
+    idDocumento INT PRIMARY KEY AUTO_INCREMENT,
+    nmDocumento VARCHAR(200) NOT null,
+    idTipoDocumento INT NOT null,
+    caminhoDocumento VARCHAR(500) NOT null,
+    idUsuarioPaciente INT NOT null,
+    dataRemocao DATETIME,
+
+    CONSTRAINT fk_documentos_tipo
+        FOREIGN KEY (idTipoDocumento)
+        REFERENCES tiposDocumento(idTipoDocumento),
+
+    CONSTRAINT fk_documentos_usuario
+        FOREIGN KEY (idUsuarioPaciente)
+        REFERENCES usuarios(idUsuario)
+);

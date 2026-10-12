@@ -233,4 +233,11 @@ class UsuarioController extends GeralController
         header("Location: " . BASE_URL . "/novaSenha?sucesso=" . $retorno['sucesso'] . "&msg=" . $retorno['mensagem']);
         exit();
     }
+
+    public function Documentos()
+    {
+        $usuario = new Usuario();
+        $usuario->RetornarDocumentosPaciente($_SESSION['idUsuario']);
+        $this->MostrarView("documentos");
+    }
 }

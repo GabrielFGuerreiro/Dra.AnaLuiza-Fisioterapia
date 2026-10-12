@@ -31,6 +31,9 @@
                     <a class="nav-link nav-principal" href="<?= BASE_URL ?>/preconsulta"><i class="fa-regular fa-calendar-plus"></i><span>Agendar consulta</span></a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="<?= BASE_URL ?>/documentos"><i class="fa-regular fa-file"></i><span>Documentos</span></a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link nav-exit" href="<?= BASE_URL ?>/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
                 </li>
 

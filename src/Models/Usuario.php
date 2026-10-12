@@ -204,4 +204,23 @@ class Usuario
             ];
         }
     }
+
+    public function RetornarDocumentosPaciente(int $idUsuario)
+    {
+        try
+        {
+            $db = new Database();
+            $pdo = $db->getConnection();
+
+            $sql = "SELECT * FROM documentos WHERE idUsuario = :idUsuario and dataRemocao is null";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([':idUsuario' => $idUsuario]);
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        }
+        catch (\Throwable $th)
+        {
+            return [];
+        }
+    }
 }

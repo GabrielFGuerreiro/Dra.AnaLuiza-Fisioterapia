@@ -15,7 +15,8 @@ return [
         '/preConsultasPendentes' => 'AdmController@PreConsultasPendentes',
         '/esqueciMinhaSenha' => 'UsuarioController@EsqueceuSenha',
         '/verificacaoCodigo' => 'UsuarioController@VerificacaoCodigo',
-        '/novaSenha' => 'UsuarioController@NovaSenha'
+        '/novaSenha' => 'UsuarioController@NovaSenha',
+        '/documentos' => 'UsuarioController@Documentos'
     ],
 
     'POST' => [
