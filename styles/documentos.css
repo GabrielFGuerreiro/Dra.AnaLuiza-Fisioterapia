@@ -35,36 +35,6 @@
     line-height: 1.6;
 }
 
-.documents-note {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 24px;
-    padding: 16px 20px;
-    border: 1px solid rgba(79, 121, 92, .2);
-    border-radius: 16px;
-    background: rgba(255, 255, 255, .62);
-    color: #486452;
-    box-shadow: 0 12px 30px rgba(48, 79, 58, .08);
-}
-
-.documents-note i {
-    display: grid;
-    flex: 0 0 38px;
-    width: 38px;
-    height: 38px;
-    place-items: center;
-    border-radius: 12px;
-    background: #e2eee3;
-    color: #4f795c;
-    font-size: 1.05rem;
-}
-
-.documents-note p {
-    margin: 0;
-    font-size: .93rem;
-}
-
 .documents-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -104,6 +74,7 @@
 
 .document-card-icon.is-pdf { background: #fff0ee; color: #ad625b; }
 .document-card-icon.is-doc { background: #edf1fa; color: #59739e; }
+.document-card-icon.is-excel { background: #e8f4eb; color: #3f8054; }
 .document-card-icon.is-image { background: #f2f0e5; color: #8a7950; }
 
 .document-card-content {
@@ -181,9 +152,9 @@
 
 .document-action-primary:hover,
 .document-action-primary:focus-visible {
-    background: #294a38;
+    border-color: rgba(79, 121, 92, .35);
+    background: #628b6d;
     color: #fff;
-    transform: translateY(-1px);
 }
 
 .document-action-secondary {
@@ -225,18 +196,6 @@
     color: #6d7e73;
     line-height: 1.55;
 }
-
-.documents-privacy {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 26px;
-    color: #718277;
-    font-size: .8rem;
-}
-
-.documents-privacy i { color: #4f795c; }
 
 @media (max-width: 760px) {
     .documents-page { padding-inline: 14px; }
