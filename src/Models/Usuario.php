@@ -205,16 +205,56 @@ class Usuario
         }
     }
 
-    public function RetornarDocumentosPaciente(int $idUsuario)
+    public function RetornarDocumentosPaciente(?int $idUsuario, string $buscaPacienteDoc, ?int $idTipoDoc) :array
     {
         try
         {
             $db = new Database();
             $pdo = $db->getConnection();
 
-            $sql = "SELECT * FROM documentos WHERE idUsuario = :idUsuario and dataRemocao is null";
+                $sql = "SELECT
+                    d.idDocumento,
+                    d.nmDocumento,
+                    d.idTipoDocumento,
+                    d.caminhoDocumento,
+                    d.dataEnvio,
+                    d.idUsuarioPaciente
+                FROM documentos d";
+
+            $where = ["d.dataRemocao IS NULL"];
+            $params = [];
+
+            if ($idUsuario !== null) {
+                $where[] = "d.idUsuarioPaciente = :idUsuario";
+                $params['idUsuario'] = $idUsuario;
+            }
+
+            if (trim($buscaPacienteDoc) !== '') {
+                $sql .= " JOIN usuarios u ON d.idUsuarioPaciente = u.idUsuario";
+
+                $where[] = "(u.nmUsuario LIKE :buscaPaciente
+                            OR d.nmDocumento LIKE :buscaDocumento)";
+
+                $sql .= " AND (
+                    u.nmUsuario LIKE :buscaPaciente
+                    OR d.nmDocumento LIKE :buscaDocumento
+                )";
+
+                $busca = '%' . trim($buscaPacienteDoc) . '%';
+
+                $params['buscaPaciente'] = $busca;
+                $params['buscaDocumento'] = $busca;
+            }
+
+            if ($idTipoDoc !== null) {
+                $where[] = "d.idTipoDocumento = :idTipoDoc";
+                $params['idTipoDoc'] = $idTipoDoc;
+            }
+
+            $sql .= " WHERE " . implode(" AND ", $where) . " ORDER BY d.dataEnvio DESC";
+
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([':idUsuario' => $idUsuario]);
+            $stmt->execute($params);
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
         }

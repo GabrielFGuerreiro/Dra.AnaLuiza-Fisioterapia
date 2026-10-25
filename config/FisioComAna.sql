@@ -47,6 +47,7 @@ CREATE TABLE documentos (
     nmDocumento VARCHAR(200) NOT null,
     idTipoDocumento INT NOT null,
     caminhoDocumento VARCHAR(500) NOT null,
+    dataEnvio DATETIME NOT NULL,
     idUsuarioPaciente INT NOT null,
     dataRemocao DATETIME,
 

@@ -17,7 +17,7 @@ class Geral
             $stmt = $pdo->prepare($sql);
             $stmt->execute();
 
-            return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+            return $stmt->fetchAll(PDO::FETCH_KEY_PAIR) ?: [];
         }
         catch (\Throwable $th)
         {
@@ -36,7 +36,7 @@ class Geral
             $stmt = $pdo->prepare($sql);
             $stmt->execute();
 
-            return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+            return $stmt->fetchAll(PDO::FETCH_KEY_PAIR) ?: [];
         }
         catch (\Throwable $th)
         {

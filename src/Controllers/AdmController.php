@@ -140,14 +140,29 @@ class AdmController extends GeralController
         $geral = new Geral();
         $pacientes = $geral->RetornarPacientes();
         $tiposDocumento = $geral->RetornarTiposDocumentos();
+        $documentos = (new Usuario())->RetornarDocumentosPaciente(null, $_GET['busca'] ?? '', !empty($_GET['tipoDoc']) ? (int) $_GET['tipoDoc'] : null);
 
-        $this->MostrarView("gerenciarDocumentos", ['pacientes' => $pacientes, 'tiposDocumento' => $tiposDocumento]);
+        $this->MostrarView("gerenciarDocumentos", ['pacientes' => $pacientes, 'tiposDocumento' => $tiposDocumento, 'documentos' => $documentos]);
     }
 
     public function EnviarDocumento()
     {
         $adm = new Adm();
         $retorno = $adm->EnviarDocumento($_FILES['arquivoDocumento'], $_POST['idPaciente'], $_POST['tipoDocumento']);
+        header("Location: " . BASE_URL . "/gerenciarDocumentos?sucesso=" . (int) $retorno['sucesso'] . "&msg=" . $retorno['msg'], true, 303);
+    }
+
+    public function AlterarTipoDocumento()
+    {
+        $adm = new Adm();
+        $retorno = $adm->AlterarTipoDocumento($_POST['idDocumento'], $_POST['tipoDocumento']);
+        header("Location: " . BASE_URL . "/gerenciarDocumentos?sucesso=" . (int) $retorno['sucesso'] . "&msg=" . $retorno['msg'], true, 303);
+    }
+
+    public function RemoverDocumento()
+    {
+        $adm = new Adm();
+        $retorno = $adm->RemoverDocumento($_POST['idDocumento']);
         header("Location: " . BASE_URL . "/gerenciarDocumentos?sucesso=" . (int) $retorno['sucesso'] . "&msg=" . $retorno['msg'], true, 303);
     }
 }

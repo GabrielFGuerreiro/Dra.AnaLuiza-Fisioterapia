@@ -26,14 +26,14 @@ $tiposDocumento = $tiposDocumento ?? [];
                     <i class="fa-solid fa-circle-exclamation"></i>
                     <span></span>
                 </div>
-                                                            <!-- Fomulário Envio Documento -->
+                                <!-- [Fomulário Envio Documento -->
                 <form action="<?= BASE_URL ?>/enviarDocumento" method="POST" enctype="multipart/form-data" class="document-upload-form" id="formEnvioDoc">
                     <div class="manage-field">
                         <label for="idPaciente">Paciente</label>
                         <select name="idPaciente" id="idPaciente">
                             <option value="">Selecione um paciente</option>
-                            <?php foreach ($pacientes as $paciente):?>
-                                <option value="<?= $paciente['idUsuario'] ?>"><?= $paciente['nmUsuario'] ?></option>
+                            <?php foreach ($pacientes as $idPaciente => $nmPaciente):?>
+                                <option value="<?= $idPaciente ?>"><?= $nmPaciente?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -42,8 +42,8 @@ $tiposDocumento = $tiposDocumento ?? [];
                         <label for="tipoDocumento">Tipo do documento</label>
                         <select name="tipoDocumento" id="tipoDocumento">
                             <option value="">Selecione uma tag</option>
-                            <?php foreach ($tiposDocumento as $tipoDoc): ?>
-                                <option value="<?= $tipoDoc['idTipoDocumento'] ?>"><?= $tipoDoc['nmTipo'] ?></option>
+                            <?php foreach ($tiposDocumento as $idTipoDoc => $nmTipoDoc): ?>
+                                <option value="<?= $idTipoDoc ?>"><?= $nmTipoDoc ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -55,7 +55,7 @@ $tiposDocumento = $tiposDocumento ?? [];
                     </div>
 
                     <button type="submit" class="manage-primary-button"><i class="fa-solid fa-paper-plane"></i> Enviar documento</button>
-                </form>
+                </form>     <!-- Fomulário Envio Documento] -->
             </section>
 
             <section class="document-list-card">
@@ -66,20 +66,20 @@ $tiposDocumento = $tiposDocumento ?? [];
                     </div>
                     <span class="document-count"><?= count($documentos) ?> <?= count($documentos) === 1 ? 'documento' : 'documentos' ?></span>
                 </div>
-
+                            <!-- [Fomulário Filtrar Documentos -->
                 <form action="<?= BASE_URL ?>/gerenciarDocumentos" method="GET" class="document-filters">
                     <div class="filter-search">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="search" name="busca" value="<?= htmlspecialchars((string) ($_GET['busca'] ?? ''), ENT_QUOTES, 'UTF-8') ?>" placeholder="Buscar por paciente ou documento">
+                        <input type="text" name="busca" value="<?= htmlspecialchars((string) ($_GET['busca'] ?? ''), ENT_QUOTES, 'UTF-8') ?>" placeholder="Buscar por paciente ou documento">
                     </div>
-                    <select name="tipo" title="Filtrar por tipo">
+                    <select name="tipoDoc">
                         <option value="">Todos os tipos</option>
-                        <?php foreach ($tiposDocumento as $valorTipo => $nomeTipo): ?>
-                            <option value="<?= htmlspecialchars((string) $valorTipo, ENT_QUOTES, 'UTF-8') ?>" <?= (($_GET['tipo'] ?? '') === (string) $valorTipo) ? 'selected' : '' ?>><?= htmlspecialchars((string) $nomeTipo, ENT_QUOTES, 'UTF-8') ?></option>
+                        <?php foreach ($tiposDocumento as $idTipoDoc => $nmTipoDoc): ?>
+                            <option value="<?= $idTipoDoc ?>" <?= (($_GET['tipoDoc'] ?? '') === (string) $idTipoDoc) ? 'selected' : '' ?>> <?= $nmTipoDoc ?></option>
                         <?php endforeach; ?>
                     </select>
                     <button type="submit" class="filter-button"><i class="fa-solid fa-filter"></i> Filtrar</button>
-                </form>
+                </form>     <!-- Fomulário Filtrar Documentos] -->
 
                 <?php if (empty($documentos)): ?>
                     <div class="manage-documents-empty">
@@ -90,42 +90,38 @@ $tiposDocumento = $tiposDocumento ?? [];
                 <?php else: ?>
                     <div class="managed-documents-list">
                         <?php foreach ($documentos as $documento):
-                            $idDocumento = $documento['idDocumento'] ?? $documento['id'] ?? 0;
-                            $nomeDocumento = $documento['nome'] ?? $documento['nmDocumento'] ?? $documento['titulo'] ?? 'Documento sem nome';
-                            $nomePaciente = $documento['nomePaciente'] ?? $documento['nmPaciente'] ?? $documento['paciente'] ?? 'Paciente não informado';
-                            $tipoAtual = (string) ($documento['tipo'] ?? $documento['tag'] ?? $documento['tipoDocumento'] ?? 'outro');
-                            $arquivo = (string) ($documento['caminho'] ?? $documento['url'] ?? $documento['arquivo'] ?? '#');
-                            $descricao = trim((string) ($documento['descricao'] ?? $documento['observacao'] ?? ''));
-                            $dataDocumento = $documento['data'] ?? $documento['created_at'] ?? null;
-                            $dataFormatada = '';
-                            if ($dataDocumento && ($timestamp = strtotime((string) $dataDocumento)) !== false) $dataFormatada = date('d/m/Y', $timestamp);
+                            $idDocumento = $documento['idDocumento'];
+                            $nomeDocumento = $documento['nmDocumento'];
+                            $idPacienteDoc = $documento['idUsuarioPaciente'];
+                            $idTipoDocAtual = $documento['idTipoDocumento'];
+                            $arquivo = BASE_URL . '/' . ltrim($documento['caminhoDocumento'], '/');
+                            $dataFormatada = date('d/m/Y H:m', strtotime($documento['dataEnvio']));
                         ?>
                             <article class="managed-document-row">
                                 <div class="managed-document-file-icon"><i class="fa-regular fa-file-lines"></i></div>
-                                <div class="managed-document-info">
+                                <div class="managed-document-info"> <!-- [Infos Documento -->
                                     <div class="managed-document-title-line">
-                                        <h3><?= htmlspecialchars((string) $nomeDocumento, ENT_QUOTES, 'UTF-8') ?></h3>
-                                        <span class="document-tag"><?= htmlspecialchars((string) ($tiposDocumento[$tipoAtual] ?? ucfirst($tipoAtual)), ENT_QUOTES, 'UTF-8') ?></span>
+                                        <h3><?= $nomeDocumento ?></h3>
+                                        <span class="document-tag"><?= $tiposDocumento[$idTipoDocAtual] ?></span>
                                     </div>
-                                    <p class="managed-document-patient"><i class="fa-regular fa-user"></i> <?= htmlspecialchars((string) $nomePaciente, ENT_QUOTES, 'UTF-8') ?></p>
-                                    <?php if ($descricao !== ''): ?><p class="managed-document-description"><?= htmlspecialchars($descricao, ENT_QUOTES, 'UTF-8') ?></p><?php endif; ?>
-                                    <?php if ($dataFormatada !== ''): ?><small>Enviado em <?= htmlspecialchars($dataFormatada, ENT_QUOTES, 'UTF-8') ?></small><?php endif; ?>
-                                </div>
+                                    <p class="managed-document-patient"><i class="fa-regular fa-user"></i> <?= $pacientes[$idPacienteDoc] ?></p>
+                                    <small>Enviado em <?= $dataFormatada ?></small>
+                                </div>                               <!-- Infos Documento] -->
                                 <div class="managed-document-actions">
-                                    <a href="<?= htmlspecialchars($arquivo, ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener" class="document-icon-action" title="Visualizar documento"><i class="fa-regular fa-eye"></i></a>
-                                    <a href="<?= htmlspecialchars($arquivo, ENT_QUOTES, 'UTF-8') ?>" download class="document-icon-action" title="Baixar documento"><i class="fa-solid fa-download"></i></a>
+                                    <a href="<?= $arquivo ?>" target="_blank" rel="noopener" class="document-icon-action" title="Visualizar documento"><i class="fa-regular fa-eye"></i></a>
+                                    <a href="<?= $arquivo ?>" download class="document-icon-action" title="Baixar documento"><i class="fa-solid fa-download"></i></a>
                                     <details class="document-tag-menu">
                                         <summary class="document-icon-action" title="Alterar tipo"><i class="fa-solid fa-tag"></i></summary>
                                         <form action="<?= BASE_URL ?>/alterarTipoDocumento" method="POST">
                                             <input type="hidden" name="idDocumento" value="<?= (int) $idDocumento ?>">
                                             <select name="tipoDocumento" onchange="this.form.submit()">
-                                                <?php foreach ($tiposDocumento as $valorTipo => $nomeTipo): ?>
-                                                    <option value="<?= htmlspecialchars((string) $valorTipo, ENT_QUOTES, 'UTF-8') ?>" <?= $tipoAtual === (string) $valorTipo ? 'selected' : '' ?>><?= htmlspecialchars((string) $nomeTipo, ENT_QUOTES, 'UTF-8') ?></option>
+                                                <?php foreach ($tiposDocumento as $idTipoDoc => $nmTipoDoc): ?>
+                                                    <option value="<?= $idTipoDoc ?>" <?= $idTipoDocAtual === $idTipoDoc ? 'selected' : '' ?>><?= $nmTipoDoc ?></option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </form>
                                     </details>
-                                    <form action="<?= BASE_URL ?>/removerDocumento" method="POST" onsubmit="return confirm('Remover este documento?');">
+                                    <form action="<?= BASE_URL ?>/removerDocumento" method="POST" id="formRemoverDocumento">
                                         <input type="hidden" name="idDocumento" value="<?= (int) $idDocumento ?>">
                                         <button type="submit" class="document-icon-action is-danger" title="Remover documento"><i class="fa-regular fa-trash-can"></i></button>
                                     </form>
@@ -170,7 +166,7 @@ document.getElementById("formEnvioDoc").addEventListener("submit", function(e)
         mostrarAlerta("Informe o Paciente.");
         return;
     }
-    
+
     if(document.getElementById("tipoDocumento").value == "")
     {
         mostrarAlerta("Selecione o Tipo do Documento.");
@@ -186,4 +182,21 @@ document.getElementById("formEnvioDoc").addEventListener("submit", function(e)
     this.submit();
 });
 
+const formRemoverDocumento = document.getElementById("formRemoverDocumento");
+if (formRemoverDocumento) {
+    formRemoverDocumento.addEventListener("submit", function(e)
+    {
+        e.preventDefault();        
+        Swal.fire({
+            title: "Deseja Excluir o Documento?",
+            icon: "warning",
+            confirmButtonText: 'Sim',
+            showCancelButton: true,
+            cancelButtonText: 'Não'
+        }).then((resultado) => {
+            if(resultado.isConfirmed)
+                this.submit();
+        });
+    });
+}
 </script>

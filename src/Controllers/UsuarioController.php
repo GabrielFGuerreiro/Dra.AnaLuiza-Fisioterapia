@@ -237,7 +237,7 @@ class UsuarioController extends GeralController
     public function Documentos()
     {
         $usuario = new Usuario();
-        $usuario->RetornarDocumentosPaciente($_SESSION['idUsuario']);
-        $this->MostrarView("documentos");
+        $documentos = $usuario->RetornarDocumentosPaciente($_SESSION['idUsuario'], '', null);
+        $this->MostrarView("documentos", ['documentos' => $documentos]);
     }
 }

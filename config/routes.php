@@ -16,7 +16,9 @@ return [
         '/esqueciMinhaSenha' => 'UsuarioController@EsqueceuSenha',
         '/verificacaoCodigo' => 'UsuarioController@VerificacaoCodigo',
         '/novaSenha' => 'UsuarioController@NovaSenha',
-        '/documentos' => 'UsuarioController@Documentos'
+        '/documentos' => 'UsuarioController@Documentos',
+        '/gerenciarDocumentos' => 'AdmController@GerenciarDocumentos',
+        
     ],
 
     'POST' => [
@@ -33,7 +35,9 @@ return [
         '/confirmarConsulta' => 'AdmController@ConfirmarConsulta',
         '/proporHorario' => 'AdmController@ProporHorario',
         '/indisponibilizarConsulta' => 'AdmController@IndisponibilizarConsulta',
-        '/enviarDocumento' => 'AdmController@EnviarDocumento'
+        '/enviarDocumento' => 'AdmController@EnviarDocumento',
+        '/alterarTipoDocumento' => 'AdmController@AlterarTipoDocumento',
+        '/removerDocumento' => 'AdmController@RemoverDocumento'
     ]
 
 ];

@@ -355,8 +355,6 @@ class Adm
     {
         try
         {
-            $caminho = null;
-        
             if ($arquivo['error'] !== UPLOAD_ERR_OK) {
                 return [
                     'sucesso' => false,
@@ -368,19 +366,22 @@ class Adm
             if (!is_dir($pastaDestino))
                 mkdir($pastaDestino, 0777, true);
 
-            $caminho = "$pastaDestino/{$arquivo['name']}";
+            $caminhoFisico = "$pastaDestino/{$arquivo['name']}";
 
-            if (!move_uploaded_file($arquivo["tmp_name"], $caminho)) {
+            if (!move_uploaded_file($arquivo["tmp_name"], $caminhoFisico)) {
                 return [
                     'sucesso' => false,
                     'msg' => 'Erro ao Mover o Arquivo.'
                 ];
             }        
-            
+
+            // Caminho relativo: utilizado para salvar no banco
+            $caminho = "documentosPacientes/{$idPaciente}/" . $arquivo['name'];
+
             $db = new Database();
             $pdo = $db->getConnection();
 
-            $sql = "INSERT INTO documentos (nmDocumento, idTipoDocumento, caminhoDocumento, idUsuarioPaciente, dataRemocao) VALUES (:nmDocumento, :tipoDoc, :caminho, :idPaciente, null)";
+            $sql = "INSERT INTO documentos (nmDocumento, idTipoDocumento, caminhoDocumento, idUsuarioPaciente, dataEnvio, dataRemocao) VALUES (:nmDocumento, :tipoDoc, :caminho, :idPaciente, NOW(), null)";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
                 ':nmDocumento' => $arquivo['name'],
@@ -397,6 +398,61 @@ class Adm
         catch (\Throwable $e)
         {
             return ['sucesso' => false, 'msg' => "Não Foi Enviar o Documento: {$e->getMessage()}"];
+        }
+    }
+
+    public function AlterarTipoDocumento(int $idDocumento, int $idTipoDocumento) :array
+    {
+        try
+        {
+            $db = new Database();
+            $pdo = $db->getConnection();
+
+            $sql = "UPDATE documentos SET idTipoDocumento = :idTipoDocumento WHERE idDocumento = :idDocumento";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':idDocumento' => $idDocumento,
+                ':idTipoDocumento' => $idTipoDocumento
+            ]);
+            
+            return [
+                'sucesso' => true,
+                'msg' => 'Tag Alterada com Sucesso'
+            ];
+        }
+        catch (\Throwable $e)
+        {
+            return [
+                'sucesso' => false,
+                'msg' => "Erro ao Alterar a tag: {$e->getMessage()}"
+            ];
+        }
+    }
+
+    public function RemoverDocumento(int $idDocumento) :array
+    {
+        try
+        {
+            $db = new Database();
+            $pdo = $db->getConnection();
+
+            $sql = "UPDATE documentos SET dataRemocao = NOW() WHERE idDocumento = :idDocumento";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':idDocumento' => $idDocumento
+            ]);
+            
+            return [
+                'sucesso' => true,
+                'msg' => 'Documento Removido com Sucesso'
+            ];
+        }
+        catch (\Throwable $e)
+        {
+            return [
+                'sucesso' => false,
+                'msg' => "Erro ao Remover o Documento: {$e->getMessage()}"
+            ];
         }
     }
 }
