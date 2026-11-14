@@ -5,7 +5,8 @@
                 <div class="moving-card">
                     <div class="form-heading">
                         <span class="form-icon"><i class="fa-regular fa-user"></i></span>
-                        <h1>Recuperar a Senha</h1>
+                        <h1>Envio de E-mail de Verificação</h1>
+                        <p class="verification-description">Para continuar, precisamos validar seu e-mail por meio de um código que você receberá.</p>
                     </div>
 
                     <div id="msgAlerta" class="alerta-form form-alert">
@@ -13,17 +14,16 @@
                         <span></span>
                     </div>
 
-                    <form class="form-layout recovery-form" action="<?= BASE_URL ?>/enviarEmailCodigo" method="POST" id="formRecuperarSenha">
+                    <form class="form-layout recovery-form" action="<?= BASE_URL ?>/enviarEmailCodigo" method="POST" id="formEnvioEmail">
 
                         <div class="form-field">
                             <label for="email">E-mail</label>
                             <div class="form-input-wrap">
                                 <i class="fa-regular fa-envelope"></i>
-                                <input id="email" name="email" class="form-control" type="email" placeholder="voce@exemplo.com">
+                                <input id="email" name="email" class="form-control" type="email" placeholder="voce@exemplo.com" <?= isset($_SESSION['emailCadastro']) ? 'disabled value="' . $_SESSION['emailCadastro'] . '"' : '' ?> >
                             </div>
                         </div>
                         <button type="submit">Enviar Código</button>
-                        <a href="<?= BASE_URL ?>/login">Voltar</a>
                     </form>
                 </div>
             </div>
@@ -51,7 +51,7 @@
         }
     });
 
-    document.getElementById("formRecuperarSenha").addEventListener("submit", function(e)
+    document.getElementById("formEnvioEmail").addEventListener("submit", function(e)
     {
         e.preventDefault();
         

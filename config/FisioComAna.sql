@@ -7,11 +7,12 @@ nmUsuario VARCHAR(75) NOT NULL,
 cpf CHAR(11) NOT NULL UNIQUE,
 dataNasc DATETIME,
 email VARCHAR(50) NOT NULL UNIQUE,
+emailVerificado BIT NOT NULL,
 celular CHAR(12) NOT NULL,
 isAdmin BIT NOT NULL,
 senha VARCHAR(255) NOT NULL,
-codigoRecuperacaoSenha CHAR(6),
-dtExpiracaoCodigoSenha DATETIME
+codigoVerificacao CHAR(6),
+dtExpiracaoCodigo DATETIME
 )
 
 CREATE TABLE PreConsultas (

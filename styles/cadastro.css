@@ -1,5 +1,13 @@
 .register-container { position: relative; z-index: 1; }
 
+/* No desktop, o formulário cabe na viewport. Evitamos a barra vertical para
+   que o SweetAlert não altere a largura do header ao abrir. */
+@media (min-width: 992px) {
+    body:has(.register-container) {
+        overflow: hidden;
+    }
+}
+
 .register-heading { margin-bottom: 30px; text-align: center; }
 
 .register-icon { font-size: 1.25rem; }

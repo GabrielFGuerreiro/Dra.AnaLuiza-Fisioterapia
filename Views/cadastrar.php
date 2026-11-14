@@ -113,17 +113,14 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const params = new URLSearchParams(window.location.search);
-        const msg = params.get("msg");
-        const sucesso = params.get("sucesso");
-        if (msg)
+        const msgErro = params.get("msgErro");
+        if (msgErro)
         {
             Swal.fire({
-                title: msg,
-                icon: sucesso === "1" ? "success" : "error",
+                title: "Erro",
+                text: msgErro,
+                icon: "error",
                 confirmButtonText: 'Ok'
-            }).then((resulta) => {
-                if(sucesso === "1")
-                    window.location.href = "<?= BASE_URL ?>/login";
             });
 
             // O resultado já foi exibido; remove os dados do POST da URL.

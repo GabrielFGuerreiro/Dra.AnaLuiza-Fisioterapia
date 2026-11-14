@@ -5,7 +5,7 @@
                 <div class="moving-card">
                     <div class="form-heading">
                         <span class="form-icon"><i class="fa-regular fa-user"></i></span>
-                        <h1>Recuperar a Senha</h1>
+                        <h1>Verificação do Código</h1>
                     </div>
 
                     <div id="msgAlerta" class="alerta-form form-alert">
@@ -27,7 +27,7 @@
                         </div>
 
                         <button type="submit">Verificar Código</button>
-                        <a href="<?= BASE_URL ?>/esqueciMinhaSenha">Voltar</a>
+                        <a href="<?= BASE_URL ?>/envioEmailVerificacao">Voltar</a>
                     </form>
                 </div>
             </div>
@@ -38,17 +38,13 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const params = new URLSearchParams(window.location.search);
-        const msg = params.get("msg");
-        const sucesso = params.get("sucesso");
-        if (msg)
+        const msgErro = params.get("msgErro");
+        if (msgErro)
         {
             Swal.fire({
-                title: msg,
-                icon: sucesso === "1" ? "success" : "error",
+                title: msgErro,
+                icon: "error",
                 confirmButtonText: 'Ok'
-            }).then((resulta) => {
-                if(sucesso === "1")
-                    window.location.href = "<?= BASE_URL ?>/novaSenha";
             });
 
             // O resultado já foi exibido; remove os dados do POST da URL.

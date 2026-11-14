@@ -10,6 +10,7 @@ class UsuarioController extends GeralController
 {
     public function Login()
     {
+        unset($_SESSION['emailCadastro']);
         $this->MostrarView("login");
     }
 
@@ -29,16 +30,30 @@ class UsuarioController extends GeralController
 
         $usuario = new Usuario();
 
-        if($usuario->EmailExiste($email))
+        if($usuario->VerificaCampoUnicoJaExiste($email, "email"))
         {
-            header("Location: " . BASE_URL . "/cadastro?sucesso=0&msg=E-mail já Cadastrado.");
+            header("Location: " . BASE_URL . "/cadastro?msgErro=E-mail já Cadastrado.");
             exit();
         }
 
-        $retorno = $usuario->CadastrarUsuario($nome, $cpf, $dtNasc, $email, $cel, $senha);
+        if($usuario->VerificaCampoUnicoJaExiste($cpf, "cpf"))
+        {
+            header("Location: " . BASE_URL . "/cadastro?msgErro=CPF já Cadastrado.");
+            exit();
+        }
 
-        header("Location: " . BASE_URL . "/cadastro?sucesso=" . $retorno['sucesso'] . "&msg=" . urlencode($retorno['mensagem']), true, 303); //303 = Após o POST, redireciona para GET, evitando o reenvio do formulário ao recarregar.
-        exit();
+        $sucesso = $usuario->CadastrarUsuario($nome, $cpf, $dtNasc, $email, $cel, $senha);
+        if($sucesso)
+        {
+            $_SESSION['emailCadastro'] = $email;
+            header("Location: " . BASE_URL . "/envioEmailVerificacao", true, 303);
+            exit();
+        }
+        else
+        {
+            header("Location: " . BASE_URL . "/cadastro?msgErro=Erro ao Realizar o Cadastro.", true, 303); //303 = Após o POST, redireciona para GET, evitando o reenvio do formulário ao recarregar.
+            exit();
+        }
     }
 
     public function CadastrarConsulta()
@@ -83,26 +98,45 @@ class UsuarioController extends GeralController
 
         $dadosUsuario = $usuario->Logar($emailForm, $senhaForm);
 
-        if($dadosUsuario !== null && password_verify($senhaForm, $dadosUsuario["senha"]))
+        if($dadosUsuario !== null)
         {
-            $_SESSION['email'] = $emailForm;
-            $_SESSION['nome'] = $dadosUsuario['nmUsuario'];
-            $_SESSION['isAdmin'] = $dadosUsuario['isAdmin'];
-            $_SESSION['idUsuario'] = $dadosUsuario['idUsuario'];
-
-            header("Location: " . BASE_URL . "/", true, 303);
-            exit();
+            if(!$dadosUsuario['emailVerificado'])
+            {
+                $_SESSION['emailCadastro'] = $emailForm;
+                header("Location: " . BASE_URL . "/envioEmailVerificacao?sucesso=0&msg=E-mail Não Verificado.", true, 303);
+                exit();
+            }
+            else if(password_verify($senhaForm, $dadosUsuario["senha"]))
+            {
+                $_SESSION['email'] = $emailForm;
+                $_SESSION['nome'] = $dadosUsuario['nmUsuario'];
+                $_SESSION['isAdmin'] = $dadosUsuario['isAdmin'];
+                $_SESSION['idUsuario'] = $dadosUsuario['idUsuario'];
+                
+                header("Location: " . BASE_URL . "/", true, 303);
+                exit();                
+            }
+            else
+            {
+                header("Location: " . BASE_URL . "/login?msgLogin=" . urlencode("E-mail ou Senha Inválidos."), true, 303);
+                exit();    
+            }
         }
         else
         {
-            header("Location: " . BASE_URL . "/login?msg=" . urlencode("E-mail ou Senha Inválidos."), true, 303);
-            exit();    
-        }
+            header("Location: " . BASE_URL . "/login?msgLogin=" . urlencode("Erro ao Realizar o Login."), true, 303);
+            exit();  
+        }       
     }
 
-    public function EsqueceuSenha()
+    public function EnvioEmailVerificacao()
     {
-        $this->MostrarView("esqueceuSenha");
+        if (isset($_SESSION['email'])) {
+            header("Location: " . BASE_URL . "/");
+            exit();
+        }
+
+        $this->MostrarView("envioEmailVerificacao");
     }
 
     public function Logout()
@@ -122,22 +156,21 @@ class UsuarioController extends GeralController
 
     public function EnviarEmailCodigo()
     {
-        $codigo = random_int(100000, 999999);
-        $email = $_POST['email'];
-        $_SESSION['emailRecuperacao'] = $email;
+        $email = $_POST['email'] ?? $_SESSION['emailCadastro'];
+        $_SESSION['emailVerificado'] = $email;
 
         $usuario = new Usuario();
-
-        if (!$usuario->EmailExiste($email))
+        if (!$usuario->VerificaCampoUnicoJaExiste($email, "email"))
         {
             header(
                 "Location: " . BASE_URL .
-                "/esqueciMinhaSenha?sucesso=0&msg=" .
+                "/envioEmailVerificacao?sucesso=0&msg=" .
                 urlencode("E-mail Não Cadastrado.")
             );
             exit();
         }
 
+        $codigo = random_int(100000, 999999);
         try
         {
             $mail = new PHPMailer(true);
@@ -154,8 +187,8 @@ class UsuarioController extends GeralController
             $mail->setFrom("gaferg2004@gmail.com");
             $mail->addAddress($email);
 
-            $mail->Subject = "Recuperação de senha";
-            $mail->Body = "Seu código para recuperar a senha é: " . $codigo;
+            $mail->Subject = "Validação de E-mail";
+            $mail->Body = "Seu código de verificação é: " . $codigo;
             $mail->CharSet = 'UTF-8';
             
             $mail->send();
@@ -164,18 +197,18 @@ class UsuarioController extends GeralController
         {
             header(
                 "Location: " . BASE_URL .
-                "/esqueciMinhaSenha?sucesso=0&msg=" .
-                urlencode("Erro ao enviar o e-mail. Favor entrar em contato.")
+                "/envioEmailVerificacao?sucesso=0&msg=" .
+                urlencode("Erro ao Enviar o E-mail. Favor entrar em contato.")
             );
             exit();
         }
 
-        $retorno = $usuario->SalvarCodigoRecuperacaoSenha($codigo, $email);
+        $retorno = $usuario->SalvarCodigoVerificacao($codigo, $email);
         if (!$retorno['sucesso'])
         {
             header(
                 "Location: " . BASE_URL .
-                "/esqueciMinhaSenha?sucesso=0&msg=" .
+                "/envioEmailVerificacao?sucesso=0&msg=" .
                 urlencode($retorno['mensagem'])
             );
             exit();
@@ -187,37 +220,78 @@ class UsuarioController extends GeralController
 
     public function VerificacaoCodigo()
     {
+        if (isset($_SESSION['email'])) {
+            header("Location: " . BASE_URL . "/");
+            exit();
+        }
+
+        if (empty($_SESSION['emailVerificado'])) {
+            header("Location: " . BASE_URL . "/envioEmailVerificacao");
+            exit();
+        }
+
         $this->MostrarView("verificacaoCodigo");
     }
 
     public function VerificarCodigo()
     {
-        $email = $_SESSION['emailRecuperacao'];
-        $dadosCodigo = (new Usuario())->RetornarCodigoRecuperacao($email);
+        if (isset($_SESSION['email'])) {
+            header("Location: " . BASE_URL . "/");
+            exit();
+        }
+
+        if (empty($_SESSION['emailVerificado'])) {
+            header("Location: " . BASE_URL . "/envioEmailVerificacao");
+            exit();
+        }
+
+        $usuario = new Usuario();
+        $email = $_SESSION['emailVerificado'];
+        $dadosCodigo = $usuario->RetornarCodigoRecuperacao($email);
         
         if (strtotime($dadosCodigo['dtExpiracao']) < time())
         {
-            header("Location: " . BASE_URL .  "/verificacaoCodigo?sucesso=0&msg=Código Expirado.");
+            header("Location: " . BASE_URL .  "/verificacaoCodigo?msgErro=Código Expirado.");
             exit();     
         }
         
         if($_POST['codigo'] != $dadosCodigo['codigo'])
         {
-            header("Location: " . BASE_URL .  "/verificacaoCodigo?sucesso=0&msg=Código Inválido.");
+            header("Location: " . BASE_URL .  "/verificacaoCodigo?msgErro=Código Inválido.");
             exit();
         }
-            
-        $_SESSION['codigoRecuperacaoValidado'] = true;
-        header("Location: " . BASE_URL .  "/novaSenha");
+        
+        if (isset($_SESSION['emailCadastro'])) {
+            $usuario->ValidarEmailUsuario($email);
+
+            unset(
+                $_SESSION['emailVerificado'],
+                $_SESSION['emailCadastro'],
+                $_SESSION['codigoVerificacaoValidado']
+            );
+
+            header("Location: " . BASE_URL . "/login?cadastroSucesso=1");
+            exit();
+        }
+
+        $_SESSION['codigoVerificacaoValidado'] = true;
+
+        header("Location: " . BASE_URL . "/novaSenha");
         exit();
     }
 
     public function NovaSenha()
     {
-        if (!isset($_SESSION['codigoRecuperacaoValidado']) ||
-            $_SESSION['codigoRecuperacaoValidado'] !== true)
+        if (isset($_SESSION['email'])) {
+            header("Location: " . BASE_URL . "/");
+            exit();
+        }
+
+        if (!isset($_SESSION['codigoVerificacaoValidado']) ||
+            $_SESSION['codigoVerificacaoValidado'] !== true ||
+            empty($_SESSION['emailVerificado']))
         {
-            header("Location: " . BASE_URL . "/esqueciMinhaSenha?teste");
+            header("Location: " . BASE_URL . "/envioEmailVerificacao");
             exit();
         }
 
@@ -226,11 +300,27 @@ class UsuarioController extends GeralController
 
     public function AlterarSenha()
     {
+        if (isset($_SESSION['email'])) {
+            header("Location: " . BASE_URL . "/");
+            exit();
+        }
+
+        if (
+            empty($_SESSION['emailVerificado']) ||
+            ($_SESSION['codigoVerificacaoValidado'] ?? false) !== true
+        ) {
+            header("Location: " . BASE_URL . "/envioEmailVerificacao");
+            exit();
+        }
+
         $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
-        $retorno = (new Usuario())->AlterarSenha($_SESSION['emailRecuperacao'], $senha);
+        $retorno = (new Usuario())->AlterarSenha($_SESSION['emailVerificado'], $senha);
 
-        header("Location: " . BASE_URL . "/novaSenha?sucesso=" . $retorno['sucesso'] . "&msg=" . $retorno['mensagem']);
+        unset($_SESSION['codigoVerificacaoValidado']);
+        unset($_SESSION['emailVerificado']);
+
+        header("Location: " . BASE_URL . "/login?sucesso=" . $retorno['sucesso'] . "&msgAlteracaoSenha=" . $retorno['mensagem']);
         exit();
     }
 

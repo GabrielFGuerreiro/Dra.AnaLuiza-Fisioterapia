@@ -29,7 +29,7 @@
                                 <input id="password" name="password" class="form-control" type="password" placeholder="Digite sua senha">
                             </div>
                         </div>
-                        <a class="forgot-password" href="<?= BASE_URL ?>/esqueciMinhaSenha">Esqueceu sua senha?</a>
+                        <a class="forgot-password" href="<?= BASE_URL ?>/envioEmailVerificacao">Esqueceu sua senha?</a>
 
                         <button class="login-submit form-submit" type="submit">
                             <span>Entrar na minha conta</span>
@@ -45,13 +45,36 @@
 </section>
 
 <script>
+
     document.addEventListener("DOMContentLoaded", function () {
         const params = new URLSearchParams(window.location.search);
-        const msg = params.get("msg");
-        if (msg)
+        const msgLogin = params.get("msgLogin");
+        const cadastroSucesso = params.get("cadastroSucesso");
+        const msgAlteracaoSenha = params.get("msgAlteracaoSenha");
+        const sucesso = params.get("sucesso");
+
+        if (msgLogin)
         {
-            mostrarAlerta(msg);
+            mostrarAlerta(msgLogin);
             window.history.replaceState({}, document.title, window.location.pathname);
+        }
+        else if(cadastroSucesso)
+        {
+            Swal.fire({
+                title: "Cadastro Finalizado!",
+                text: "Conta Cadastrada com Sucesso. Você Pode Fazer o Login Agora.",
+                icon: "success",
+                confirmButtonText: 'Ok'
+            });
+        }
+        else if(msgAlteracaoSenha)
+        {
+            Swal.fire({
+                title: sucesso === "1" ? "Senha Alterada." : "Erro ao Alterar a Senha.",
+                text: msgAlteracaoSenha,
+                icon: sucesso === "1" ? "success" : "error",
+                confirmButtonText: 'Ok'
+            });
         }
     });
 

@@ -13,12 +13,12 @@ return [
         '/obterObservacaoAgendamento' => 'AdmController@ObterObservacaoAgendamento',
         '/gerenciarDepoimentos' => 'AdmController@GerenciarDepoimentos',
         '/preConsultasPendentes' => 'AdmController@PreConsultasPendentes',
-        '/esqueciMinhaSenha' => 'UsuarioController@EsqueceuSenha',
+        '/envioEmailVerificacao' => 'UsuarioController@EnvioEmailVerificacao',
         '/verificacaoCodigo' => 'UsuarioController@VerificacaoCodigo',
         '/novaSenha' => 'UsuarioController@NovaSenha',
         '/documentos' => 'UsuarioController@Documentos',
         '/gerenciarDocumentos' => 'AdmController@GerenciarDocumentos',
-        
+        '/enviarEmailCodigo' => 'UsuarioController@EnviarEmailCodigo'
     ],
 
     'POST' => [

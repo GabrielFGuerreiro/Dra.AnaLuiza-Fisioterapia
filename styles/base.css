@@ -50,6 +50,18 @@ body{
 /* Componentes compartilhados dos formulários */
 .form-heading { text-align: center; }
 
+.form-heading h1 {
+    margin-bottom: 9px;
+}
+
+.verification-description {
+    max-width: 410px;
+    margin: 0 auto;
+    color: #627267;
+    font-size: .94rem;
+    line-height: 1.5;
+}
+
 .form-icon {
     display: inline-grid;
     place-items: center;

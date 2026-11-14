@@ -6,52 +6,31 @@ use PDOException;
 
 class Usuario
 {
-    public function CadastrarUsuario($nome, $cpf, $dtNasc, $email, $cel, $senha): array
+    public function CadastrarUsuario($nome, $cpf, $dtNasc, $email, $cel, $senha): bool
     {        
         $senha = password_hash($senha, PASSWORD_DEFAULT);
         try
         {
             $db = new Database();
             $pdo = $db->getConnection();
-
-            $sql = "SELECT COUNT(*) FROM USUARIOS WHERE cpf = :cpf";
+        
+            $sql = "INSERT INTO USUARIOS (nmUsuario, cpf, dataNasc, email, emailVerificado, celular, isAdmin, senha) 
+            VALUES (:nome, :cpf, :dataNasc, :email, 0, :celular, 0, :senha)";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([":cpf" => $cpf]);
-            $count = $stmt->fetchColumn();
-
-            if ($count == 0)
-            {            
-                $sql = "INSERT INTO USUARIOS (nmUsuario, cpf, dataNasc, email, celular, isAdmin, senha) 
-                VALUES (:nome, :cpf, :dataNasc, :email, :celular, 0, :senha)";
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute([
-                    ":nome" => $nome,
-                    ":cpf" => $cpf,
-                    ":dataNasc" => $dtNasc,
-                    ":email" => $email,
-                    ":celular" => $cel,
-                    ":senha" => $senha            
-                ]);
-                
-                return [
-                    'sucesso' => true,
-                    'mensagem' => 'Usuário Cadastrado com Sucesso!'
-                ];
-            }
-            else
-            {
-                return [
-                    'sucesso' => false,
-                    'mensagem' => 'CPF Já Cadastrado'
-                ];
-            }
+            $stmt->execute([
+                ":nome" => $nome,
+                ":cpf" => $cpf,
+                ":dataNasc" => $dtNasc,
+                ":email" => $email,
+                ":celular" => $cel,
+                ":senha" => $senha            
+            ]);
+            
+            return true;
         }
         catch(PDOException $e)
         {
-            return [
-                'sucesso' => false,
-                'mensagem' => "Erro: {$e->getMessage()}"
-            ];
+            return false;
         }
     }
 
@@ -62,7 +41,7 @@ class Usuario
             $db = new Database();
             $pdo = $db->getConnection();
             
-            $sql = "SELECT idUsuario, nmUsuario, isAdmin, senha FROM USUARIOS WHERE email = :email";
+            $sql = "SELECT idUsuario, nmUsuario, isAdmin, senha, emailVerificado FROM USUARIOS WHERE email = :email";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([':email' => $email]);
             return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
@@ -73,16 +52,16 @@ class Usuario
         }
     }
 
-    public function EmailExiste($email): bool
+    public function VerificaCampoUnicoJaExiste($valor, $campo): bool
     {
         $db = new Database();
         $pdo = $db->getConnection();
 
-        $sql = "SELECT COUNT(*) FROM USUARIOS WHERE email = :email";
+        $sql = "SELECT COUNT(*) FROM USUARIOS WHERE $campo = :valor";
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
-            ":email" => $email
+            ":valor" => $valor
         ]);
 
         return $stmt->fetchColumn() > 0;
@@ -100,7 +79,7 @@ class Usuario
         }
     }
 
-    public function SalvarCodigoRecuperacaoSenha($codigo, $email): array
+    public function SalvarCodigoVerificacao($codigo, $email): array
     {
         try
         {
@@ -108,8 +87,8 @@ class Usuario
             $pdo = $db->getConnection();
                 
             $sql = "UPDATE USUARIOS 
-                    SET codigoRecuperacaoSenha = :codigo,
-                        dtExpiracaoCodigoSenha = DATE_ADD(NOW(), INTERVAL 5 MINUTE)
+                    SET codigoVerificacao = :codigo,
+                        dtExpiracaoCodigo = DATE_ADD(NOW(), INTERVAL 5 MINUTE)
                     WHERE email = :email";
 
             $stmt = $pdo->prepare($sql);
@@ -138,11 +117,21 @@ class Usuario
         $db = new Database();
         $pdo = $db->getConnection();
         
-        $sql = "SELECT codigoRecuperacaoSenha as codigo, dtExpiracaoCodigoSenha as dtExpiracao FROM USUARIOS WHERE email = :email";
+        $sql = "SELECT codigoVerificacao as codigo, dtExpiracaoCodigo as dtExpiracao, emailVerificado FROM USUARIOS WHERE email = :email";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([':email' => $email]);
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
+    }
+
+    public function ValidarEmailUsuario(string $email)
+    {
+        $db = new Database();
+        $pdo = $db->getConnection();
+
+        $sql = "UPDATE usuarios SET emailVerificado = 1 WHERE email = :email";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([':email' => $email]);
     }
 
     public function AlterarSenha($email, $novaSenha): array
